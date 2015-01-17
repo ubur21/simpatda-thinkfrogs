@@ -124,6 +124,7 @@ class Pendaftaran extends Base_Controller {
 
     $data['main_content']='pendaftaran_form';
     $this->load->view('layout/template',$data);
+	
   }
 
   public function proses()
@@ -135,7 +136,7 @@ class Pendaftaran extends Base_Controller {
     $this->form_validation->set_rules('gol', 'Golongan', 'required|trim');
     $this->form_validation->set_rules('no', 'Nomor', 'required|trim|max_length[10]|callback__cek_nomor');
     $this->form_validation->set_rules('noreg', 'No. Registrasi', 'required|trim|max_length[50]');
-    $this->form_validation->set_rules('npwpd', 'NPWPD', 'required|trim|max_length[20]');
+    $this->form_validation->set_rules('npwpd', 'NPWPD', 'required|trim|max_length[22]'); // nana
     $this->form_validation->set_rules('tgl', 'Tanggal NPWPD', 'required|trim');
     $this->form_validation->set_rules('tglkirim', 'Tanggal Kirim', 'required|trim');
     $this->form_validation->set_rules('tglkembali', 'Tanggal Kembali', 'required|trim');
