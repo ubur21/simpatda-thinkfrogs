@@ -235,7 +235,7 @@ $(document).ready(function() {
 
   App.pilih_rekening = function(){
     if (!App.canSave() || App.isEdit()) { return; }
-    var option = {multi:0, mode:'penetapan_oa'};
+    var option = {multi:0, mode:'penetapan_sa'};
     var $list = $('#grid');
     
     // hapus dulu isi grid
