@@ -132,7 +132,7 @@ class Pilih_model extends CI_Model {
       $this->db->join('tarif_pajak t', 't.id_rekening=r.id_rekening');
       $this->db->where('pr.kode_pr', PAJAK_MINERAL);
     }
-    else if ($param['mode'] === 'pendataan_hotel'){
+    else if ($param['mode'] === 'pendataan_hotel'){ //nana
       $this->db->select('
         r.id_rekening,
         r.kode_rekening,
@@ -344,6 +344,7 @@ class Pilih_model extends CI_Model {
       $this->db->from('wajib_pajak r');
       $this->db->join('kecamatan kec','kec.id_kecamatan=r.id_kecamatan');
       $this->db->join('kelurahan kel','kel.id_kelurahan=r.id_kelurahan');
+	  $this->db->where_in('r.nama_wp','sulistyo');
     }
 
     if ($isCount) {

@@ -1,3 +1,6 @@
+<style>
+.span2{width:80px}
+</style>
 <fieldset>
   <legend id="bc" data-bind="text: title"></legend>
 </fieldset>
@@ -6,7 +9,14 @@
   <fieldset>
     <legend>Data Registrasi</legend>
     <div class="controls-row">
-      <div class="control-group pull-left" >
+		<div class="control-group pull-left">
+        <label class="control-label" for="gol">Assesment</label>
+        <select id="gol" class="span2" />
+			<option value="0">Self</option>
+			<option value="1">Official</option>
+		</select>
+      </div>
+      <div class="control-group pull-left" style="margin-left:20px" >
         <label class="control-label" for="jenis">Tipe</label>
         <select id="jenis" class="span2" data-bind="options: opsiJenis, optionsValue:'kode', optionsText:'uraian', value: jenis" /></select>
       </div>
@@ -27,7 +37,7 @@
     <div class="control-group" >
       <div class="control-group pull-left" data-bind="validationElement: npwpd">
         <label class="control-label" for="npwpd">NPWPD</label>
-        <input type="text" class="span3" id="npwpd" data-bind="value: npwpd" required readonly="true" />
+        <input type="text" class="span3" id="npwpd" data-bind="value: npwpd" required />
       </div>
       <div class="control-group pull-left" style="margin-left:20px"  data-bind="validationElement: tgl" >
         <label class="control-label" for="tgl">Tanggal NPWPD</label>
@@ -388,7 +398,7 @@ $(document).ready(function() {
 
     $.getJSON(root+modul+'/get_no', function(data){
       if(self.isEdit() === false)
-        return self.no(data);
+        return self.no(data); 
       else
         return self.no();
     });
