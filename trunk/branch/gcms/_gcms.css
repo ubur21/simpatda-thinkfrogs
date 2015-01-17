@@ -1,0 +1,29 @@
+.daftar {
+    background-color: #FFFFFF;
+}
+
+.daftar_buttons {
+    padding: 10px;
+}
+
+.daftar_filter {
+    padding: 10px;
+}
+
+.entri {
+	padding: 10px;
+    background-attachment:scroll;
+    background-image:url(images/loginbg.png);
+    background-repeat: repeat;
+}
+
+.entri_buttons {
+	border-top: thin #78a26f solid;
+    padding: 10px;
+}
+
+.fake_head {
+    position: absolute;
+    background-image:url(yui/build/assets/skins/sam/sprite.png);
+    background-position: 0px 0px;
+}

@@ -1,0 +1,11 @@
+ReportName=fr3\test_fb.fr3
+OutputType=html, pdf, xls
+DriverName=Firebird
+DBServer=localhost
+DBName=C:\DB\SIPKD\JYP_KOTA.fdb
+DBUser=sysdba
+DBPassword=masterkey
+Param01=Judul Laporan
+Param02=Isi Laporan
+Param03=Parameter Ketiga
+Param04=Parameter Keempat

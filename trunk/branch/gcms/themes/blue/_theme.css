@@ -1,0 +1,147 @@
+body {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    background-attachment: scroll;
+    background-image: url(images/bkgnd.png);
+    background-repeat: repeat;
+    height: 100%;
+}
+
+#container-page {
+    width: 100%;
+    height: 100%;
+}
+
+#content {
+    font-size: 12px;
+	text-align: left;
+}
+
+#content h1 {
+	color: #000000;
+}
+
+#content table {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+}
+
+#content input {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+}
+
+#content legend {
+    color: black;
+    padding: 4px 6px;
+}
+
+#content fieldset {
+  padding: 20px 20px 20px 20px;
+  border: 1px solid #000066;
+}
+
+#content th {
+  font-weight: bold;
+  background-color: #EFD980;
+  padding: 5px 0px 5px 0px; 
+}
+
+#content td {
+    padding: 0px 0px 0px 0px;
+}
+
+
+#content hr {
+  margin-left: 2px;
+  border: 1px solid #000066;
+}
+
+#header {
+	text-align: left;
+    height: 55px;
+    background-attachment:scroll;
+    background-image:url(images/header.png);
+    background-repeat: repeat;
+    font-size: 30px;
+    font-weight: bolder;
+    color: #FFFFFF;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+#footer {    
+    margin-top: 10px;
+    border-top: thin #78a26f solid;
+    text-align: right;
+    font-size: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+#login_page_table {
+	width: 95%;
+	margin: 10px;
+}
+
+#login {
+    background-attachment:scroll;
+    background-image:url(images/loginbg.png);
+    background-repeat: repeat;
+	width: 200px;
+	border: thin #78a26f solid;
+	text-align: center;
+	padding: 10px;
+}
+
+
+#login_hdr {
+    font-family: tahoma, geneva, verdana, arial, sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+
+#login_hdr img {
+	margin: 5px;
+}
+
+#login td {
+	color: #000000
+}
+
+.login_input {
+	width: 90%;
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+	font-size: 12px;
+}
+
+#form_header {
+	text-align: left;
+    height: 30px;
+    background-attachment:scroll;
+    background-image:url(images/header.png);
+    background-repeat: repeat;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #FFFFFF;
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+#wnd_list {
+    margin-top: 10px;
+	width: 100%;
+	height: 1;
+}
+
+.window_icon {
+    position: relative;
+	width: 100;
+	text-align: center;
+	font-size: 12px;
+    font-family: tahoma, geneva, verdana, arial, sans-serif;
+}
+

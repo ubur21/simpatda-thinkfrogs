@@ -1,0 +1,139 @@
+/** menu icons **/
+.icon-16-archive 		{ background-image: url(../images/menu/icon-16-archive.png); }
+.icon-16-article 		{ background-image: url(../images/menu/icon-16-article.png); }
+.icon-16-category 	{ background-image: url(../images/menu/icon-16-category.png); }
+.icon-16-checkin 		{ background-image: url(../images/menu/icon-16-checkin.png); }
+.icon-16-component	{ background-image: url(../images/menu/icon-16-component.png); }
+.icon-16-config 		{ background-image: url(../images/menu/icon-16-config.png); }
+.icon-16-content 		{ background-image: url(../images/menu/icon-16-content.png); }
+.icon-16-cpanel 		{ background-image: url(../images/menu/icon-16-cpanel.png); }
+.icon-16-default 		{ background-image: url(../images/menu/icon-16-default.png); }
+.icon-16-frontpage 	{ background-image: url(../images/menu/icon-16-frontpage.png); }
+.icon-16-help			{ background-image: url(../images/menu/icon-16-help.png); }
+.icon-16-info 			{ background-image: url(../images/menu/icon-16-info.png); }
+.icon-16-install 		{ background-image: url(../images/menu/icon-16-install.png);}
+.icon-16-language 	{ background-image: url(../images/menu/icon-16-language.png);}
+.icon-16-logout 		{ background-image: url(../images/menu/icon-16-logout.png);}
+.icon-16-massmail 	{ background-image: url(../images/menu/icon-16-massmail.png); }
+.icon-16-media 		{ background-image: url(../images/menu/icon-16-media.png);}
+.icon-16-menu 			{ background-image: url(../images/menu/icon-16-menu.png); }
+.icon-16-menumgr 		{ background-image: url(../images/menu/icon-16-menumgr.png); }
+.icon-16-messages 	{ background-image: url(../images/menu/icon-16-messages.png); }
+.icon-16-module 		{ background-image: url(../images/menu/icon-16-module.png); }
+.icon-16-plugin 		{ background-image: url(../images/menu/icon-16-plugin.png); }
+.icon-16-section 		{ background-image: url(../images/menu/icon-16-section.png); }
+.icon-16-static 		{ background-image: url(../images/menu/icon-16-static.png); }
+.icon-16-stats 		{ background-image: url(../images/menu/icon-16-stats.png); }
+.icon-16-themes 		{ background-image: url(../images/menu/icon-16-themes.png); }
+.icon-16-trash 		{ background-image: url(../images/menu/icon-16-trash.png); }
+.icon-16-user 			{ background-image: url(../images/menu/icon-16-user.png); }
+.icon-16-lock 			{ background-image: url(../images/menu/icon-16-lock.png); }
+
+
+/** toolbar icons **/
+.icon-32-send 			{ background-image: url(../images/toolbar/icon-32-send.png); }
+.icon-32-delete 		{ background-image: url(../images/toolbar/icon-32-delete.png); }
+.icon-32-help 			{ background-image: url(../images/toolbar/icon-32-help.png); }
+.icon-32-cancel 		{ background-image: url(../images/toolbar/icon-32-cancel.png); }
+.icon-32-config 		{ background-image: url(../images/toolbar/icon-32-config.png); }
+.icon-32-apply 		{ background-image: url(../images/toolbar/icon-32-apply.png); }
+.icon-32-back			{ background-image: url(../images/toolbar/icon-32-back.png); }
+.icon-32-forward		{ background-image: url(../images/toolbar/icon-32-forward.png); }
+.icon-32-save 			{ background-image: url(../images/toolbar/icon-32-save.png); }
+.icon-32-edit 			{ background-image: url(../images/toolbar/icon-32-edit.png); }
+.icon-32-copy 			{ background-image: url(../images/toolbar/icon-32-copy.png); }
+.icon-32-move 			{ background-image: url(../images/toolbar/icon-32-move.png); }
+.icon-32-new 			{ background-image: url(../images/toolbar/icon-32-new.png); }
+.icon-32-upload 		{ background-image: url(../images/toolbar/icon-32-upload.png); }
+.icon-32-assign 		{ background-image: url(../images/toolbar/icon-32-publish.png); }
+.icon-32-html 			{ background-image: url(../images/toolbar/icon-32-html.png); }
+.icon-32-css 			{ background-image: url(../images/toolbar/icon-32-css.png); }
+.icon-32-menus 			{ background-image: url(../images/toolbar/icon-32-menu.png); }
+.icon-32-publish 		{ background-image: url(../images/toolbar/icon-32-publish.png); }
+.icon-32-unpublish 	{ background-image: url(../images/toolbar/icon-32-unpublish.png);}
+.icon-32-restore		{ background-image: url(../images/toolbar/icon-32-revert.png); }
+.icon-32-trash 		{ background-image: url(../images/toolbar/icon-32-trash.png); }
+.icon-32-archive 		{ background-image: url(../images/toolbar/icon-32-archive.png); }
+.icon-32-unarchive 	{ background-image: url(../images/toolbar/icon-32-unarchive.png); }
+.icon-32-preview 		{ background-image: url(../images/toolbar/icon-32-preview.png); }
+.icon-32-default 		{ background-image: url(../images/toolbar/icon-32-default.png); }
+.icon-32-back 		{ background-image: url(../images/toolbar/icon-32-back.png); }
+.icon-32-next 		{ background-image: url(../images/toolbar/icon-32-next.png); }
+.icon-32-reload 		{ background-image: url(../images/toolbar/icon-32-reload.png); }
+.icon-32-duplicate 		{ background-image: url(../images/toolbar/icon-32-duplicate.png); }
+.icon-32-detail 		{ background-image: url(../images/toolbar/icon-32-detail.png); }
+.icon-32-ref 		{ background-image: url(../images/toolbar/icon-32-ref.png); }
+.icon-32-print 		{ background-image: url(../images/toolbar/icon-32-print.png); }
+.icon-32-close 		{ background-image: url(../images/toolbar/icon-32-close.png); }
+.icon-32-up 		{ background-image: url(../images/toolbar/icon-32-up.png); }
+.icon-32-setor 		{ background-image: url(../images/toolbar/icon-32-setor.png); }
+
+/** header icons **/
+.icon-48-generic 		{ background-image: url(../images/header/icon-48-generic.png); }
+.icon-48-checkin 		{ background-image: url(../images/header/icon-48-checkin.png); }
+.icon-48-cpanel 		{ background-image: url(../images/header/icon-48-cpanel.png); }
+.icon-48-config 		{ background-image: url(../images/header/icon-48-config.png); }
+.icon-48-module 		{ background-image: url(../images/header/icon-48-module.png); }
+.icon-48-menu 			{ background-image: url(../images/header/icon-48-menu.png); }
+.icon-48-menumgr 		{ background-image: url(../images/header/icon-48-menumgr.png); }
+.icon-48-trash 		{ background-image: url(../images/header/icon-48-trash.png); }
+.icon-48-user	 		{ background-image: url(../images/header/icon-48-user.png); }
+.icon-48-inbox 		{ background-image: url(../images/header/icon-48-inbox.png); }
+.icon-48-msgconfig 	{ background-image: url(../images/header/icon-48-message_config.png); }
+.icon-48-langmanager { background-image: url(../images/header/icon-48-language.png); }
+.icon-48-mediamanager{ background-image: url(../images/header/icon-48-media.png); }
+.icon-48-plugin 	{ background-image: url(../images/header/icon-48-plugin.png); }
+.icon-48-help_header { background-image: url(../images/header/icon-48-help_header.png); }
+.icon-48-impressions { background-image: url(../images/header/icon-48-stats.png); }
+.icon-48-browser 		{ background-image: url(../images/header/icon-48-stats.png); }
+.icon-48-searchtext 	{ background-image: url(../images/header/icon-48-stats.png); }
+.icon-48-thememanager{ background-image: url(../images/header/icon-48-themes.png); }
+.icon-48-massemail 	{ background-image: url(../images/header/icon-48-massemail.png); }
+.icon-48-frontpage 	{ background-image: url(../images/header/icon-48-frontpage.png); }
+.icon-48-sections 	{ background-image: url(../images/header/icon-48-section.png); }
+.icon-48-addedit 		{ background-image: url(../images/header/icon-48-article.png); }
+.icon-48-categories 	{ background-image: url(../images/header/icon-48-category.png); }
+.icon-48-install 		{ background-image: url(../images/header/icon-48-extension.png); }
+.icon-48-dbbackup		{ background-image: url(../images/header/icon-48-backup.png); }
+.icon-48-dbrestore 	{ background-image: url(../images/header/icon-48-dbrestore.png); }
+.icon-48-dbquery 		{ background-image: url(../images/header/icon-48-query.png); }
+.icon-48-systeminfo 	{ background-image: url(../images/header/icon-48-info.png); }
+.icon-48-massemail 	{ background-image: url(../images/header/icon-48-massmail.png); }
+.icon-48-hotel 	{ background-image: url(../images/header/icon-48-hotel.png); }
+.icon-48-restoran 	{ background-image: url(../images/header/icon-48-restoran.png); }
+.icon-48-reklame 	{ background-image: url(../images/header/icon-48-reklame.png); }
+.icon-48-electric 	{ background-image: url(../images/header/icon-48-electric.png); }
+.icon-48-hiburan 	{ background-image: url(../images/header/icon-48-hiburan.png); }
+.icon-48-galian 	{ background-image: url(../images/header/icon-48-galian.png); }
+.icon-48-parkir 	{ background-image: url(../images/header/icon-48-parkir.png); }
+.icon-48-retribusi 	{ background-image: url(../images/header/icon-48-retribusi.png); }
+.icon-48-walet 	{ background-image: url(../images/header/icon-48-walet.png); }
+.icon-48-penetapan 	{ background-image: url(../images/header/icon-48-penetapan.png); }
+.icon-48-penetapan_stprd 	{ background-image: url(../images/header/icon-48-penetapan_stprd.png); }
+.icon-48-pemda 	{ background-image: url(../images/header/icon-48-pemda.png); }
+.icon-48-master 	{ background-image: url(../images/header/icon-48-master.png); }
+.icon-48-key 	{ background-image: url(../images/header/icon-48-key.png); }
+.icon-48-operator 	{ background-image: url(../images/header/icon-48-operator.png); }
+.icon-48-bb 	{ background-image: url(../images/header/icon-48-bb.png); }
+.icon-48-bb_persediaan 	{ background-image: url(../images/header/icon-48-bb_persediaan.png); }
+.icon-48-bb_surat 	{ background-image: url(../images/header/icon-48-bb_surat.png); }
+.icon-48-bb_order 	{ background-image: url(../images/header/icon-48-bb_order.png); }
+.icon-48-bb_terima 	{ background-image: url(../images/header/icon-48-bb_terima.png); }
+.icon-48-bb_bukti 	{ background-image: url(../images/header/icon-48-bb_bukti.png); }
+.icon-48-bb_setor 	{ background-image: url(../images/header/icon-48-bb_setor.png); }
+.icon-48-setoran 	{ background-image: url(../images/header/icon-48-setoran.png); }
+.icon-48-setoran_bank 	{ background-image: url(../images/header/icon-48-setoran_bank.png); }
+.icon-48-menulist 	{ background-image: url(../images/header/icon-48-menulist.png); }
+.icon-48-pendaftaran_p 	{ background-image: url(../images/header/icon-48-pend_p.png); }
+.icon-48-pendaftaran_bu 	{ background-image: url(../images/header/icon-48-pend_bu.png); }
+.icon-48-pendaftaran1 	{ background-image: url(../images/header/icon-48-pend1.png); }
+.icon-48-lhp 	{ background-image: url(../images/header/icon-48-lhp.png); }
+.icon-48-form 	{ background-image: url(../images/header/icon-48-form.png); }
+.icon-48-print 	{ background-image: url(../images/header/icon-48-print.png); }
+.icon-48-popup 	{ background-image: url(../images/header/icon-48-popup.png); }
+.icon-48-popupAdd 	{ background-image: url(../images/header/icon-48-popupAdd.png); }
+.icon-48-bu 	{ background-image: url(../images/header/icon-48-bu.png); }
+.icon-48-sand_watch 	{ background-image: url(../images/header/icon-48-sand_watch.png); }
+.icon-48-history 	{ background-image: url(../images/header/icon-48-history.png); }
+.icon-48-simpatda 	{ background-image: url(../images/header/icon-48-simpatda.png); }
+.icon-48-bos 	{ background-image: url(../images/header/icon-48-bos.png); }
