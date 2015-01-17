@@ -118,6 +118,36 @@ class Pilih_model extends CI_Model {
       $this->db->join('tarif_pajak t', 't.id_rekening=r.id_rekening');
       $this->db->where('pr.kode_pr', PAJAK_REKLAME);
     }
+	else if ($param['mode'] === 'penetapan_oa'){
+      $this->db->select('
+        r.id_rekening,
+        r.kode_rekening,
+        r.nama_rekening,
+        t.tarif_rp,
+        t.tarif_persen
+      ');
+      $this->db->distinct();
+      $this->db->from('rekening r');
+      $this->db->join('rekening_pr pr','r.id_rekening=pr.id_rekening');
+      $this->db->join('tarif_pajak t', 't.id_rekening=r.id_rekening');
+      $this->db->where('pr.kode_pr', PAJAK_REKLAME);
+      $this->db->or_where('pr.kode_pr', PAJAK_AIR);
+    }
+	else if ($param['mode'] === 'penetapan_sa'){
+      $this->db->select('
+        r.id_rekening,
+        r.kode_rekening,
+        r.nama_rekening,
+        t.tarif_rp,
+        t.tarif_persen
+      ');
+      $this->db->distinct();
+      $this->db->from('rekening r');
+      $this->db->join('rekening_pr pr','r.id_rekening=pr.id_rekening');
+      $this->db->join('tarif_pajak t', 't.id_rekening=r.id_rekening');
+      $this->db->where('pr.kode_pr !=', PAJAK_REKLAME);
+      $this->db->or_where('pr.kode_pr !=', PAJAK_AIR);
+    }
     else if ($param['mode'] === 'pendataan_mineral'){
       $this->db->select('
         r.id_rekening,

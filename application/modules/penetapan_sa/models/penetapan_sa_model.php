@@ -1,5 +1,5 @@
 <?php
-class Penetapan_model extends CI_Model {
+class Penetapan_sa_model extends CI_Model {
 
   var $spt;
   var $tgl;
@@ -114,7 +114,7 @@ class Penetapan_model extends CI_Model {
     $this->db->from('spt a');
     $this->db->join('rekening r', 'r.id_rekening = a.id_rekening');
     $this->db->join('penetapan p', 'p.id_spt = a.id_spt');
-	$this->db->where("a.tipe = 'OA'");
+	$this->db->where("a.tipe = 'SA'");
 
     if ($isCount) {
       $result = $this->db->count_all_results();
@@ -150,7 +150,7 @@ class Penetapan_model extends CI_Model {
     $this->db->from('spt r');
     $this->db->join('rekening s', 'r.id_rekening = s.id_rekening');
     $this->db->where("r.id_rekening = '".$idrek."'");
-    $this->db->where("r.tipe = 'OA'");
+    $this->db->where("r.tipe = 'SA'");
     $this->db->where('r.id_spt not in (select id_spt from penetapan)');
     $result = $this->db->get()->result_array();
 
