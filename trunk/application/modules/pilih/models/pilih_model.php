@@ -344,7 +344,7 @@ class Pilih_model extends CI_Model {
       $this->db->from('wajib_pajak r');
       $this->db->join('kecamatan kec','kec.id_kecamatan=r.id_kecamatan');
       $this->db->join('kelurahan kel','kel.id_kelurahan=r.id_kelurahan');
-	  $this->db->where_in('r.nama_wp','sulistyo');
+	  
     }
 
     if ($isCount) {
