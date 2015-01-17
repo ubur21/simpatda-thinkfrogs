@@ -359,7 +359,7 @@ class Pilih_model extends CI_Model {
     if ($wh) $this->db->where($wh);
     ($param['sort_by'] != null && !$isCount) ? $this->db->order_by( $fieldmap[$param['sort_by']], $param['sort_direction']) :'';
 
-    if ($param['mode'] === 'pendataan' || $param['mode'] === 'angsuran'){
+    if ($param['mode'] === 'pendataan' || $param['mode'] === 'angsuran' || $param['mode'] === 'pendataan_hotel_npwpd' || $param['mode'] === 'pendataan_restoran_npwpd'|| $param['mode'] === 'pendataan_hiburan_npwpd'){ //add by nana
       $this->db->select('
         r.id_wajib_pajak,
         r.npwpd,
@@ -375,8 +375,19 @@ class Pilih_model extends CI_Model {
       $this->db->join('kecamatan kec','kec.id_kecamatan=r.id_kecamatan');
       $this->db->join('kelurahan kel','kel.id_kelurahan=r.id_kelurahan');
 	  
+	  if ($param['mode'] === 'pendataan_hotel_npwpd'){ //add by nana
+		$this->db->where('substring(r.npwpd from 18 for 3)=','005');
+	  }
+	  if ($param['mode'] === 'pendataan_restoran_npwpd'){ //add by nana
+		$this->db->where('substring(r.npwpd from 18 for 3)=','003');
+	  }
+	  if ($param['mode'] === 'pendataan_hiburan_npwpd'){ //add by nana
+		$this->db->where('substring(r.npwpd from 18 for 3)=','004');
+	  }
+	  
     }
-
+	
+	
     if ($isCount) {
       $result = $this->db->count_all_results();
       return $result;
