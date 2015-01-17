@@ -1,0 +1,252 @@
+/* tambahan 
+author:banu
+*/
+.entri_buttons{
+	background-image:url(images/bg.jpg);
+    background-repeat:repeat;
+}
+
+.entri_buttons1{
+	/*background-image:url(images/bg.jpg);
+    background-repeat:repeat;*/
+	border:1px solid #7F7F7F;
+	border-right:1px solid #CBCBCB;
+	border-spacing:2px;
+	border-bottom:hidden;
+	border-right:hidden;
+	border-left:hidden;
+	padding:0px;
+	margin:0px;
+}
+.warning { color: red; }
+.entri{
+    padding:10px;
+    background-image:url(images/bg.jpg);
+    background-repeat:repeat;
+}
+/*-------------------------------------------*/
+
+body{
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#container-page {
+    width: 100%;
+    height: 100%;
+}
+
+#content {
+    font-size: 12px;
+	/*text-align: left;*/
+}
+
+
+#content h1 {
+    color: #000000;
+    font-size: 18px;
+    font-family: Arial;
+    font-style: normal;
+    font-weight:normal;
+    margin-bottom: 15px;
+    border-bottom: thin;
+    border-bottom-color: #FF9900;
+    border-bottom-style: solid;
+}
+
+#content table {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+}
+
+#content input[readonly]{
+	background-color:#E0E0E0;
+}
+
+#content input {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+    height:22px;
+    border:1px solid #FDA102;
+    padding:0;
+    padding-top:2px;
+    margin:3px;
+}
+
+#content textarea {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+	border:1px solid #FDA102;
+	padding:0;
+	padding-top:2px;
+	margin:3px;
+}
+
+#content select {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+	height:22px;
+	border:1px solid #FDA102;
+	padding:0;
+	padding-top:2px;
+	margin:3px;
+}
+
+#content legend {
+    color: black;
+    padding: 4px 6px;
+}
+
+#content fieldset {
+  padding: 20px 20px 20px 20px;
+  border: 1px solid #000066;
+}
+
+#content th {
+  /*background-color:#990000;
+  padding: 2px 0px;
+  color:#000000;
+  font-size:13px;*/
+  
+  
+  
+  font-weight: bold;
+  background-color: #EFD980;
+  padding: 5px 0px 5px 0px; 
+}
+
+#content td {
+    padding: 0px 0px 0px 0px;
+}
+
+
+#content hr {
+  margin-left: 2px;
+  border: 1px solid #000066;
+}
+
+.content_form_entri{
+	color:#000000;
+	font-size:10x;
+	padding: 10px 10px 10px 10px;
+	
+	font-weight:normal;
+	border-spacing:0px;
+	font-family:Arial, Verdana Helvetica, sans-serif;
+}
+
+#header {
+	text-align: left;
+    height: 55px;
+    background-attachment:scroll;
+	background-color:#E90D16;
+    font-size: 30px;
+    font-weight: bolder;
+    color: #FFFFFF;
+	padding-left:5px;
+}
+
+#footer {
+	color:#FFFFFF;
+	font-size:10px;
+	padding-left:10px;
+}
+
+#login {
+   
+}
+
+#login_hdr {
+    font-family: tahoma, geneva, verdana, arial, sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+
+#login_hdr img {
+	
+}
+
+#login td {
+	color: #000000
+}
+
+.login_input {
+	font-family: arial, tahoma, geneva,verdana, sans-serif;
+	font-size: 12px;
+	border:1px solid #FDA102;
+	padding:2px;
+}
+
+#form_header {
+	text-align: left;
+    height: 30px;
+    background-attachment:scroll;
+    background-image:url(images/form_header.png);
+	background-repeat:repeat;
+    font-size: 20px;
+	font-weight: bolder;
+	color:#FFFFFF;
+	padding-left:5px;
+}
+
+#wnd_list {
+	background-color:#EFEFEF;
+    width: 100%;
+	height: 1;
+	padding-bottom:20px; /*tambahan*/
+}
+
+.window_icon {
+    position: relative;
+	width: 100;
+	text-align: center;
+	font-size: 12px;
+    font-family: tahoma, geneva, verdana, arial, sans-serif;
+}
+.content_form_list{
+	border-collapse:collapse;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+.content_form_list th{	
+	border:1px solid #aaaaaa;
+	/*border-bottom:none;*/
+	/*padding:2px 8px 2px 8px;*/
+	background-color:#E4E4E4;
+	color:#3f3f3f;
+	/*font:90% Arial, Verdana,Geneva;*/
+	
+	font-weight:bold;
+}
+
+.content_form_list td{
+	border:1px solid #aaaaaa;
+	/*font:90% Arial, Verdana,Geneva;*/
+	/*padding:2px 4px 2px 4px;*/
+	vertical-align:middle;
+	background-color:#FFFFFF;
+	/*line-height:12px;*/
+}
+
+.header_field{
+	background:#d8d8d8 url(images/sprite.png) repeat-x;
+	border:1px solid #a3a3a3;
+}
+
+<!--BEGIN CUSTOMIZE SKIN YUI-->
+.yui-button#btn_entri_save button { 
+	background: url(../../images/cancel.png) 10% 50% no-repeat; 
+	padding-left: 2em; 
+} 
+.yui-button#btn_entri_tutup button { 
+	background: url(../../images/cancel.png) 10% 50% no-repeat; 
+	padding-left: 2em; 
+}
+.yui-button#idsubmitPlus button { 
+	background: url(../../images/plus.png) 50% 50% no-repeat ;
+} 
+<!--END CUSTOMIZE SKIN YUI-->

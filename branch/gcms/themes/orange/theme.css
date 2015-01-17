@@ -1,0 +1,380 @@
+/* tambahan 
+author:banu
+
+.entri_buttons{
+	background-image:url(images/bg.jpg);
+    background-repeat:repeat;
+}
+
+.entri_buttons1{
+	/*background-image:url(images/bg.jpg);
+    background-repeat:repeat;*/
+	border:1px solid #7F7F7F;
+	border-right:1px solid #CBCBCB;
+	border-spacing:2px;
+	border-bottom:hidden;
+	border-right:hidden;
+	border-left:hidden;
+	padding:0px;
+	margin:0px;
+}
+.entri{
+    padding:10px;
+    background-image:url(images/bg.jpg);
+    background-repeat:repeat;
+}
+/*-------------------------------------------*/
+
+body{
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#container-page {
+    width: 100%;
+    height: 100%;
+}
+
+#content {
+    font-size: 12px;
+	/*text-align: left;*/
+}
+
+
+#content h1 {
+    color: #000000;
+    font-size: 18px;
+    font-family: Arial;
+    font-style: normal;
+    font-weight:normal;
+    margin-bottom: 15px;
+    border-bottom: thin;
+    border-bottom-color: #FF9900;
+    border-bottom-style: solid;
+}
+
+#content table {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+}
+
+#content input[readonly]{
+	background-color:#E0E0E0;
+}
+
+#content input {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+    height:22px;
+    border:1px solid #FDA102;
+    padding:0;
+    padding-top:2px;
+    margin:3px;
+}
+
+#content textarea[readonly]{
+	background-color:#E0E0E0;
+}
+
+#content textarea {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+	border:1px solid #FDA102;
+	padding:0;
+	padding-top:2px;
+	margin:3px;
+}
+
+#content select {
+    font-family: arial, tahoma, geneva,verdana, sans-serif;
+    font-size: 12px;
+	height:22px;
+	border:1px solid #FDA102;
+	padding:0;
+	padding-top:2px;
+	margin:3px;
+}
+
+#content legend {
+    color: black;
+    padding: 4px 6px;
+}
+
+#content fieldset {
+  padding: 20px 20px 20px 20px;
+  border: 1px solid #000066;
+}
+
+#content th {
+  /*background-color:#990000;
+  padding: 2px 0px;
+  color:#000000;
+  font-size:13px;*/
+  
+  
+  
+  font-weight: bold;
+  background-color: #EFD980;
+  padding: 5px 0px 5px 0px; 
+}
+
+#content td {
+    padding: 0px 0px 0px 0px;
+}
+
+
+#content hr {
+  margin-left: 2px;
+  border: 1px solid #000066;
+}
+
+.content_form_entri{
+	color:#000000;
+	font-size:10x;
+	padding: 10px 10px 10px 10px;
+	
+	font-weight:normal;
+	border-spacing:0px;
+	font-family:Arial, Verdana Helvetica, sans-serif;
+}
+
+#header {
+	text-align: left;
+    height: 55px;
+    background-attachment:scroll;
+	background-color:#E90D16;
+    font-size: 30px;
+    font-weight: bolder;
+    color: #FFFFFF;
+	padding-left:5px;
+}
+
+#footer {
+	color:#FFFFFF;
+	font-size:10px;
+	padding-left:10px;
+}
+
+#login {
+   
+}
+
+#login_hdr {
+    font-family: tahoma, geneva, verdana, arial, sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+
+#login_hdr img {
+	
+}
+
+#login td {
+	color: #000000
+}
+
+.login_input {
+	font-family: arial, tahoma, geneva,verdana, sans-serif;
+	font-size: 12px;
+	border:1px solid #FDA102;
+	padding:2px;
+}
+
+#form_header {
+	text-align: left;
+    height: 30px;
+    background-attachment:scroll;
+    background-image:url(images/form_header.png);
+	background-repeat:repeat;
+    font-size: 20px;
+	font-weight: bolder;
+	color:#FFFFFF;
+	padding-left:5px;
+}
+
+#wnd_list {
+	background-color:#EFEFEF;
+    width: 100%;
+	height: 1;
+	padding-bottom:20px; /*tambahan*/
+}
+
+.window_icon {
+    position: relative;
+	width: 100;
+	text-align: center;
+	font-size: 12px;
+    font-family: tahoma, geneva, verdana, arial, sans-serif;
+}
+.content_form_list{
+	border-collapse:collapse;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+.content_form_list th{	
+	border:1px solid #aaaaaa;
+	/*border-bottom:none;*/
+	/*padding:2px 8px 2px 8px;*/
+	background-color:#E4E4E4;
+	color:#3f3f3f;
+	/*font:90% Arial, Verdana,Geneva;*/
+	
+	font-weight:bold;
+}
+
+.content_form_list td{
+	border:1px solid #aaaaaa;
+	/*font:90% Arial, Verdana,Geneva;*/
+	/*padding:2px 4px 2px 4px;*/
+	vertical-align:middle;
+	background-color:#FFFFFF;
+	/*line-height:12px;*/
+}
+
+.header_field{
+	background:#d8d8d8 url(images/sprite.png) repeat-x;
+	border:1px solid #a3a3a3;
+}
+
+<!--BEGIN CUSTOMIZE SKIN YUI-->
+.yui-button#btn_entri_save button { 
+	background: url(../../images/cancel.png) 10% 50% no-repeat; 
+	padding-left: 2em; 
+} 
+.yui-button#btn_entri_tutup button { 
+	background: url(../../images/cancel.png) 10% 50% no-repeat; 
+	padding-left: 2em; 
+}
+.yui-button#idsubmitPlus button { 
+	background: url(../../images/plus.png) 50% 50% no-repeat ;
+} 
+
+.entri_buttons{
+background-attachment:scroll;
+background-image:url(./themes/orange/images/form_header.png);
+background-repeat:repeat;
+border-top:none;
+} 
+#content{
+background-color:#F2F1E6;
+} 
+#kanvas{
+background-color:#ECEAD8;
+padding:10;
+height:90%;
+border:1px solid #cccccc;
+-moz-border-radius:10;
+}
+
+#greyrow:hover{
+	background:#6699FF;
+}
+.greyrow { 
+	background:#e5f1f4;
+	border:1px solid #000000;
+	height:20px;/**/
+}
+
+#whiterow:hover{
+	background:#6699FF;
+}	
+.whiterow { /*memutihkan td biasanya*/
+	background:#f8fbfc;
+	border:1px solid #fff;
+	height:20px;/**/
+	text-align:left;padding:.5em;border:1px solid #000000;
+}
+.inheritrow{
+	text-align:center;padding:.5em;border:1px solid #000000;
+}
+.input_row{
+	background:#6699FF url(tr_back.gif) repeat-x;color:#000000;	
+}	
+
+.orangerow { /*mengoranyekan td biasanya, untuk highlighted*/
+	background-color: #FF9900;
+	font-size:10px;
+	text-align: left;
+	height:20px;/**/
+}
+
+.brownrow { /*mengoranyekan td biasanya, untuk highlighted*/
+	background-color:#EFBF8F;
+	text-align: left;
+	height:20px;/**/
+}
+
+.tablestyle 
+{
+	font-family: arial;
+	font-size: small;
+	border: solid 1px #7f7f7f;
+}
+
+.altrowstyle 
+{
+    background-color: #edf5ff;
+}
+
+.headerstyle th 
+{
+    background: url(images/sprite.png) repeat-x 0px 0px;
+    border-color: #989898 #cbcbcb #989898 #989898;
+    border-style: solid solid solid none;
+    border-width: 1px 1px 1px medium;
+    color: #000;
+    padding: 4px 5px 4px 10px;
+    text-align: center;
+    vertical-align: bottom;
+}  
+
+.headerstyle th a
+{
+    font-weight: normal;
+	text-decoration: none;
+	text-align: center;
+    color: #000;
+	display: block;
+    padding-right: 10px;
+}    
+
+.rowstyle .sortaltrow, .altrowstyle .sortaltrow 
+{
+    background-color: #edf5ff;
+}
+
+.rowstyle .sortrow, .altrowstyle .sortrow 
+{
+    background-color: #dbeaff;
+}
+
+.rowstyle td, .altrowstyle td 
+{
+    padding: 4px 10px 4px 10px;
+    border-right: solid 1px #cbcbcb;
+}
+
+.headerstyle .sortascheader 
+{
+    background: url(images/sprite.png) repeat-x 0px -100px;
+}
+
+.headerstyle .sortascheader a 
+{
+    background: url(images/dt-arrow-up.png) no-repeat right 50%;
+} 
+
+.headerstyle .sortdescheader 
+{
+    background: url(images/sprite.png) repeat-x 0px -100px;
+}   
+
+.headerstyle .sortdescheader a 
+{
+    background: url(images/dt-arrow-dn.png) no-repeat right 50%;
+} 
+<!--END CUSTOMIZE SKIN YUI-->
