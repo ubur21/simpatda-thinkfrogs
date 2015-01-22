@@ -111,6 +111,12 @@ class Penetapan_sa extends Base_Controller {
 
     echo json_encode($response);    
   }
+  
+  public function coba(){
+	$hasil = $this->data_model->getDSpt(10);
+	var_dump($hasil);
+	echo $hasil[0]['ID_SPT'];
+  }
 
   public function proses()
   {
