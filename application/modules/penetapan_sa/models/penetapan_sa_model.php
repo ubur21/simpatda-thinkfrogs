@@ -153,12 +153,7 @@ class Penetapan_sa_model extends CI_Model {
       s.nama_rekening,
       r.periode_awal,
       r.periode_akhir,
-	  case
-		when DATEDIFF(month,r.PERIODE_AKHIR,current_date) > 2
-		then (r.JUMLAH_PAJAK * DATEDIFF(month,r.PERIODE_AKHIR,current_date))
-		else
-		r.JUMLAH_PAJAK
-		end as JUMLAH_PAJAK
+	  r.JUMLAH_PAJAK
     ');
     $this->db->distinct();
     $this->db->from('spt r');
@@ -166,6 +161,8 @@ class Penetapan_sa_model extends CI_Model {
     $this->db->where("r.id_rekening = '".$idrek."'");
     $this->db->where("r.tipe = 'SA'");
     $this->db->where('r.id_spt not in (select id_spt from penetapan)');
+    $this->db->where('DATEDIFF(month,r.PERIODE_AKHIR,current_date) > 4');
+    $this->db->or_where('DATEDIFF(month,r.PERIODE_AKHIR,current_date) = 1');
     $result = $this->db->get()->result_array();
 
     return $result;
