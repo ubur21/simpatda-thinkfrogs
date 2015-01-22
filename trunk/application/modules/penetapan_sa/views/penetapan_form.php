@@ -71,7 +71,7 @@ $(document).ready(function() {
     minDate:$('.datepicker#tgl').val(),
   });
 });
-
+  var last = 0;
   $("#grid").jqGrid({
     url:'',
     datatype:'local',
@@ -82,7 +82,7 @@ $(document).ready(function() {
         {name:'npwpd', width:150},
         {name:'nama', width:200},
         {name:'rek', width:150},
-        {name:'jml', width:100, formatter:'currency', align:'right'},
+        {name:'jml', width:100, formatter:'currency', align:'right', editable:true},
         {name:'awal', width:100, formatter:'date', align:'center'},
         {name:'akhir', width:100, formatter:'date', align:'center'},
     ],
@@ -97,20 +97,43 @@ $(document).ready(function() {
     recordtext:'{2} baris',
     width:935,
     height:250,
-    onSelectRow: select_row,
+	onSelectRow: function(id){
+      if(id && id!==last){
+         $(this).restoreRow(last);
+         last=id;
+      }
+    },
+   // onSelectRow: select_row,
     onSelectAll: select_row,
+	ondblClickRow: edit_row,
   });
 
   $("#grid").jqGrid('bindKeys', {
+	"onEnter": edit_row
   });
 
   $("#grid").jqGrid('navGrid', '#pager', {
     add:false,
-    edit:false,
+    edit:true,
     del:false,
+	edittext: 'Ubah',
+	editfunc: edit_row,
     search:false,
     refresh:false,
   },{},{},{},{});
+  
+  function edit_row(id){
+    $(this).jqGrid('saveRow', last, null, 'clientArray', null, after_save);
+    $(this).jqGrid('editRow', id, true, null, null, 'clientArray', null, after_save);
+    last = id;
+  }
+  
+  function after_save(){
+    $(this).focus();
+   // hitungTotal();
+    //hitungSisa();
+    //jumlahAll();
+  }
   
   function select_row(id)
   {
@@ -212,6 +235,7 @@ $(document).ready(function() {
 
   App.save = function(){
     if (!App.formValidation()){ return }
+	
 
     var $frm = $('#frm'),
         data = JSON.parse(ko.toJSON(App));
