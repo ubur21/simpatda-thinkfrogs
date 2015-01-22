@@ -67,11 +67,20 @@ class Penetapan_sa_model extends CI_Model {
   {
     for ($i=0; $i<$this->jmlspt; $i++)
     {
+	
+	//$hasil2 = $this->getJabatan($this->data[$i]['ID_SPT']);
+	//if($hasil2[0]['JML'] > 2){
+	//$this->db->insert('PENETAPAN', $this->data[$i]);
+	//$hasil=$this->getDSpt($this->data[$i]['ID_SPT']);
+	//$this->db->insert('SPT', array("ID_WAJIB_PAJAK"=>$hasil[0]['ID_WAJIB_PAJAK'],"ID_REKENING"=>$hasil[0]['ID_REKENING'],"TANGGAL_SPT"=>$hasil[0]['TANGGAL_SPT'],"NOMOR_SPT"=>$hasil[0]['NOMOR_SPT'],"TIPE"=>$hasil[0]['TIPE'],"STATUS_SPT"=>$hasil[0]['STATUS_SPT'],"NOMOR_KOHIR"=>$this->get_kohir(),"NAMA_WP"=>$hasil[0]['NAMA_WP'],"ALAMAT_WP"=>$hasil[0]['ALAMAT_WP'], "LOKASI"=>$hasil[0]['LOKASI'],"URAIAN"=>$hasil[0]['URAIAN'],"PERIODE_AWAL"=>$hasil[0]['PERIODE_AWAL'],"PERIODE_AKHIR"=>$hasil[0]['PERIODE_AKHIR'],"TARIF_RP"=>$hasil[0]['TARIF_RP'] ,"TARIF_PERSEN"=>$hasil[0]['TARIF_PERSEN'],"JUMLAH"=>$hasil[0]['JUMLAH'],"JUMLAH_PAJAK"=>(int)$hasil[0]['JUMLAH_PAJAK'] * (int)$hasil2[0]['JML'],"TANGGAL_LUNAS"=>$hasil[0]['TANGGAL_LUNAS'],"NPWPD"=>$hasil[0]['NPWPD']));
+	// tarif persen, tarif rp
+	//}else{
       $this->db->insert('PENETAPAN', $this->data[$i]);
 
       $this->data_spt = array('NOMOR_KOHIR'=>$this->get_kohir());
       $this->db->where('ID_SPT', $this->data[$i]['ID_SPT']);
       $this->db->update('SPT', $this->data_spt);
+	//}
     }
   }
   
@@ -142,9 +151,14 @@ class Penetapan_sa_model extends CI_Model {
       r.npwpd,
       r.nama_wp,
       s.nama_rekening,
-      r.jumlah_pajak,
       r.periode_awal,
       r.periode_akhir,
+	  case
+		when DATEDIFF(month,r.PERIODE_AKHIR,current_date) > 2
+		then (r.JUMLAH_PAJAK * DATEDIFF(month,r.PERIODE_AKHIR,current_date))
+		else
+		r.JUMLAH_PAJAK
+		end as JUMLAH_PAJAK
     ');
     $this->db->distinct();
     $this->db->from('spt r');
@@ -156,5 +170,26 @@ class Penetapan_sa_model extends CI_Model {
 
     return $result;
   }
+  
+   function getJabatan($idSpt)
+	  {
+		$this->db->select('
+		  DATEDIFF(month,r.PERIODE_AKHIR,current_date) as jml
+		');
+		$this->db->from('spt r');
+		$this->db->where("r.id_spt = '".$idSpt."'");
+		$result = $this->db->get()->result_array();
+
+		return $result;
+	  }
+	function getDSpt($idSpt)
+	  {
+		$this->db->select('*');
+		$this->db->from('spt r');
+		$this->db->where("r.id_spt = '".$idSpt."'");
+		$result = $this->db->get()->result_array();
+
+		return $result;
+	  }
 
 }

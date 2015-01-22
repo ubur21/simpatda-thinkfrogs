@@ -2,7 +2,7 @@
   <legend id="bc" data-bind="text: title"></legend>
 </fieldset>
 
-<form id="frm" method="post" action="<?php echo base_url(); ?>penetapan/proses">
+<form id="frm" method="post" action="<?php echo base_url(); ?>penetapan_sa/proses">
   <div class="controls-row">
     <div class="control-group pull-left" data-bind="validationElement: kd_rek" >
       <label class="control-label" for="pajak">Pilih Pajak/Retribusi</label>
@@ -126,7 +126,7 @@ $(document).ready(function() {
 
   var ModelPendataan = function (){
     var self = this;
-    self.modul = 'Penetapan';
+    self.modul = 'Penetapan_sa';
     self.akses_level = ko.observable(<?php echo isset($akses) ? $akses : 0 ?>);
     self.id = ko.observable();
     self.tgl = ko.observable('<?php echo date('d/m/Y') ?>')
@@ -228,7 +228,7 @@ $(document).ready(function() {
           type: res.isSuccess ? 'info' : 'error'
         });
         
-        setTimeout(function() { window.location = root+modul}, 2000);
+       // setTimeout(function() { window.location = root+modul}, 2000);
       }
     });
   }
