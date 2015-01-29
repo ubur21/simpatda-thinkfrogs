@@ -62,9 +62,9 @@
     <div class="controls-row">
       <div class="control-group pull-left" data-bind="validationElement: nospt" >
         <label class="control-label" for="nospt">Nomor SPT</label>
-        <input type="text" class="span3" id="nospt" data-bind="value: nospt" required />
+        <input type="text" class="span3" id="nospt" data-bind="value: nospt" required readonly="true" />
       </div>
-      <div class="control-group pull-left" style="margin-left:20px" data-bind="validationElement: status" >
+      <div class="control-group pull-left" style="margin-left:20px;display:none;" data-bind="validationElement: status" >
         <label class="control-label" for="status">Status SPT</label>
         <select id="status" class="span3" data-bind="options: opsiStatus, optionsValue:'kode', optionsText:'uraian', value: status" /></select>
       </div>
@@ -297,6 +297,14 @@ $(document).ready(function() {
         self.jml(hitung);
       });
     })
+	
+	//add nana
+	 $.getJSON(root+'Umum'+'/get_no_spt', function(data){
+      if(self.isEdit() === false)
+        return self.nospt(data); 
+      else
+        return self.nospt();
+    });
   }
 
   var App = new ModelPendaftaran();
