@@ -257,5 +257,32 @@ class Pendaftaran extends Base_Controller {
     }
     echo json_encode($response);
   }
+  
+  function searchNama(){
+        // process posted form data (the requested items like province)
+        $keyword = $this->input->post('term');
+
+        $data['response'] = 'false'; //Set default response
+        $query = $this->data_model->search_nama($keyword); //Search DB
+        if( ! empty($query) )
+        {
+            $data['response'] = 'true'; //Set response
+            $data['message'] = array(); //Create array
+            foreach( $query as $row )
+            {
+                $data['message'][] = array(
+                                        'id_wajib_pajak'=>$row->ID_WAJIB_PAJAK,
+                                        'value' => $row->NAMA_WP,
+                                        ''
+                                     );  //Add a row to array
+            }
+        }
+        if('IS_AJAX')
+        {
+            echo json_encode($data); //echo json string if ajax request
+
+        }
+        
+    }
 
 }

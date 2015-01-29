@@ -1,3 +1,4 @@
+ <script data-require="angular.js@1.3.9" data-semver="1.3.9" src="https://code.angularjs.org/1.3.9/angular.js"></script>
 <style>
 .span2{width:80px}
 </style>
@@ -60,7 +61,7 @@
     <div class="controls-row">
       <label class="control-label span2" for="nama">Nama</label>
       <div class="control-group pull-left" data-bind="validationElement: nama" >
-        <input type="text" class="span10" id="nama" data-bind="value: nama" required />
+        <input type="text" class="span10" id="nama" ng-keyup="complete()" data-bind="value: nama" required />
       </div>
     </div>
 
@@ -168,11 +169,49 @@
 </form>
 
 <script>
+
+
+
 function pad (str, max) {
   str = str.toString();
   return str.length < max ? pad("0" + str, max) : str;
 }
 $(document).ready(function() {
+	
+	 var app=angular.module('pendaftaran',[]);
+  app.controller('ctrl',function($scope){
+   $scope.availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $scope.complete=function(){
+      console.log($scope.availableTags);
+    $( "#nama" ).autocomplete({
+      source: $scope.availableTags
+    });
+    } 
+  });
+	
   $.datepicker.setDefaults($.datepicker.regional['id']);
   $('.datepicker#tgl').datepicker({
     onSelect:function(selectedDate) {
@@ -406,7 +445,7 @@ $(document).ready(function() {
     self.npwpd = ko.computed(function(){
      // return self.jenis() + '.' + self.gol() + '.' + self.no() + '.' + self.kecamatan() + '.' + self.kelurahan();
 	 //by nana
-	  return self.jenis() + '.' + self.gol() + '.' +  self.kecamatan() + '.' + self.kelurahan() + '.' + self.no() + '.' + pad(self.usaha(),3);
+	  return pad(self.usaha(),3) + '.' +  self.kecamatan() + '.' + self.kelurahan() + '.' + self.no() + '.' + '001';
     });    
 
     self.mode = ko.computed(function(){
@@ -515,4 +554,10 @@ $(document).ready(function() {
   },2000);
   
   
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function() {
+            
+        });
 </script>
