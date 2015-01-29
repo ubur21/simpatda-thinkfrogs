@@ -359,7 +359,7 @@ class Pilih_model extends CI_Model {
     if ($wh) $this->db->where($wh);
     ($param['sort_by'] != null && !$isCount) ? $this->db->order_by( $fieldmap[$param['sort_by']], $param['sort_direction']) :'';
 
-    if ($param['mode'] === 'pendataan' || $param['mode'] === 'angsuran' || $param['mode'] === 'pendataan_hotel_npwpd' || $param['mode'] === 'pendataan_restoran_npwpd'|| $param['mode'] === 'pendataan_hiburan_npwpd'){ //add by nana
+    if ($param['mode'] === 'pendataan' || $param['mode'] === 'angsuran' || $param['mode'] === 'pendataan_hotel_npwpd' || $param['mode'] === 'pendataan_restoran_npwpd'|| $param['mode'] === 'pendataan_hiburan_npwpd'|| $param['mode'] === 'pendataan_reklame_npwpd'){ //add by nana
       $this->db->select('
         r.id_wajib_pajak,
         r.npwpd,
@@ -376,15 +376,17 @@ class Pilih_model extends CI_Model {
       $this->db->join('kelurahan kel','kel.id_kelurahan=r.id_kelurahan');
 	  
 	  if ($param['mode'] === 'pendataan_hotel_npwpd'){ //add by nana
-		$this->db->where('substring(r.npwpd from 18 for 3)=','005');
+		$this->db->where('substring(r.npwpd from 1 for 3)=','002');
 	  }
 	  if ($param['mode'] === 'pendataan_restoran_npwpd'){ //add by nana
-		$this->db->where('substring(r.npwpd from 18 for 3)=','003');
+		$this->db->where('substring(r.npwpd from 1 for 3)=','003');
 	  }
 	  if ($param['mode'] === 'pendataan_hiburan_npwpd'){ //add by nana
-		$this->db->where('substring(r.npwpd from 18 for 3)=','004');
+		$this->db->where('substring(r.npwpd from 1 for 3)=','004');
 	  }
-	  
+	  if ($param['mode'] === 'pendataan_reklame_npwpd'){ //add by nana
+		$this->db->where('substring(r.npwpd from 1 for 3)=','006');
+	  }
     }
 	
 	

@@ -263,7 +263,7 @@ class Pilih extends CI_Controller{
                     'Kecamatan', 'Kelurahan');
                     
     $mode = $data['param']['mode'];
-    if ($mode === 'pendataan' || $mode === 'angsuran'|| $mode === 'pendataan_hotel_npwpd'|| $mode === 'pendataan_restoran_npwpd'|| $mode === 'pendataan_hiburan_npwpd') //nana add pendataan_hotel_npwpd
+    if ($mode === 'pendataan' || $mode === 'angsuran'|| $mode === 'pendataan_hotel_npwpd'|| $mode === 'pendataan_restoran_npwpd'|| $mode === 'pendataan_hiburan_npwpd'|| $mode === 'pendataan_reklame_npwpd') //nana add pendataan_hotel_npwpd
     {
       $data['colmodel'] = array(
         array('name' => 'id_wp', 'hidden' => true),
