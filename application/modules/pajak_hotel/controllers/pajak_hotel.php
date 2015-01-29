@@ -292,4 +292,25 @@ class Pajak_hotel extends Base_Controller {
     echo json_encode($response);
   }
 
+
+  public function generateReport()
+  {
+    // load view yang akan digenerate atau diconvert
+    // contoh kita akan membuat pdf dari halaman welcome codeigniter
+    $this->load->view('report');
+    // dapatkan output html
+    
+    $html = $this->output->get_output();
+    
+    // Load/panggil library dompdfnya
+    $this->load->library('dompdf_gen');
+    
+    // Convert to PDF
+    $this->dompdf->load_html($html);
+    
+    $this->dompdf->render();
+    
+    //utk menampilkan preview pdf
+    $this->dompdf->stream("skpd_hotel.pdf",array('Attachment'=>0));
+  }
 }
