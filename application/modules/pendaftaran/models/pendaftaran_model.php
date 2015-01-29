@@ -308,5 +308,13 @@ class Pendaftaran_model extends CI_Model {
       return TRUE;
     }
   }
+  
+  function search_nama($nama)
+  {
+	  $result = $this->db->query(" SELECT * FROM WAJIB_PAJAK WHERE NAMA_WP LIKE '$nama%' ")->result();
+	
+	return $result;
+  }
+
 
 }
