@@ -10,15 +10,19 @@ class Feature extends Base_Controller {
 
    public function pemeriksaan()
   {
+<<<<<<< .mine
+	$data['title'] = PRODUCT;
+=======
     $data['breadcrumbs'] = 'Pemeriksaan Pajak';
     $data['title'] = PRODUCT.' - '.$data['breadcrumbs'];
+>>>>>>> .r29
     $data['modul'] = 'feature';
-   // $data['link_daftar'] = '/get_daftar_sa';
-   // $data['link_form'] = '/form_sa';
-    $data['main_content'] = 'pemeriksaan';
-    //$data['tipe'] = 'sa';
+    $data['akses'] = $this->access;
+
+    $data['main_content']='pemeriksaan';
     $this->load->view('layout/template',$data);
   } 
+  
   
   public function aging()
   {
@@ -165,6 +169,31 @@ class Feature extends Base_Controller {
     //$data['tipe'] = 'sa';
     $this->load->view('layout/template',$data);
   } 
+<<<<<<< .mine
+  
+  
+  function getspt()
+	{
+		$id_spt = $this->input->post('id_spt') ? $this->input->post('id_spt') : 0;
+		$idpjk = $this->input->post('idpjk') ? $this->input->post('idpjk') : 0;
+		$result = $this->data_model->getSPT($id_spt);
+		$response = (object) NULL;
+		$response->sql = $this->db->queries;
+		$response->len = count($result);
+		if ($result){
+			for($i=0; $i<count($result); $i++){
+				$response->rows[$i]['id_spt'] = $result[$i]['ID_SPT'];
+				$response->rows[$i]['nospt'] = $result[$i]['NOMOR_SPT'];
+				$response->rows[$i]['tglspt'] = $result[$i]['TANGGAL_SPT'];
+				$response->rows[$i]['tglbayar'] = $result[$i]['TANGGAL'];
+				$response->rows[$i]['rek'] = $result[$i]['NAMA_REKENING'];
+				$response->rows[$i]['awal'] = $result[$i]['PERIODE_AWAL'];
+				$response->rows[$i]['akhir'] = $result[$i]['PERIODE_AKHIR'];
+				$response->rows[$i]['jml'] = $result[$i]['JUMLAH_PAJAK'];
+				$response->rows[$i]['sisa'] = $result[$i]['JUMLAH_PAJAK'];
+			}
+		}
+=======
   
   public function cetak_aging()
   {
@@ -175,5 +204,49 @@ class Feature extends Base_Controller {
 	$data['aging'] = $aging;
 	$this->load->view('aging_report',$data);
   }
+>>>>>>> .r29
+
+		echo json_encode($response);    
+	}
+	
+	function getsptlngkp()
+	{
+		$id_spt = $this->input->post('id_spt') ? $this->input->post('id_spt') : 0;
+		//$idpjk = $this->input->post('idpjk') ? $this->input->post('idpjk') : 0;
+		$result = $this->data_model->getsptlngkp($id_spt);
+		$response = (object) NULL;
+		$response->sql = $this->db->queries;
+		$response->len = count($result);
+		//print_r($result);
+		if ($result){
+			for($i=0; $i<count($result); $i++){
+				$result_bayar = $this->data_model->getsptbayar($result[$i]['ID_SPT']);
+				if($result_bayar){
+					$telah_bayar 	= $result_bayar['TELAH_DIBAYAR'];
+					$denda 			= $result_bayar['DENDA'];
+				}
+				else{
+					$telah_bayar = 0;
+					$denda = 0;
+				}
+				$total 	= $result[$i]['JUMLAH_PAJAK'] + $denda;
+				$sisa 	= ($result[$i]['JUMLAH_PAJAK'] + $denda) - $telah_bayar;
+				
+				$response->rows[$i]['id_spt'] 	= $result[$i]['ID_SPT'];
+				$response->rows[$i]['nospt'] 	= $result[$i]['NOMOR_SPT'];
+				$response->rows[$i]['tglspt'] = $result[$i]['TANGGAL_SPT'];
+				$response->rows[$i]['tglbayar'] = $result[$i]['TANGGAL'];
+				$response->rows[$i]['rek'] 		= $result[$i]['NAMA_REKENING'];
+				$response->rows[$i]['awal'] 	= $result[$i]['PERIODE_AWAL'];
+				$response->rows[$i]['akhir'] 	= $result[$i]['PERIODE_AKHIR'];
+				$response->rows[$i]['jml'] 		= $result[$i]['JUMLAH_PAJAK'];				
+				$response->rows[$i]['setor'] 	= $telah_bayar;
+				$response->rows[$i]['denda'] 	= $denda;
+				$response->rows[$i]['total'] 	= $total;
+				$response->rows[$i]['sisa'] 	= $sisa;
+			}
+		}
+		echo json_encode($response);    
+	}
 
 }

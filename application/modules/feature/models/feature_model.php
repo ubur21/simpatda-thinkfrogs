@@ -8,7 +8,101 @@ class Feature_model extends CI_Model {
     // Call the Model constructor
     parent::__construct();
   }
+  
+  	function getSPT($id_spt)
+	{
+		$this->db->select('ID_REKENING');
+		$this->db->from('rekening_pr');
+		//$this->db->where('kode_pr', $idpjk);
+		$ada = $this->db->get()->result_array();
+		$hasil = null;
+		if(count($ada) > 0)
+		{
+			foreach($ada as $row)
+			{
+				$hasil[] = $row['ID_REKENING'];
+			}
+		}
+				
+		$this->db->select('
+			r.id_spt,
+			r.nomor_spt,
+			r.tanggal_spt,
+			p.tanggal,
+			s.nama_rekening,
+			r.periode_awal,
+			r.periode_akhir,
+			r.jumlah_pajak
+		');
+		$this->db->distinct();
+		$this->db->from('spt r');
+		$this->db->join('rekening s', 'r.id_rekening = s.id_rekening');
+		$this->db->join('pembayaran p', 'r.id_spt = p.id_spt','left');
+		$this->db->where('r.id_wajib_pajak', $id_spt);
+		$this->db->where('r.tipe', 'SA');
+		$this->db->where('r.tanggal_lunas is null');
+		$this->db->where_in('r.id_rekening',$hasil);
+		$this->db->where('r.id_spt not in (select p.id_spt from pembayaran p)');
+		$result = $this->db->get()->result_array();
+
+		return $result;
+	}
 	
+<<<<<<< .mine
+	function getsptlngkp($id_spt)
+	{
+		$this->db->select('ID_REKENING');
+		$this->db->from('rekening_pr');
+		//$this->db->where('kode_pr', $idpjk);
+		$ada = $this->db->get()->result_array();
+		$hasil = null;
+		if(count($ada) > 0)
+		{
+			foreach($ada as $row)
+			{
+				$hasil[] = $row['ID_REKENING'];
+			}
+		}
+				
+		$this->db->select('
+			r.id_spt,
+			r.nomor_spt,
+			r.tanggal_spt,
+			p.tanggal,
+			s.nama_rekening,
+			r.periode_awal,
+			r.periode_akhir,
+			r.jumlah_pajak
+		');
+		//$this->db->distinct();
+		$this->db->from('spt r');
+		$this->db->join('rekening s', 'r.id_rekening = s.id_rekening');
+		$this->db->join('pembayaran p', 'r.id_spt = p.id_spt','left');
+		$this->db->where('r.id_wajib_pajak', $id_spt);
+		$this->db->where('r.tipe', 'SA');
+		$this->db->where_in('r.id_rekening',$hasil);
+		$this->db->order_by('r.nomor_spt');
+		$result = $this->db->get()->result_array();
+
+		return $result;
+	}
+	
+	function getsptbayar($id_spt)
+	{				
+		$this->db->select('TELAH_DIBAYAR,DENDA');
+		$this->db->from('pembayaran');
+		$this->db->where('id_spt', $id_spt);
+		$result = $this->db->get()->row_array();
+		if($result){
+			return $result;
+		}
+		else{
+			return FALSE;
+		}
+		
+	}
+	
+=======
   function get_aging()
   {
 	  $result = $this->db->query(" SELECT XX.* ,YY.PERIODE_AWAL AS TGL_TERBIT,COALESCE(YY.JUMLAH_PAJAK,0) JUMLAH_PAJAK
@@ -44,6 +138,7 @@ class Feature_model extends CI_Model {
 	//$result = $this->db->get();
 	return $result;
   }
+>>>>>>> .r29
   
   function get_reminder()
   {
