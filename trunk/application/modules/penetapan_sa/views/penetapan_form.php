@@ -239,7 +239,15 @@ $(document).ready(function() {
 
     var $frm = $('#frm'),
         data = JSON.parse(ko.toJSON(App));
-
+		data['rincian'] = [];
+	var select_jq = $('#grid').jqGrid('getGridParam', 'selarrrow');
+   
+	//nana
+	for (i = 0; i < select_jq.length; i++){
+		data['rincian'].push(JSON.stringify($('#grid').jqGrid('getRowData',select_jq[i])));
+	}
+	
+	
     $.ajax({
       url: $frm.attr('action'),
       type: 'post',

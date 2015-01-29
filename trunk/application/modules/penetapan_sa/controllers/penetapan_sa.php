@@ -133,7 +133,7 @@ class Penetapan_sa extends Base_Controller {
 
     if ($this->form_validation->run() == TRUE){
       $this->data_model->fill_data();
-      $success = $this->data_model->save_data();
+      //$success = $this->data_model->save_data();
 
       if (!$success)
       {

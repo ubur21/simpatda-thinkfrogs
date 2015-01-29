@@ -34,6 +34,54 @@ class Penetapan_sa_model extends CI_Model {
 
   function fill_data()
   {
+	$rinci = $this->input->post('rincian') ? $this->input->post('rincian') : NULL;
+	
+    if ($rinci)
+    {
+	  
+      
+
+	  
+	  $rinci_json = "[" ;
+      for($i=0;$i<count($rinci);$i++){ //foreach element in $arr
+			if($i == count($rinci)-1){
+				$rinci_json .= $rinci[$i]; 
+			}else{
+				$rinci_json .= $rinci[$i].','; //etc
+			}
+		}
+	  $rinci_json .= "]" ;
+	  $arr = json_decode($rinci_json,true);
+
+		
+		$data = array(
+		   'SET URAIAN' => 'PT'
+		);
+		/*
+		$this->db->set('URAIAN','Perseroan Terbatas');
+		$this->db->set('KODE','001');
+		$this->db->where('ID_JENIS_USAHA', '1');
+      $this->db->update('JENIS_USAHA');
+	  echo $arr[0]['nama']; */
+		for($i=0;$i<count($arr);$i++){
+			$this->db->set('ID_SPT', $arr[$i]['idspt']);
+			$this->db->set('TANGGAL', prepare_date($this->input->post('tgl')));
+			$this->db->set('BATAS_BAYAR', prepare_date($this->input->post('batas')));
+			$this->db->insert('PENETAPAN');
+
+			//echo ."<br/>";
+			$this->db->set('TANGGAL_SPT',prepare_date($this->input->post('tgl')));
+			$this->db->set('PERIODE_AWAL',prepare_date($this->input->post('tgl')));
+			$this->db->set('PERIODE_AKHIR',prepare_date($this->input->post('batas')));
+			$this->db->set('JUMLAH_PAJAK',$arr[$i]['jml']);
+			$this->db->set('JUMLAH',$arr[$i]['jml']);
+			$this->db->where('ID_SPT', $arr[$i]['idspt']);
+			$this->db->update('SPT');
+			//echo ""
+		}
+		//echo "Berhasil";
+	  //exit;
+    }
     if ($this->spt)
     {
       foreach ($this->spt as $key) 
@@ -77,9 +125,9 @@ class Penetapan_sa_model extends CI_Model {
 	//}else{
       $this->db->insert('PENETAPAN', $this->data[$i]);
 
-      $this->data_spt = array('NOMOR_KOHIR'=>$this->get_kohir());
-      $this->db->where('ID_SPT', $this->data[$i]['ID_SPT']);
-      $this->db->update('SPT', $this->data_spt);
+     // $this->data_spt = array('NOMOR_KOHIR'=>$this->get_kohir());
+     // $this->db->where('ID_SPT', $this->data[$i]['ID_SPT']);
+     // $this->db->update('SPT', $this->data_spt);
 	//}
     }
   }
@@ -158,11 +206,12 @@ class Penetapan_sa_model extends CI_Model {
     $this->db->distinct();
     $this->db->from('spt r');
     $this->db->join('rekening s', 'r.id_rekening = s.id_rekening');
+	$this->db->join('penetapan t', 'r.id_spt = t.id_spt','left');
     $this->db->where("r.id_rekening = '".$idrek."'");
     $this->db->where("r.tipe = 'SA'");
-    $this->db->where('r.id_spt not in (select id_spt from penetapan)');
+    $this->db->where('t.id_spt is null'); //nana
     $this->db->where('DATEDIFF(month,r.PERIODE_AKHIR,current_date) > 4');
-    $this->db->or_where('DATEDIFF(month,r.PERIODE_AKHIR,current_date) = 1');
+    $this->db->or_where("(DATEDIFF(month,r.PERIODE_AKHIR,current_date) < 5 and r.tipe = 'SA' and t.id_spt is null and r.id_rekening = '".$idrek."'  )");
     $result = $this->db->get()->result_array();
 
     return $result;
