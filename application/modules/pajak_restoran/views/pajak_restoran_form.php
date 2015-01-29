@@ -135,8 +135,8 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-      <li><a href="#">PDF</a></li>
-      <li><a href="#">XLS</a></li>
+      <li><a href="<?php echo base_url(); ?>pajak_restoran/generateReport">PDF</a></li>
+      <!--<li><a href="#">XLS</a></li>-->
     </ul>
   </div>
   <input type="button" id="back" value="Kembali" class="btn btn-primary" data-bind="click: back" />
