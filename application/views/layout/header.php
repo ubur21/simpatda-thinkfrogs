@@ -18,6 +18,7 @@ if ($this->session->userdata('login') != true){
     <link href="<?php echo base_url()?>assets/css/jquery.autocomplete.css" rel="stylesheet" media="screen">
 	<link href="<?php echo base_url()?>assets/css/bootstrap_upload/bootstrap-fileupload.min.css" rel="stylesheet" media="screen">
     <link href="<?php echo base_url()?>assets/css/jquery.treeview.css" rel="stylesheet" media="screen">
+    <link href="<?php echo base_url()?>assets/css/examples.css" rel="stylesheet" media="screen">
 	
     <script type="text/javascript" src="<?php echo base_url()?>assets/script/jquery.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/script/jquery-ui.js"></script>
@@ -37,6 +38,8 @@ if ($this->session->userdata('login') != true){
 	<script type="text/javascript" src="<?php echo base_url()?>assets/script/bootstrap-fileupload.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/script/moment.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/script/jquery.treeview.js"></script>
+	<script type="text/javascript" src="<?php echo base_url()?>assets/script/jquery.typeahead.js"></script>
+	<script type="text/javascript" src="<?php echo base_url()?>assets/script/hogan.js"></script>
     <script type="text/javascript">
       var root = '<?php echo base_url();?>';
       var modul = '<?php echo (isset($modul) ? $modul : '');?>';
