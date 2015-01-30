@@ -2,6 +2,50 @@
 <style>
 .span2{width:80px}
 </style>
+<script type="text/javascript">
+        $(document).ready(function () {
+
+			//Custom Template
+
+            $('.namapendaftar').typeahead({
+                name: 'Nama',
+                valueKey: 'name',
+                local: [
+						{
+							"tag": "HTML5", "name": "HTML5 LocalStorage API", "description": "HTML5 LocalStorage API,Client Side Storage", "value": "HTML5",
+							"tokens": ['HTML5']
+						},
+						{
+							"tag": "HTML5", "name": "HTML5 GeoLocations API", "description": "HTML5 GeoLocations API,Used to Find Location", "value": "HTML5",
+							"tokens": ['HTML5']
+						},
+						{
+							"tag": "JavaScript", "name": "JavaScript Tips And Tricks", "description": "Some Useful Javascript tips and tricks", "value": "JavaScript",
+							"tokens": ['JavaScript']
+						},
+						{
+							"tag": "JavaScript", "name": "JavaScript Tutorials", "description": "JavaScript Tutorials", "value": "JavaScript",
+							"tokens": ['JavaScript']
+						},
+						{
+							"tag": "CSS3", "name": "CSS3 Animations", "description": "CSS3 Animations", "value": "CSS3",
+							"tokens": ['CSS3']
+						},
+						{
+							"tag": "CSS3", "name": "CSS3 Tutorial", "description": "CSS3 Tutorial", "value": "CSS3",
+							"tokens": ['CSS3']
+						}
+                ],
+                template: [
+    '<p class="repo-tag">{{tag}}</p>',
+    '<p class="repo-name">{{name}}</p>',
+    '<p class="repo-description">{{description}}</p>'
+                ].join(''),
+                engine: Hogan
+            });
+        });
+    </script>
+	
 <fieldset>
   <legend id="bc" data-bind="text: title"></legend>
 </fieldset>
@@ -61,7 +105,9 @@
     <div class="controls-row">
       <label class="control-label span2" for="nama">Nama</label>
       <div class="control-group pull-left" data-bind="validationElement: nama" >
-        <input type="text" class="span10" id="nama" ng-keyup="complete()" data-bind="value: nama" required />
+	  <div class="CustomTemplate">
+        <input type="text" class="namapendaftar typeahead" id="nama" ng-keyup="complete()" data-bind="value: nama" required />
+	  </div>
       </div>
     </div>
 
