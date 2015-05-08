@@ -2,27 +2,9 @@
 <style>
 .span2{width:80px}
 </style>
-<?php 
-foreach($this->data_model->get_nama() as $value):
-	$namanama .=  "'".$value['NAMA_WP']."',";
-endforeach; 
-?>
-<script type="text/javascript">
-        $(document).ready(function () {
-
-			$('input.counties').typeahead({
-                name: 'countries',
-                local: [<?php echo $namanama; ?>]
-
-            });
-            
-        });
-    </script>
-	
 <fieldset>
   <legend id="bc" data-bind="text: title"></legend>
 </fieldset>
-
 
 <form id="frm" method="post" action="<?php echo base_url(); ?>pendaftaran/proses">
   <fieldset>
@@ -63,15 +45,13 @@ endforeach;
         <input type="text" class="datepicker span2" id="tgl" data-bind="value: tgl" required />
       </div>
       <div class="control-group pull-left" style="margin-left:20px"  data-bind="validationElement: tglkirim" >
-        <label class="control-label" for="tglkirim">Tanggal Pengukuhan</label>
+        <label class="control-label" for="tglkirim">Tanggal Kirim</label>
         <input type="text" class="datepicker span2" id="tglkirim" data-bind="value: tglkirim" />
       </div>
-
-      <!--<div class="control-group pull-left" style="margin-left:20px" data-bind="validationElement: tglkembali" >
+      <div class="control-group pull-left" style="margin-left:20px" data-bind="validationElement: tglkembali" >
         <label class="control-label" for="tglkembali">Tanggal Kembali</label>
         <input type="text" class="datepicker span2" id="tglkembali" data-bind="value: tglkembali" />
-      </div>-->
-
+      </div>
     </div>
   </fieldset>
 
@@ -81,9 +61,7 @@ endforeach;
     <div class="controls-row">
       <label class="control-label span2" for="nama">Nama</label>
       <div class="control-group pull-left" data-bind="validationElement: nama" >
-	  <div class="CustomTemplate">
-        <input onchange="getDetail()" type="text" class="counties typeahead" id="nama" ng-keyup="complete()" data-bind="value: nama" required />
-	  </div>
+        <input type="text" class="span10" id="nama" ng-keyup="complete()" data-bind="value: nama" required />
       </div>
     </div>
 
@@ -98,7 +76,7 @@ endforeach;
       <label class="control-label span2" for="kecamatan">Kecamatan / Kelurahan</label>
       <div class="controls">
         <div class="control-group pull-left"  data-bind="validationElement: kecamatan">
-          <select id="kecamatan" class="span3" data-bind="options:opsiKecamatan, optionsValue:'kode', optionsText:'uraian', value:kecamatan" required ></select>
+          <select id="kecamatan" class="span3" data-bind="options:opsiKecamatan, optionsValue:'kode', optionsText:'uraian', value:kecamatan" required /></select>
         </div>
         <div class="control-group pull-left span5"  data-bind="validationElement: kelurahan">
           <select id="kelurahan" class="span3" data-bind="options:opsiKelurahan, optionsValue:'kode', optionsText:'uraian', value:kelurahan" required /></select>
@@ -198,27 +176,41 @@ function pad (str, max) {
   str = str.toString();
   return str.length < max ? pad("0" + str, max) : str;
 }
-
-function getDetail(){
-	//alert($("#nama").val());
-	$.ajax({
-        url: "<?php echo base_url(); ?>pendaftaran/getDataNama",
-        type: "post",
-		dataType:"json",
-        data: 'namaha = '+ $("#nama").val(),
-        success: function (data) {
-            $("#alamat").val(data.ALAMAT_WP);
-            $("#kecamatan").val(data.ID_KECAMATAN);
-            $("#kelurahan").val(data.ID_KELURAHAN).change();
-            $("#telp").val(data.NO_TELP);
-            $("#usaha").val(data.ID_JENIS_USAHA);
-        }
-    });
-}
 $(document).ready(function() {
 	
 	 var app=angular.module('pendaftaran',[]);
-  
+  app.controller('ctrl',function($scope){
+   $scope.availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $scope.complete=function(){
+      console.log($scope.availableTags);
+    $( "#nama" ).autocomplete({
+      source: $scope.availableTags
+    });
+    } 
+  });
 	
   $.datepicker.setDefaults($.datepicker.regional['id']);
   $('.datepicker#tgl').datepicker({
@@ -434,17 +426,14 @@ $(document).ready(function() {
       .extend({
         required: {params: true, message: 'Tanggal NPWPD tidak boleh kosong'}
       });
-    self.tglkirim = ko.observable('<?php echo isset($data['TANGGAL_DIKIRIM']) ? format_date($data['TANGGAL_DIKIRIM']) : date('d/m/Y') ?>')
+    self.tglkirim = ko.observable('<?php echo isset($data['TANGGAL_DIKIRIM']) ? format_date($data['TANGGAL_DIKIRIM']) : '' ?>')
       .extend({
         required: {params: true, message: 'Tanggal Kirim tidak boleh kosong'}
       });
-
-    /*
     self.tglkembali = ko.observable('<?php echo isset($data['TANGGAL_KEMBALI']) ? format_date($data['TANGGAL_KEMBALI']) : '' ?>')
       .extend({
         required: {params: true, message: 'Tanggal Kembali tidak boleh kosong'}
       });
-    */  
 
     $.getJSON(root+modul+'/get_no', function(data){
       if(self.isEdit() === false)
@@ -452,22 +441,11 @@ $(document).ready(function() {
       else
         return self.no();
     });
-
-
-    //Ditambah Singo untuk mengisi no_reg otomatis sesuai nomor//
-    $.getJSON(root+modul+'/get_no', function(data){
-      if(self.isEdit() === false)
-        return self.noreg(data); 
-      else
-        return self.noreg();
-    });
-    //Ditambah Singo untuk mengisi no_reg otomatis sesuai nomor//
-
 	
     self.npwpd = ko.computed(function(){
      // return self.jenis() + '.' + self.gol() + '.' + self.no() + '.' + self.kecamatan() + '.' + self.kelurahan();
 	 //by nana
-	  return pad(self.usaha(),2) + '.' +  self.kecamatan() + '.' + self.kelurahan() + '.' + self.no() + '.' + '001';
+	  return pad(self.usaha(),3) + '.' +  self.kecamatan() + '.' + self.kelurahan() + '.' + self.no() + '.' + '001';
     });    
 
     self.mode = ko.computed(function(){

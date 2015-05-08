@@ -126,16 +126,6 @@ class Pendaftaran extends Base_Controller {
     $this->load->view('layout/template',$data);
 	
   }
-  
-  public function getDataNama(){
-	$nm = $_POST['namaha_'];
-	$nam = substr($nm,1);
-	$this->db->from('wajib_pajak');
-	$this->db->where("nama_wp = '$nam'");
-    $result = $this->db->get()->row_array();
-	//var_dump($result);
-	echo json_encode($result);
-  }
 
   public function proses()
   {
@@ -149,7 +139,7 @@ class Pendaftaran extends Base_Controller {
     $this->form_validation->set_rules('npwpd', 'NPWPD', 'required|trim|max_length[22]'); // nana
     $this->form_validation->set_rules('tgl', 'Tanggal NPWPD', 'required|trim');
     $this->form_validation->set_rules('tglkirim', 'Tanggal Kirim', 'required|trim');
-    //$this->form_validation->set_rules('tglkembali', 'Tanggal Kembali', 'required|trim');
+    $this->form_validation->set_rules('tglkembali', 'Tanggal Kembali', 'required|trim');
     $this->form_validation->set_rules('nama', 'Nama WP/WR', 'required|trim|max_length[50]');
     $this->form_validation->set_rules('alamat', 'Alamat WP/WR', 'required|trim|max_length[50]');
     $this->form_validation->set_rules('kecamatan', 'Kecamatan WP/WR', 'required|integer');
@@ -178,14 +168,11 @@ class Pendaftaran extends Base_Controller {
         $response->isSuccess = FALSE;
         $response->message = 'Tanggal Kirim harus sama atau lebih dari Tanggal NPWPD';
       }
-
-      /*
       else if (($tglkembali - $tglkirim) < 0)
       {
         $response->isSuccess = FALSE;
         $response->message = 'Tanggal Kembali harus sama atau lebih dari Tanggal Kirim';
       }
-      */
       else
       {
         $this->data_model->fill_data();

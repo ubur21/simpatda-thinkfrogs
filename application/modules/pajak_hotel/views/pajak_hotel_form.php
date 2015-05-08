@@ -135,7 +135,7 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-      <li><a href="<?php echo base_url(); ?>pajak_hotel/generateReport">PDF</a></li>
+      <li><a href="<?php echo base_url(); ?>pajak_hotel/generateReport/<?php echo $data['ID_SPT']; ?>">PDF</a></li>
       <!--<li><a href="#">XLS</a></li>-->
     </ul>
   </div>
