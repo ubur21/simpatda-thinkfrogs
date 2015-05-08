@@ -233,24 +233,6 @@ class Pendaftaran_model extends CI_Model {
     return $result['ID_WAJIB_PAJAK'];
   }
   
-  function get_nama()
-  {
-    $this->db->select('NAMA_WP');
-    $this->db->from('wajib_pajak');
-    $result = $this->db->get()->result_array();
-
-    return $result;
-  }
-  
-  function get_namah($nama)
-  {
-    $this->db->from('wajib_pajak');
-	$this->db->where("nama_wp = '".$nama."'");
-    $result = $this->db->get()->row_array();
-
-    return $result;
-  }
-  
   function get_nomor()
   {
     $this->db->select('nomor');

@@ -293,11 +293,12 @@ class Pajak_hotel extends Base_Controller {
   }
 
 
-  public function generateReport()
+  public function generateReport($id)
   {
     // load view yang akan digenerate atau diconvert
     // contoh kita akan membuat pdf dari halaman welcome codeigniter
-    $this->load->view('report');
+    $data['data'] = $this->data_model->get_data_by_id($id);
+    $this->load->view('report',$data);
     // dapatkan output html
     
     $html = $this->output->get_output();

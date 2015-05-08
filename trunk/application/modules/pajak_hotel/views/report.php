@@ -1,4 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+
+function Terbilang($x)
+{
+  $abil = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+  if ($x < 12)
+    return " " . $abil[$x];
+  elseif ($x < 20)
+    return Terbilang($x - 10) . "belas";
+  elseif ($x < 100)
+    return Terbilang($x / 10) . " puluh" . Terbilang($x % 10);
+  elseif ($x < 200)
+    return " seratus" . Terbilang($x - 100);
+  elseif ($x < 1000)
+    return Terbilang($x / 100) . " ratus" . Terbilang($x % 100);
+  elseif ($x < 2000)
+    return " seribu" . Terbilang($x - 1000);
+  elseif ($x < 1000000)
+    return Terbilang($x / 1000) . " ribu" . Terbilang($x % 1000);
+  elseif ($x < 1000000000)
+    return Terbilang($x / 1000000) . " juta" . Terbilang($x % 1000000);
+}
+
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1. Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,6 +37,7 @@ table.myTable td, table.myTable th { border:1px solid black;padding:5px; }
 </head>
 
 <body>
+
 
 <table class="myTable" width="100%" cellpadding="0" cel>
 <tr>
@@ -34,8 +60,8 @@ table.myTable td, table.myTable th { border:1px solid black;padding:5px; }
         (SKPD)<br />
         </span>
         <SPAN class="judul1">
-    Periode :<br />
-    Tahun :<br />
+    Periode : <?php echo date('d-m-Y',strtotime($data['PERIODE_AWAL']))." s/d ".date('d-m-Y',strtotime($data['PERIODE_AKHIR'])); ?><br />
+    Tahun : <?php echo date('Y',strtotime($data['PERIODE_AWAL'])); ?><br />
         </span>
 
 </td>
@@ -43,7 +69,7 @@ table.myTable td, table.myTable th { border:1px solid black;padding:5px; }
 
 <span class="judul1">
         SKPD NOMOR<br />
-        ________
+        <?php echo $data['NOMOR_KOHIR']; ?>
       </span>
 
 </td>
@@ -53,17 +79,18 @@ table.myTable td, table.myTable th { border:1px solid black;padding:5px; }
 <table class="myTable" width="100%" cellpadding="0" cel>
 <tr>
 <td width="36%" height="50" valign="top">
+  <br />
 
              <span class="judul1">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : _________________________________________________________<br />
+        Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?php echo $data['NAMA_WP']; ?><br />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        Alamat &nbsp;&nbsp;&nbsp;&nbsp;: _________________________________________________________<br />
+        Alamat &nbsp;&nbsp;&nbsp;&nbsp;: <?php echo $data['ALAMAT_WP']; ?><br />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        NPWPD &nbsp;&nbsp;: _________________________________________________________<br /><br />
+        NPWPD &nbsp;&nbsp;: <?php echo $data['NPWPD']; ?><br /><br /><br />
         
         &nbsp;&nbsp;&nbsp;&nbsp;
-        Tanggal Jatuh Tempo &nbsp;&nbsp;: ______________</span>
+        Tanggal Jatuh Tempo &nbsp;&nbsp;: <?php echo date('d-m-Y',strtotime($data['TANGGAL_SPT'])); ?></span>
 
 </td>
 </tr>
@@ -100,8 +127,17 @@ table.myTable td, table.myTable th { border:1px solid black;padding:5px; }
   <tr>
     <td width="5%" height="248" align="center" valign="middle"><span class="judul1">&nbsp;</span></td>
     <td width="17%" align="center" valign="middle"><span class="judul1">&nbsp;</span></td>
-    <td width="54%" align="center" valign="middle"><span class="judul1">&nbsp;</span></td>
-    <td width="24%" align="center" valign="middle"><span class="judul1">&nbsp;</span></td>
+    <td width="54%" valign="top"><span class="judul1">&nbsp;&nbsp;KETETAPAN PAJAK HOTEL
+     <br />
+     <br /> 
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.1 x <?php echo number_format($data['JUMLAH'],0,',','.'); ?>
+    </span></td>
+    <td width="24%" valign="top"><span class="judul1">
+      <br />
+      <br />
+      <br />
+      Rp. <?php echo number_format($data['JUMLAH_PAJAK'],0,',','.'); ?>
+    </span></td>
   </tr>
 </table>
 <table class="myTable" width="100%" cellpadding="0" cel="cel">
@@ -130,7 +166,7 @@ table.myTable td, table.myTable th { border:1px solid black;padding:5px; }
         &nbsp;&nbsp;&nbsp;&nbsp; JUMLAH<br />
         </span>
     </td>
-    <td width="24%" align="center" valign="middle">&nbsp;</td>
+    <td width="24%" valign="middle">Rp. <?php echo number_format($data['JUMLAH_PAJAK'],0,',','.'); ?></td>
   </tr>
 </table>
 
@@ -140,6 +176,7 @@ table.myTable td, table.myTable th { border:1px solid black;padding:5px; }
     <td width="5%"valign="middle" height="25">
     <span class="judul1">
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dengan Huruf 
+    &nbsp;&nbsp;&nbsp;<strong><?php echo strtoupper(Terbilang($data['JUMLAH_PAJAK'])); ?>&nbsp; RUPIAH<strong> 
     </span>
     </td>
   
