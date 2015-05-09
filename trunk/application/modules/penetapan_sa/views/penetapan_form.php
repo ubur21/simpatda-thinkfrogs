@@ -238,7 +238,7 @@ $(document).ready(function() {
 	
 
     var $frm = $('#frm'),
-        data = JSON.parse(ko.toJSON(App));
+    data = JSON.parse(ko.toJSON(App));
 		data['rincian'] = [];
 	var select_jq = $('#grid').jqGrid('getGridParam', 'selarrrow');
    
@@ -260,7 +260,7 @@ $(document).ready(function() {
           type: res.isSuccess ? 'info' : 'error'
         });
         
-       // setTimeout(function() { window.location = root+modul}, 2000);
+        setTimeout(function() { window.location = root+modul}, 2000);
       }
     });
   }

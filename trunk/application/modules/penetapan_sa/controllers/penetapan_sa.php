@@ -133,7 +133,7 @@ class Penetapan_sa extends Base_Controller {
 
     if ($this->form_validation->run() == TRUE){
       $this->data_model->fill_data();
-      //$success = $this->data_model->save_data();
+      $success = $this->data_model->save_data();
 
       if (!$success)
       {
@@ -161,5 +161,35 @@ class Penetapan_sa extends Base_Controller {
   {
     return $this->data_model->cek_duplikasi_nomor($nomor);
   }
+
+
+
+   public function generateReport()
+  {
+    $id=$_REQUEST['id'];
+
+
+    
+    $data['data'] = $this->data_model->get_data_by_id(62);
+    $this->load->view('report',$data);
+    
+    
+    
+    $html = $this->output->get_output();
+    
+    
+    $this->load->library('dompdf_gen');
+    
+    
+    $this->dompdf->load_html($html);
+    
+    $this->dompdf->render();
+    
+    
+    $this->dompdf->stream("skpd_hotel.pdf",array('Attachment'=>0));
+    
+    
+  }
+
 
 }
