@@ -62,7 +62,7 @@
     <div class="controls-row">
       <div class="control-group pull-left" data-bind="validationElement: nospt" >
         <label class="control-label" for="nospt">Nomor SPT</label>
-        <input type="text" class="span3" id="nospt" data-bind="value: nospt" required readonly="true" />
+        <input type="text" class="span3" id="nospt" data-bind="value: nospt" required />
       </div>
       <div class="control-group pull-left" style="margin-left:20px;display:none;" data-bind="validationElement: status" >
         <label class="control-label" for="status">Status SPT</label>
@@ -203,7 +203,7 @@ $(document).ready(function() {
         required: {params: true, message: 'Nomor SPT tidak boleh kosong'},
         maxLength: {params: 20, message: 'Nomor SPT tidak boleh melebihi 20 karakter'},
       });
-    self.tgl = ko.observable('<?php echo isset($data['TANGGAL_SPT']) ? format_date($data['TANGGAL_SPT']) : '' ?>')
+    self.tgl = ko.observable('<?php echo isset($data['TANGGAL_SPT']) ? format_date($data['TANGGAL_SPT']) : date('d/m/Y') ?>')
       .extend({
         required: {params: true, message: 'Tanggal SPT tidak boleh kosong'},
       });
