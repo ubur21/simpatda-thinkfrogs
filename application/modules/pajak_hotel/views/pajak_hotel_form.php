@@ -62,7 +62,7 @@
     <div class="controls-row">
       <div class="control-group pull-left" data-bind="validationElement: nospt" >
         <label class="control-label" for="nospt">Nomor SPT</label>
-        <input type="text" class="span3" id="nospt" data-bind="value: nospt" required readonly="true" />
+        <input type="text" class="span3" id="nospt" data-bind="value: nospt" required />
       </div>
       <div class="control-group pull-left" style="margin-left:20px;display:none;" data-bind="validationElement: status" >
         <label class="control-label" for="status">Status SPT</label>

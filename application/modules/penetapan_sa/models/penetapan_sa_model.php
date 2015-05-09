@@ -125,9 +125,9 @@ class Penetapan_sa_model extends CI_Model {
 	//}else{
       $this->db->insert('PENETAPAN', $this->data[$i]);
 
-     // $this->data_spt = array('NOMOR_KOHIR'=>$this->get_kohir());
-     // $this->db->where('ID_SPT', $this->data[$i]['ID_SPT']);
-     // $this->db->update('SPT', $this->data_spt);
+      $this->data_spt = array('NOMOR_KOHIR'=>$this->get_kohir());
+      $this->db->where('ID_SPT', $this->data[$i]['ID_SPT']);
+      $this->db->update('SPT', $this->data_spt);
 	//}
     }
   }

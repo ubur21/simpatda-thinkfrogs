@@ -375,18 +375,21 @@ class Pilih_model extends CI_Model {
       $this->db->join('kecamatan kec','kec.id_kecamatan=r.id_kecamatan');
       $this->db->join('kelurahan kel','kel.id_kelurahan=r.id_kelurahan');
 	  
+    /*
 	  if ($param['mode'] === 'pendataan_hotel_npwpd'){ //add by nana
-		$this->db->where('substring(r.npwpd from 1 for 3)=','002');
+		$this->db->where('substring(r.npwpd from 1 for 2)=','02');
 	  }
 	  if ($param['mode'] === 'pendataan_restoran_npwpd'){ //add by nana
-		$this->db->where('substring(r.npwpd from 1 for 3)=','003');
+		$this->db->where('substring(r.npwpd from 1 for 2)=','03');
 	  }
 	  if ($param['mode'] === 'pendataan_hiburan_npwpd'){ //add by nana
-		$this->db->where('substring(r.npwpd from 1 for 3)=','004');
+		$this->db->where('substring(r.npwpd from 1 for 2)=','04');
 	  }
 	  if ($param['mode'] === 'pendataan_reklame_npwpd'){ //add by nana
-		$this->db->where('substring(r.npwpd from 1 for 3)=','006');
+		$this->db->where('substring(r.npwpd from 1 for 2)=','06');
 	  }
+    */
+
     }
 	
 	

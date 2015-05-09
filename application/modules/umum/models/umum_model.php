@@ -10,7 +10,7 @@ class Umum_model extends CI_Model {
 	
    function get_nomor_spt()
   {
-    $this->db->select('coalesce(max(id_spt),0) +1 as nomor');
+    $this->db->select('coalesce(count(id_spt),0) +1 as nomor');
     $result = $this->db->get('spt')->row_array();
     
     if (count($result) > 0)
