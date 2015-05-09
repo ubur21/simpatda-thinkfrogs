@@ -73,6 +73,7 @@ class Penetapan_sa_model extends CI_Model {
 			$this->db->set('TANGGAL_SPT',prepare_date($this->input->post('tgl')));
 			$this->db->set('PERIODE_AWAL',prepare_date($this->input->post('tgl')));
 			$this->db->set('PERIODE_AKHIR',prepare_date($this->input->post('batas')));
+      $this->db->set('NOMOR_KOHIR',$this->get_kohir());
 			$this->db->set('JUMLAH_PAJAK',$arr[$i]['jml']);
 			$this->db->set('JUMLAH',$arr[$i]['jml']);
 			$this->db->where('ID_SPT', $arr[$i]['idspt']);
@@ -123,11 +124,11 @@ class Penetapan_sa_model extends CI_Model {
 	//$this->db->insert('SPT', array("ID_WAJIB_PAJAK"=>$hasil[0]['ID_WAJIB_PAJAK'],"ID_REKENING"=>$hasil[0]['ID_REKENING'],"TANGGAL_SPT"=>$hasil[0]['TANGGAL_SPT'],"NOMOR_SPT"=>$hasil[0]['NOMOR_SPT'],"TIPE"=>$hasil[0]['TIPE'],"STATUS_SPT"=>$hasil[0]['STATUS_SPT'],"NOMOR_KOHIR"=>$this->get_kohir(),"NAMA_WP"=>$hasil[0]['NAMA_WP'],"ALAMAT_WP"=>$hasil[0]['ALAMAT_WP'], "LOKASI"=>$hasil[0]['LOKASI'],"URAIAN"=>$hasil[0]['URAIAN'],"PERIODE_AWAL"=>$hasil[0]['PERIODE_AWAL'],"PERIODE_AKHIR"=>$hasil[0]['PERIODE_AKHIR'],"TARIF_RP"=>$hasil[0]['TARIF_RP'] ,"TARIF_PERSEN"=>$hasil[0]['TARIF_PERSEN'],"JUMLAH"=>$hasil[0]['JUMLAH'],"JUMLAH_PAJAK"=>(int)$hasil[0]['JUMLAH_PAJAK'] * (int)$hasil2[0]['JML'],"TANGGAL_LUNAS"=>$hasil[0]['TANGGAL_LUNAS'],"NPWPD"=>$hasil[0]['NPWPD']));
 	// tarif persen, tarif rp
 	//}else{
-      $this->db->insert('PENETAPAN', $this->data[$i]);
-
-      $this->data_spt = array('NOMOR_KOHIR'=>$this->get_kohir());
-      $this->db->where('ID_SPT', $this->data[$i]['ID_SPT']);
-      $this->db->update('SPT', $this->data_spt);
+      //$this->db->insert('PENETAPAN', $this->data[$i]);
+      echo $this->get_kohir();
+      //$this->data_spt = array('NOMOR_KOHIR'=>$this->get_kohir());
+      //$this->db->where('ID_SPT', $this->data[$i]['ID_SPT']);
+      //$this->db->update('SPT', $this->data_spt);
 	//}
     }
   }

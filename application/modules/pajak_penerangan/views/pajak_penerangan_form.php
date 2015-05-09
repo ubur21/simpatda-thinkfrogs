@@ -64,7 +64,7 @@
         <label class="control-label" for="nospt">Nomor SPT</label>
         <input type="text" class="span3" id="nospt" data-bind="value: nospt" required />
       </div>
-      <div class="control-group pull-left" style="margin-left:20px" data-bind="validationElement: status" >
+      <div class="control-group pull-left" style="margin-left:20px;display:none;" data-bind="validationElement: status" >
         <label class="control-label" for="status">Status SPT</label>
         <select id="status" class="span3" data-bind="options: opsiStatus, optionsValue:'kode', optionsText:'uraian', value: status" /></select>
       </div>
@@ -203,7 +203,7 @@ $(document).ready(function() {
         required: {params: true, message: 'Nomor SPT tidak boleh kosong'},
         maxLength: {params: 20, message: 'Nomor SPT tidak boleh melebihi 20 karakter'},
       });
-    self.tgl = ko.observable('<?php echo isset($data['TANGGAL_SPT']) ? format_date($data['TANGGAL_SPT']) : '' ?>')
+    self.tgl = ko.observable('<?php echo isset($data['TANGGAL_SPT']) ? format_date($data['TANGGAL_SPT']) : date('d/m/Y') ?>')
       .extend({
         required: {params: true, message: 'Tanggal SPT tidak boleh kosong'},
       });
@@ -289,6 +289,15 @@ $(document).ready(function() {
       hitung = self.omset() * self.tarif1() * (self.tarif2() / 100);
       self.jumlah(hitung);
     })
+
+    //add nana
+   $.getJSON(root+'Umum'+'/get_no_spt', function(data){
+      if(self.isEdit() === false)
+        return self.nospt(data); 
+      else
+        return self.nospt();
+    });
+
   }
 
   var App = new ModelPenerangan();
@@ -377,7 +386,7 @@ $(document).ready(function() {
       App.tarif2(rs.tarif_persen);
 
       var hitung = App.omset() * App.tarif1() * (App.tarif2() / 100);
-      App.jml(hitung);
+      App.jumlah(hitung);
     });
   }
 

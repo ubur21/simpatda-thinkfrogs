@@ -183,7 +183,7 @@ class Pajak_air extends Base_Controller {
     $this->form_validation->set_rules('alamat', 'Alamat WP/WR', 'required|trim');
     $this->form_validation->set_rules('awal', 'Periode Awal', 'required|trim');
     $this->form_validation->set_rules('akhir', 'Periode Akhir', 'required|trim');
-    $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|trim');
+    $this->form_validation->set_rules('jml', 'Jumlah', 'required|trim');
     $this->form_validation->set_rules('lokasi', 'Lokasi', 'required|trim');
     $this->form_validation->set_rules('uraian', 'Uraian', 'required|trim');
 
