@@ -369,6 +369,16 @@ class Pilih extends CI_Controller{
 			);
 		}
 		
+		if ($mode === 'bayar_oa')
+		{
+			$data['colmodel'] = array(
+				array('name' => 'id', 'hidden' => true),
+				//array('name' => 'id_wp', 'hidden' => true),
+				//array('name' => 'no_spt', 'width' => '110', 'sortable' => $data['param']['tree'] ? false :true),
+				array('name' => 'nama_wp', 'width' => '550', 'sortable' => $data['param']['tree'] ? false :true),
+			);
+		}
+		
 		$data['orderby'] = 'nospt';
 		$response = (object) NULL;
 		$response->html = $this->load->view('v_pilih', $data, true);
@@ -451,6 +461,14 @@ class Pilih extends CI_Controller{
 						
 		$mode = $data['param']['mode'];
 		if ($mode === 'bayar_pajak_sa')
+		{
+			$data['colmodel'] = array(
+				array('name' => 'kode_pr', 'hidden' => false),
+				array('name' => 'nama_pr', 'width' => '550', 'sortable' => $data['param']['tree'] ? false :true),
+			);
+		}
+		
+		if ($mode === 'bayar_pajak_oa')
 		{
 			$data['colmodel'] = array(
 				array('name' => 'kode_pr', 'hidden' => false),

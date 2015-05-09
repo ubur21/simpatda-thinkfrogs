@@ -335,6 +335,17 @@ class Pilih_model extends CI_Model {
 			$this->db->where_in('mp.sa','1');
 			$this->db->where_in('r.id_rekening',$hasil);
 		}
+		
+		if ($param['mode'] === 'bayar_pajak_oa' ){
+			$this->db->select('
+				distinct(mp.kode_pr),
+				mp.nama_pr
+			');
+			$this->db->from('rekening_pr r');
+			$this->db->join('modul_pr mp', 'mp.kode_pr=r.kode_pr');
+			$this->db->where_in('mp.oa','1');
+			$this->db->where_in('r.id_rekening',$hasil);
+		}
 
 		if ($isCount) {
 			$result = $this->db->count_all_results();
@@ -425,6 +436,18 @@ class Pilih_model extends CI_Model {
 		$this->db->distinct();
 		$this->db->from('spt r');
 		$this->db->where('r.tipe', 'SA');
+		$this->db->where('r.id_spt not in (select p.id_spt from pembayaran p)');
+		//$this->db->group_by('r.id_wajib_pajak');
+    }
+	
+	if ($param['mode'] === 'bayar_oa'){
+			$this->db->select('
+				r.id_wajib_pajak,
+				r.nama_wp,
+			');
+		$this->db->distinct();
+		$this->db->from('spt r');
+		$this->db->where('r.tipe', 'OA');
 		$this->db->where('r.id_spt not in (select p.id_spt from pembayaran p)');
 		//$this->db->group_by('r.id_wajib_pajak');
     }
