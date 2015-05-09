@@ -152,7 +152,7 @@ select max(id_spt) id_max from spt group by id_wajib_pajak
 LEFT JOIN REKENING C ON B.ID_REKENING = C.ID_REKENING
 left join spt d on a.id_wajib_pajak = d.id_wajib_pajak and extract(month from d.tanggal_spt) = extract(month from current_timestamp)
 and extract(year from d.tanggal_spt) = extract(year from current_timestamp)
-left join teguran e on a.ID_WAJIB_PAJAK != e.ID_WAJIB_PAJAK and  extract(month from current_timestamp) != extract(month from e.periode_awal)
+left join teguran e on a.ID_WAJIB_PAJAK = e.ID_WAJIB_PAJAK and  extract(month from current_timestamp) = extract(month from e.periode_awal)
 where e.PERIODE_AWAL is null and b.tipe='SA'
 ";
 	  $result = $this->db->query($sql)->result();
@@ -174,7 +174,7 @@ select max(id_spt) id_max from spt group by id_wajib_pajak
 LEFT JOIN REKENING C ON B.ID_REKENING = C.ID_REKENING
 left join spt d on a.id_wajib_pajak = d.id_wajib_pajak and extract(month from d.tanggal_spt) = extract(month from current_timestamp)
 and extract(year from d.tanggal_spt) = extract(year from current_timestamp)
-left join teguran e on a.ID_WAJIB_PAJAK != e.ID_WAJIB_PAJAK and  extract(month from current_timestamp) != extract(month from e.periode_awal)
+left join teguran e on a.ID_WAJIB_PAJAK = e.ID_WAJIB_PAJAK and  extract(month from current_timestamp) = extract(month from e.periode_awal)
 where e.PERIODE_AWAL is null and b.tipe='SA'
 
 ";
