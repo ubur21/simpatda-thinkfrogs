@@ -166,11 +166,8 @@ class Penetapan_sa extends Base_Controller {
 
    public function generateReport()
   {
-    $id=$_REQUEST['id'];
-
-
-    
-    $data['data'] = $this->data_model->get_data_by_id(62);
+     
+    //$data['data'] = $this->data_model->get_data_by_id(62);
     $this->load->view('report',$data);
     
     
@@ -180,13 +177,13 @@ class Penetapan_sa extends Base_Controller {
     
     $this->load->library('dompdf_gen');
     
-    
+    $this->dompdf->set_paper('a4', 'portrait'); 
+
     $this->dompdf->load_html($html);
     
     $this->dompdf->render();
     
-    
-    $this->dompdf->stream("skpd_hotel.pdf",array('Attachment'=>0));
+    $this->dompdf->stream("SKPD.pdf",array('Attachment'=>0));
     
     
   }
