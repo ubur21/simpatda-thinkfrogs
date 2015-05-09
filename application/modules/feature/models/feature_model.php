@@ -140,12 +140,50 @@ class Feature_model extends CI_Model {
   
   function get_reminder()
   {
-	  $result = $this->db->query(" SELECT a.ID_BLN, a.DESK_BLN , b.npwpd,b.NAMA_WP,coalesce((select max(jumlah_pajak) from spt where npwpd = b.npwpd group by npwpd),0) as jml_pajak
-FROM MST_BULAN a
-left join wajib_pajak b on 1=1 
-left join spt c on b.ID_WAJIB_PAJAK = c.ID_WAJIB_PAJAK and extract(month from c.tanggal_spt) <= 1 and extract(year from c.tanggal_spt) = '2015'
-where a.id <= 1 and c.tanggal_spt is null ")->result();
-	//$result = $this->db->get();
+	$sql = "
+select a.ID_WAJIB_PAJAK,a.alamat_wp,a.NAMA_WP,a.NPWPD,C.NAMA_REKENING,b.jumlah_pajak,b.ID_REKENING,b.TIPE,b.STATUS_SPT,b.LOKASI,b.URAIAN,b.TARIF_RP,b.TARIF_PERSEN,b.JUMLAH,b.NOMOR_SPT
+from 
+wajib_pajak a 
+left join (select a.ID_WAJIB_PAJAK,a.jumlah_pajak,a.id_rekening,a.TIPE,a.STATUS_SPT,a.LOKASI,a.URAIAN,a.TARIF_RP,a.TARIF_PERSEN,a.JUMLAH,a.NOMOR_SPT
+from
+spt a inner join (
+select max(id_spt) id_max from spt group by id_wajib_pajak
+) b on a.id_spt = b.id_max) b on  a.ID_WAJIB_PAJAK = b.ID_WAJIB_PAJAK
+LEFT JOIN REKENING C ON B.ID_REKENING = C.ID_REKENING
+left join spt d on a.id_wajib_pajak = d.id_wajib_pajak and extract(month from d.tanggal_spt) = extract(month from current_timestamp)
+and extract(year from d.tanggal_spt) = extract(year from current_timestamp)
+where d.tanggal_spt is null
+";
+	  $result = $this->db->query($sql)->result();
+	//$result = $this->db->get();  where d.tanggal_spt is null
+	return $result;
+  }
+  
+   function get_reminder2()
+  {
+	$sql = "
+select a.ID_WAJIB_PAJAK,a.alamat_wp,a.NAMA_WP,a.NPWPD,C.NAMA_REKENING,b.jumlah_pajak,b.ID_REKENING,b.TIPE,b.STATUS_SPT,b.LOKASI,b.URAIAN,b.TARIF_RP,b.TARIF_PERSEN,b.JUMLAH,b.NOMOR_SPT
+from 
+wajib_pajak a 
+left join (select a.ID_WAJIB_PAJAK,a.jumlah_pajak,a.id_rekening,a.TIPE,a.STATUS_SPT,a.LOKASI,a.URAIAN,a.TARIF_RP,a.TARIF_PERSEN,a.JUMLAH,a.NOMOR_SPT
+from
+spt a inner join (
+select max(id_spt) id_max from spt group by id_wajib_pajak
+) b on a.id_spt = b.id_max) b on  a.ID_WAJIB_PAJAK = b.ID_WAJIB_PAJAK
+LEFT JOIN REKENING C ON B.ID_REKENING = C.ID_REKENING
+left join spt d on a.id_wajib_pajak = d.id_wajib_pajak and extract(month from d.tanggal_spt) = extract(month from current_timestamp)
+and extract(year from d.tanggal_spt) = extract(year from current_timestamp)
+left join teguran e on a.ID_WAJIB_PAJAK != e.ID_WAJIB_PAJAK and  extract(month from current_timestamp) != extract(month from e.periode_awal)
+where d.tanggal_spt is null and e.PERIODE_AWAL is null
+
+";
+	  $result = $this->db->query($sql)->result();
+		foreach($result as $row)
+		{
+			$result2 = $this->db->query("insert into teguran(id_wajib_pajak,periode_awal,periode_akhir,periode_telat,periode_cetak) values ('".$row->ID_WAJIB_PAJAK."','01.".date('m.Y')."','".date('t.m.Y')."','20.".date('m.Y')."','".date('d.m.Y')."')");
+			
+			$result3 = $this->db->query("insert into spt(ID_WAJIB_PAJAK, ID_REKENING, TANGGAL_SPT, NOMOR_SPT, TIPE, STATUS_SPT, NAMA_WP, ALAMAT_WP, LOKASI, URAIAN, PERIODE_AWAL, PERIODE_AKHIR, TARIF_RP, TARIF_PERSEN, JUMLAH_PAJAK, NPWPD) values ('".$row->ID_WAJIB_PAJAK."','".$row->ID_REKENING."','".date('d.m.Y')."','".$row->NOMOR_SPT."','".$row->TIPE."','".$row->STATUS_SPT."','".$row->NAMA_WP."','".$row->ALAMAT_WP."','".$row->LOKASI."','".$row->URAIAN."','01.".date('m.Y')."','".date('t.m.Y')."','".$row->TARIF_RP."','".$row->TARIF_PERSEN."','".$row->JUMLAH_PAJAK."','".$row->NPWPD."')");
+		}
 	return $result;
   }
 

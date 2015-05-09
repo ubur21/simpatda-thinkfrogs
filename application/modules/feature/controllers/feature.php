@@ -93,7 +93,7 @@ class Feature extends Base_Controller {
   
   public function daftar_reminder()
   {
-	 
+	  $response = (object) NULL;
     $page = $_REQUEST['page']; // get the requested page
     $limit = $_REQUEST['rows']; // get how many rows we want to have into the grid
     $sidx = $_REQUEST['sidx']; // get index row - i.e. user click to sort
@@ -113,6 +113,7 @@ class Feature extends Base_Controller {
 	
     if(!$row) // tidak ada data
     {
+	 
       $response->total = 0;
       $response->records = 0;
       echo json_encode($response);
@@ -130,7 +131,7 @@ class Feature extends Base_Controller {
           'start' => $start,
           'end' => $limit
     );
-
+	
     $result = $this->data_model->get_reminder();
     $response->page = $page;
     $response->total = $total_pages;
@@ -139,17 +140,32 @@ class Feature extends Base_Controller {
 	$i = 0;
     foreach($result as $row)
     {
-     
+      $response->rows[$i]['id'] = $row->ID_WAJIB_PAJAK;
       $response->rows[$i]['cell']=array(
-        $row->ID_BLN,
-		$row->DESK_BLN,
-		$row->NPWPD,
+        $row->NPWPD,
 		$row->NAMA_WP,
-		$row->JML_PAJAK
+		$row->NAMA_REKENING,
+		$row->JUMLAH_PAJAK
       );
 	  $i++;
     }
     echo json_encode($response);
+  }
+  
+    public function form_teguran($id=0)
+  {
+    $data['title'] = $this->app['app_name'];
+    $data['modul'] = 'Surat Teguran';
+    $data['tipe'] = 'SA';
+    $data['link_proses'] = 'proses';
+    $data['link_back'] = '/daftar_sa';
+    $data['form'] = '/form_teguran';
+    $data['header'] = 'Surat Teguran';
+    $data['akses'] = $this->access;
+   
+
+    $data['main_content']='surat_teguran_form';
+    $this->load->view('layout/template',$data);
   }
   
   public function reminder()
@@ -158,7 +174,7 @@ class Feature extends Base_Controller {
     $data['title'] = PRODUCT.' - '.$data['breadcrumbs'];
     $data['modul'] = 'feature';
    // $data['link_daftar'] = '/get_daftar_sa';
-   // $data['link_form'] = '/form_sa';
+   $data['link_form'] = '/form_teguran';
     $data['main_content'] = 'reminder';
     //$data['tipe'] = 'sa';
     $this->load->view('layout/template',$data);
@@ -239,5 +255,30 @@ class Feature extends Base_Controller {
 		}
 		echo json_encode($response);    
 	}
+	
+	
+  public function cetak_teguran()
+  {
+	
+    $data['data'] = $this->data_model->get_reminder2();
+	
+    $this->load->view('surat_teguran',$data);
+    
+   
+    
+    $html = $this->output->get_output();
+    
+    
+    $this->load->library('dompdf_gen');
+    
+    
+    $this->dompdf->load_html($html);
+    
+    $this->dompdf->render();
+    
+    
+    $this->dompdf->stream("surat_teguran_".date('m-Y').".pdf",array('Attachment'=>0));
+	
+  }
 	
 }
