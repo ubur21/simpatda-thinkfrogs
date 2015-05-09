@@ -85,6 +85,7 @@ class Bayar_oa extends Base_Controller {
   {
     $id_spt = $this->input->post('id_spt') ? $this->input->post('id_spt') : 0;
     $idpjk = $this->input->post('idpjk') ? $this->input->post('idpjk') : 0;
+	
     $result = $this->data_model->getSPT($id_spt, $idpjk);
     $response = (object) NULL;
     $response->sql = $this->db->queries;
