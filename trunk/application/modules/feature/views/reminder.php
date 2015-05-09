@@ -7,9 +7,9 @@
   </fieldset>
 	<table id="grid"></table>
 	<div id="pager"></div>
-	<form id="frm" method="post" action="<?php echo base_url(); ?>feature/cetak_aging">
+	<form id="frm" method="post" target="_blank" action="<?php echo base_url(); ?>feature/cetak_teguran">
 		<div class="controls-row">
-			<input type="submit" value="Cetak" name="btn_cetak" class="btn btn-primary"/>
+			<input type="submit" value="Cetak Surat Teguran" name="btn_cetak" class="btn btn-primary" onClick="window.location.reload()" />
 		</div>
 	</form>
 	<script type="text/javascript">
@@ -21,14 +21,13 @@
 			editurl:'<?php echo base_url()?>feature/daftar_reminder',
 			datatype:'json',
 			mtype:'POST',
-			colNames:['ID_BLN','DESK_BLN','NPWPD','NAMA_WP','JML_PAJAK'],
+			colNames:['NPWPD','NAMA_WP','NAMA_REKENING','JUMLAH_PAJAK'],
 			colModel:[
-				{name:'jabatan',index:'jabatan',width:180,editable:true,editoptions:{size:30,class:'autocomplete span3'},editrules:{required:true}},
+				{name:'npwpd',index:'npwpd',width:180,editable:true,editoptions:{size:30,class:'autocomplete span3'},editrules:{required:true}},
 				{name:'nama_wp',index:'nama_wp',width:180,editable:true,editoptions:{size:30,class:"span3"},editrules:{required:true}},
 				{name:'nama_rekening', index:'nama_rekening',width:115,editable:true,edittype:'text',editoptions:{size:10,class:"span2"}},
-				{name:'tgl_terbit', index:'tgl_terbit',width:65,editable:true,edittype:'text',editoptions:{size:10,class:"span1"}},
-				{name:'jumlah_pajak', index:'jumlah_pajak',width:115,editable:true,edittype:'text',editoptions:{size:10,class:"span2"}}
-				
+				{name:'jumlah_pajak', index:'jumlah_pajak',width:65,editable:true,edittype:'text',editoptions:{size:10,class:"span1"}},
+				// {name:'cetak',search:false,index:'npwpd',width:60,sortable: false,formatter: cetakLink},
 			],
 			rowNum:10,
 			rowList:[10,20,30],
@@ -38,13 +37,29 @@
 			gridview:true,
 			width:930,
 			height:250,
-			onSelectRow: restore_row
+			onSelectRow: restore_row//,
+			//ondblClickRow:edit_row
 		});
+		
+		function cetakLink(id)
+        {
+            return "<a href='<?php echo base_url(); ?>feature/cetak_teguran/"+id+"' class='btn btn-primary' >Cetak</a>";
+        }
+		
+		/*
+		 $("#grid").jqGrid('bindKeys', {
+    'onEnter':edit_row
+  });*/
 		
 		$("#grid").jqGrid( 'navGrid', '#pager', { 
 		refresh: true,
 		refreshtext: 'Refresh',
+		//editfunc:edit_row,
 		});
+		
+		 function edit_row(id){
+    location.href = root+modul+'<?php echo $link_form;?>/'+id;
+  }
 		
 		$("#add_grid").hide();
 		$("#edit_grid").hide();
