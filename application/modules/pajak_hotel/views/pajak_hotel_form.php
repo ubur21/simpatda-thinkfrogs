@@ -2,6 +2,7 @@
   <legend id="bc" data-bind="text: title"></legend>
 </fieldset>
 
+
 <form id="frm" method="post" action="<?php echo base_url(); ?>pajak_hotel/<?php echo $link_proses;?>">
   <fieldset>
     <div class="controls-row">
@@ -84,7 +85,7 @@
     <div class="controls-row" >
       <div class="control-group pull-left" >
         <label class="control-label" for="omset">Dasar Pengenaan</label>
-        <input type="text" class="span3 currency" id="omset" data-bind="numeralvalue: omset" />
+        <input type="text" class="span3 currency" id="omset" data-bind="numeralvalue: omset" required />
       </div>
       <div class="control-group pull-left" style="margin-left:20px" >
         <label class="control-label" for="tarif1">Tarif Pajak (Rp)</label>
