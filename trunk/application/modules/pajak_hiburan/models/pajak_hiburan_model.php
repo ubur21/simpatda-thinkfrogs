@@ -26,7 +26,7 @@ class Pajak_hiburan_model extends CI_Model {
       'akhir' => 'PERIODE_AKHIR',
       'tarif1' => 'TARIF_RP',
       'tarif2' => 'TARIF_PERSEN',
-      'jumlah' => 'JUMLAH',
+      'omset' => 'JUMLAH',
       'jml' => 'JUMLAH_PAJAK',
       'npwpd' => 'NPWPD',
     );

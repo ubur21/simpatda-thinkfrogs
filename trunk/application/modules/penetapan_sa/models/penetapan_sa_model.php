@@ -70,12 +70,12 @@ class Penetapan_sa_model extends CI_Model {
 			$this->db->insert('PENETAPAN');
 
 			//echo ."<br/>";
-			$this->db->set('TANGGAL_SPT',prepare_date($this->input->post('tgl')));
-			$this->db->set('PERIODE_AWAL',prepare_date($this->input->post('tgl')));
-			$this->db->set('PERIODE_AKHIR',prepare_date($this->input->post('batas')));
+			//$this->db->set('TANGGAL_SPT',prepare_date($this->input->post('tgl')));
+			//$this->db->set('PERIODE_AWAL',prepare_date($this->input->post('tgl')));
+			//$this->db->set('PERIODE_AKHIR',prepare_date($this->input->post('batas')));
       $this->db->set('NOMOR_KOHIR',$this->get_kohir());
-			$this->db->set('JUMLAH_PAJAK',$arr[$i]['jml']);
-			$this->db->set('JUMLAH',$arr[$i]['jml']);
+			//$this->db->set('JUMLAH_PAJAK',$arr[$i]['jml']);
+			//$this->db->set('JUMLAH',$arr[$i]['jml']);
 			$this->db->where('ID_SPT', $arr[$i]['idspt']);
 			$this->db->update('SPT');
 			//echo ""

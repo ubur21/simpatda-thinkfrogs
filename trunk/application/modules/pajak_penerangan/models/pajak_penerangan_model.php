@@ -26,8 +26,8 @@ class Pajak_penerangan_model extends CI_Model {
       'akhir' => 'PERIODE_AKHIR',
       'tarif1' => 'TARIF_RP',
       'tarif2' => 'TARIF_PERSEN',
-      'jumlah' => 'JUMLAH',
-      'jml' => 'JUMLAH_PAJAK',
+      'omset' => 'JUMLAH',
+      'jumlah' => 'JUMLAH_PAJAK',
       'npwpd' => 'NPWPD',
     );
 
