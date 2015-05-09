@@ -156,4 +156,29 @@ class Penetapan extends Base_Controller {
     return $this->data_model->cek_duplikasi_nomor($nomor);
   }
 
+
+   public function generateReport()
+  {
+     
+    //$data['data'] = $this->data_model->get_data_by_id(62);
+    $this->load->view('report',$data);
+    
+    
+    
+    $html = $this->output->get_output();
+    
+    
+    $this->load->library('dompdf_gen');
+    
+    $this->dompdf->set_paper('a4', 'portrait'); 
+
+    $this->dompdf->load_html($html);
+    
+    $this->dompdf->render();
+    
+    $this->dompdf->stream("SKPD.pdf",array('Attachment'=>0));
+    
+    
+  }
+
 }

@@ -267,7 +267,10 @@ class Penetapan_sa_model extends CI_Model {
         w.id_kecamatan,
         w.id_kelurahan,
         kec.nama_kecamatan,
-        kel.nama_kelurahan
+        kel.nama_kelurahan,
+        rek.panjang,
+        rek.lebar,
+        rek.jumlah
         
     ');
     $this->db->from('spt a');
@@ -275,6 +278,7 @@ class Penetapan_sa_model extends CI_Model {
     $this->db->join('wajib_pajak w', 'w.id_wajib_pajak = a.id_wajib_pajak');
     $this->db->join('kecamatan kec', 'kec.id_kecamatan = w.id_kecamatan');
     $this->db->join('kelurahan kel', 'kel.id_kelurahan = w.id_kelurahan', 'left');
+    $this->db->join('detil_reklame rek', 'a.id_spt = rek.id_spt', 'left');
     $this->db->where('a.id_spt', $id);
     $result = $this->db->get()->row_array();
 

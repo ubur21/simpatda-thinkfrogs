@@ -13,6 +13,7 @@ $(document).ready(function() {
   $("#grid").jqGrid({
     url:root+modul+'/get_daftar',
     datatype:'json',
+    multiselect:true,
     mtype:'POST',
     colNames:['', 'No Kohir', 'NPWPD', 'Nama WP', 'Rekening', 'Jumlah', 'Tgl Penetapan', 'Batas Bayar'],
     colModel:[
@@ -53,11 +54,14 @@ $(document).ready(function() {
   .navSeparatorAdd('#pager')
   .navButtonAdd('#pager',{
     caption:'',
-    onClickButton: function(){ print_list('pdf') },
-    title:'Cetak Daftar (PDF)',
+    onClickButton: function(){ cetak_skpd() },
+    title:'Cetak SKPD',
     buttonicon:'ui-icon-pdf',
     position:'last'
   })
+
+
+  /*
   .navButtonAdd('#pager',{
     caption:'',
     onClickButton: function(){ print_list('xls') },
@@ -65,9 +69,16 @@ $(document).ready(function() {
     buttonicon:'ui-icon-xls',
     position:'last'
   });
+  */
 
   function print_list(doc){
     preview({"tipe":"daftar", "format":doc});
+  }
+
+
+  function cetak_skpd(doc){
+    var select_jq = $('#grid').jqGrid('getGridParam', 'selarrrow');
+    location.href = root+modul+'/generateReport?id='+select_jq;
   }
 
 });

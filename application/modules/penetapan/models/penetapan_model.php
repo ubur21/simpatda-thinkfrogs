@@ -157,4 +157,49 @@ class Penetapan_model extends CI_Model {
     return $result;
   }
 
+
+  function get_data_by_id($id)
+  {
+    $this->db->select('
+        a.id_spt,
+        a.nomor_kohir,
+        a.nomor_spt,
+        a.status_spt,
+        a.tanggal_spt,
+        a.periode_awal,
+        a.periode_akhir,
+        a.id_rekening,
+        r.kode_rekening,
+        r.nama_rekening,
+        a.id_wajib_pajak,
+        a.npwpd,
+        a.nama_wp,
+        a.alamat_wp,
+        a.tarif_rp,
+        a.tarif_persen,
+        a.jumlah,
+        a.jumlah_pajak,
+        a.lokasi,
+        a.uraian,
+        w.id_kecamatan,
+        w.id_kelurahan,
+        kec.nama_kecamatan,
+        kel.nama_kelurahan,
+        rek.panjang,
+        rek.lebar,
+        rek.JUMLAH
+        
+    ');
+    $this->db->from('spt a');
+    $this->db->join('rekening r', 'r.id_rekening = a.id_rekening');
+    $this->db->join('wajib_pajak w', 'w.id_wajib_pajak = a.id_wajib_pajak');
+    $this->db->join('kecamatan kec', 'kec.id_kecamatan = w.id_kecamatan');
+    $this->db->join('kelurahan kel', 'kel.id_kelurahan = w.id_kelurahan', 'left');
+    $this->db->join('detil_reklame rek', 'a.id_spt = rek.id_spt', 'left');
+    $this->db->where('a.id_spt', $id);
+    $result = $this->db->get()->row_array();
+
+    return $result;
+  }
+
 }
