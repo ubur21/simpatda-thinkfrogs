@@ -1,0 +1,8 @@
+Tabel USERS
+- SKPD_ID integer
+- ID_JABATAN integer
+
+
+Tabel SKPD
+- ALAMAT_SKPD Varchar(255)
+- TELP_SKPD Varchar(20)
