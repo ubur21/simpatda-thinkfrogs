@@ -13,6 +13,14 @@
 		</div>
 	</form>
 	<script type="text/javascript">
+	 function prosesTeguran(id,id_rekening)
+		 {
+			if (document.getElementById('chk_'+id).checked) {
+				window.location.href = '/simpatda/feature/proses_teguran/'+id+'/'+id_rekening;
+			} else {
+				window.location.href = '/simpatda/feature/reminder';
+			}
+		}
 	$(document).ready(function() {
 		
 		
@@ -21,13 +29,14 @@
 			editurl:'<?php echo base_url()?>feature/daftar_reminder',
 			datatype:'json',
 			mtype:'POST',
-			colNames:['NPWPD','NAMA_WP','NAMA_REKENING','JUMLAH_PAJAK'],
+			colNames:['NPWPD','NAMA WP','NAMA REKENING','JUMLAH PAJAK','PROSES TEGURAN','hdn'],
 			colModel:[
-				{name:'npwpd',index:'npwpd',width:180,editable:true,editoptions:{size:30,class:'autocomplete span3'},editrules:{required:true}},
+				{name:'npwpd',index:'npwpd',width:100,editable:true,editoptions:{size:30,class:'autocomplete span3'},editrules:{required:true}},
 				{name:'nama_wp',index:'nama_wp',width:180,editable:true,editoptions:{size:30,class:"span3"},editrules:{required:true}},
 				{name:'nama_rekening', index:'nama_rekening',width:115,editable:true,edittype:'text',editoptions:{size:10,class:"span2"}},
 				{name:'jumlah_pajak', index:'jumlah_pajak',width:65,editable:true,edittype:'text',editoptions:{size:10,class:"span1"}},
-				// {name:'cetak',search:false,index:'npwpd',width:60,sortable: false,formatter: cetakLink},
+				{name:'flag', index:'flag', width:100,edittype:'checkbox',formatter: cboxFormatter,editoptions: { value:"1:0"},editable:true,formatoptions: {disabled : false}},
+				{ name: 'id_rekening', hidden: true , editable: true, editrules: {edithidden:true}}
 			],
 			rowNum:10,
 			rowList:[10,20,30],
@@ -37,13 +46,24 @@
 			gridview:true,
 			width:930,
 			height:250,
-			onSelectRow: restore_row//,
-			//ondblClickRow:edit_row
+			onSelectRow: restore_row
 		});
 		
-		function cetakLink(id)
+		
+		
+		function cboxFormatter(cellvalue, options, rowObject)
+{
+
+  return '<input id="chk_'+options.rowId+'" type="checkbox"' + (options.rowFlag==1 ? ' checked="checked"' : '') + 
+      'onClick = "javascript:prosesTeguran(' + options.rowId + ','+rowObject[5]+');"/>';
+}
+
+		
+		
+		
+		function cetakLink(id_rekening)
         {
-            return "<a href='<?php echo base_url(); ?>feature/cetak_teguran/"+id+"' class='btn btn-primary' >Cetak</a>";
+            return "<a href='<?php echo base_url(); ?>feature/cetak_teguran/"+id_rekening+"' class='btn btn-primary' >Proses</a>";
         }
 		
 		/*
