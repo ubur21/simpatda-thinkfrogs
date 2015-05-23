@@ -77,7 +77,9 @@ class Group_model extends CI_Model
       'PASSWD'  => $passwd,
       'EMAIL'   => $this->input->post('email'),
       'ICON' => $icon,
-      'STATUS'  => '1'
+      'STATUS'  => '1',
+	  //'ID_JABATAN'  => $this->input->post('jabatan'),
+	  'SKPD_ID'=> $this->input->post('idskpd')
     );
 
     if($rs){
@@ -392,6 +394,18 @@ class Group_model extends CI_Model
   }
 
   function get_one($field = '',$table = '',$where = '')
+  {
+    $sql    = "SELECT ".$field." FROM ".$table." WHERE ".$where;
+    $result = $this->db->query("SELECT ".$field." FROM ".$table." WHERE ".$where);
+    if($result->num_rows() > 0){
+      $row = $result->row_array();
+      if($row == false) return 0;
+      else return $row[$field];
+    }
+    else return 0;
+  }
+  
+   function get_one_skpd($field = '',$table = '',$where = '')
   {
     $sql    = "SELECT ".$field." FROM ".$table." WHERE ".$where;
     $result = $this->db->query("SELECT ".$field." FROM ".$table." WHERE ".$where);

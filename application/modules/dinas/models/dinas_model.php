@@ -14,7 +14,9 @@ class Dinas_model extends CI_Model {
 		$this->fieldmap = array (
 		'id' => 'ID_SKPD',
 		'skpd' => 'KODE_SKPD',
-		'namaskpd' => 'NAMA_SKPD'
+		'namaskpd' => 'NAMA_SKPD',
+		'alamatskpd' => 'ALAMAT_SKPD',
+		'telpskpd' => 'TELP_SKPD',
 		);
 	}
 	
@@ -57,7 +59,7 @@ class Dinas_model extends CI_Model {
 		//returns the query string
 		$this->db->trans_start();
 		
-		$this->db->select('ID_SKPD, KODE_SKPD, NAMA_SKPD');
+		$this->db->select('ID_SKPD, KODE_SKPD, NAMA_SKPD, ALAMAT_SKPD, TELP_SKPD');
 		$this->db->order_by ('KODE_SKPD');		
 		$result = $this->db->get($this->_table)->result_array();
 		$this->db->trans_complete();
@@ -67,7 +69,8 @@ class Dinas_model extends CI_Model {
 			return FALSE;
 		}
 	}
-  
+	
+    
 	function check_data()
 	{
 		$skpd	= $this->input->post('skpd');	$skpd=($skpd)?$skpd:null;

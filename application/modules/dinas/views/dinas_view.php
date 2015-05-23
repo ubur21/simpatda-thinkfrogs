@@ -11,6 +11,7 @@
       <input type="text" name="string" id="string" class="span7">
       <a class="btn btn-primary" href="#" id="filter"><i class="icon-search icon-white"></i> Filter</a>
   </fieldset>
+		
 	<table id="grid"></table>
 	<div id="pager"></div>
 
@@ -26,11 +27,13 @@
 			editurl:'<?php echo base_url()?>dinas/proses_form',
 			datatype:'json',
 			mtype:'POST',
-			colNames:['ID','KODE SKPD','NAMA SKPD'],
+			colNames:['ID','KODE SKPD','NAMA SKPD', 'ALAMAT_SKPD', 'TELP_SKPD'],
 			colModel:[
 				{name:'id',index:'id',width:25,editable:false,search:false,hidden:true},
 				{name:'skpd',index:'skpd',width:110,editable:true,edittype:'text',editoptions:{size:20,class:'span3'}, editrules:{number:false},sortable:false},
-				{name:'namaskpd',index:'namaskpd',width:300,editable:true,edittype:'text',editoptions:{size:100,class:'span7'},sortable:false}
+				{name:'namaskpd',index:'namaskpd',width:300,editable:true,edittype:'text',editoptions:{size:100,class:'span7'},sortable:false},
+				{name:'alamatskpd',index:'alamatskpd',width:400,editable:true,edittype:'text',editoptions:{size:255,class:'span7'},sortable:false},
+				{name:'telpskpd',index:'telpskpd',width:300,editable:true,edittype:'text',editoptions:{size:20,class:'span7'},sortable:false}
 			
 			],
 			rowNum:-1,

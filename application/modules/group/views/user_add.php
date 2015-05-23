@@ -186,6 +186,33 @@
     </select>
     </div>
   </div>
+  
+  <div class="controls-row">
+      <div class="control-group pull-left" data-bind="validationElement: kd_skpd" >
+        
+		<label class="control-label" for="idskpd">SKPD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+		<input type="hidden" class="span2" id="idskpd" readonly="1" data-bind="value: idskpd, executeOnEnter: pilih_skpd" required />
+        <input type="text" class="span2" id="kd_skpd" readonly="1" data-bind="value: kd_skpd, executeOnEnter: pilih_skpd" required />
+		
+        <input type="text" class="span6" id="nama_skpd" readonly="1" data-bind="value: nama_skpd, executeOnEnter: pilih_skpd" required />
+        <span class="add-on" data-bind="visible: isEdit() && canSave(),  click: pilih_skpd" ><i class="icon-folder-open"></i></span>
+        
+      </div>
+    </div>	
+	
+	<!--
+	<div class="controls-row" >
+      <label class="control-label span2" for="jabatan">Jabatan</label>
+      <div class="controls">
+        <div class="control-group pull-left span5"  data-bind="validationElement: jabatan" data-bind="value: jabatan">
+          <select id="jabatan" class="span3" data-bind="options:opsiJabatan, optionsValue:'kode', optionsText:'uraian', value:jabatan" />
+		  <option value="">Pilih</option>
+		  </select>
+        </div>
+      </div>
+    </div>
+	-->
+	
   <div class="control-group">
     <div class="controls">
   <input type="submit" id="save" value="Simpan" class="btn btn-primary" data-bind="enable: canSave, click: save" />
@@ -248,6 +275,20 @@
       .extend({
         required: {params: true, message: 'Pilih Group'},
       });
+	
+	//self.jabatan = ko.observable('<?php echo isset($data['ID_JABATAN']) ? $data['ID_JABATAN'] : 0 ?>')
+
+	
+	self.idskpd = ko.observable('<?php echo isset($data['ID_SKPD']) ? $data['ID_SKPD'] : 0 ?>')
+    self.kd_skpd = ko.observable('<?php echo isset($data['KODE_SKPD']) ? $data['KODE_SKPD'] : '' ?>')
+      .extend({
+        required: {params: true, message: 'Kode SKPD tidak boleh kosong'},
+      });
+    self.nama_skpd = ko.observable('<?php echo isset($data['NAMA_SKPD']) ? $data['NAMA_SKPD'] : '' ?>')
+      .extend({
+        required: {params: true, message: 'Nama SKPD tidak boleh kosong'},
+    });  
+	  
     self.displaypassword = ko.observable(false);
     <?php
     if(isset($data['ID']))
@@ -381,7 +422,61 @@
         });
     }
   }
-
+	
+	/*
+    //Ditambah Singo Untuk Pilih Jabatan SKPD
+  App.pilih_skpd = function(){
+    if (!App.canSave() || App.isEdit()) { return; }
+    var option = {multi:0, mode:'skpd'};
+    Dialog.pilihSKPD(option, function(obj, select){
+      var rs = $(obj).jqGrid('getRowData', select[0].id);
+      App.idskpd(rs.id);
+      App.kd_skpd(rs.kode);
+      App.nama_skpd(rs.nama);
+	  
+	  $.getJSON(root+'group/get_jabatan_skpd/'+rs.id, function(data){
+          if (data != null) {
+			
+            
+            $.each(data, function(i,val) {
+              var html = '<option value="'+i+'">'+val+'</option>';
+			  $("#jabatan").append(html);
+            });
+			
+          }
+        });
+	  
+    });
+  }
+  //Ditambah Singo Untuk Pilih Jabatan SKPD
+	*/
+  
+    //Ditambah Singo Untuk Pilih SKPD
+  App.pilih_skpd = function(){
+    if (!App.canSave() || App.isEdit()) { return; }
+    var option = {multi:0, mode:'skpd'};
+    Dialog.pilihSKPD(option, function(obj, select){
+      var rs = $(obj).jqGrid('getRowData', select[0].id);
+      App.idskpd(rs.id);
+      App.kd_skpd(rs.kode);
+      App.nama_skpd(rs.nama);
+	  
+	  $.getJSON(root+'group/get_jabatan_skpd/'+rs.id, function(data){
+          if (data != null) {
+			
+            
+            $.each(data, function(i,val) {
+              var html = '<option value="'+i+'">'+val+'</option>';
+			  $("#jabatan").append(html);
+            });
+			
+          }
+        });
+	  
+    });
+  }
+  //Ditambah Singo Untuk Pilih SKPD 	
+  
   App.hapus_icon = function(){
     var agree=confirm("Apakah Anda yakin akan menghapus icon?");
     if(agree)

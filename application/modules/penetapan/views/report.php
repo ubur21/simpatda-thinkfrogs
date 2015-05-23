@@ -73,11 +73,16 @@ for($i=0;$i<count($arrData);$i++){
 <tr>
 <td width="42%" height="50" align="center" valign="top">
 
+    <?php
+	$skpd_id = $this->Group_model->get_one('SKPD_ID','USERS','ID = '.$this->session->userdata('id_user'));
+	$namaSkpd = $this->Group_model->get_one_skpd('NAMA_SKPD','SKPD','ID_SKPD = '.$skpd_id);
+	$alamatSkpd = $this->Group_model->get_one_skpd('ALAMAT_SKPD','SKPD','ID_SKPD = '.$skpd_id);
+	$telpSkpd = $this->Group_model->get_one_skpd('TELP_SKPD','SKPD','ID_SKPD = '.$skpd_id);
+?>
     <span class="judul1">
         PEMERINTAH KOTA SALATIGA<br />
-        DINAS PENDAPATAN, PENGELOLAAN KEUANGAN<br />
-        DAN ASET DAERAH<br />
-        JL. LETJEND. SUKOWATI NO.51<br />
+        <?php echo strtoupper($namaSkpd); ?><br />
+        <?php echo strtoupper($alamatSkpd)." Telp. ".$telpSkpd; ?><br />
         </span>
 
 </td>

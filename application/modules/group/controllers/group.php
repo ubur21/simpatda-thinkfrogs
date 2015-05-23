@@ -141,6 +141,8 @@ class Group extends Admin_Controller
 
     $this->form_validation->set_rules('username', 'Username', 'required|trim|max_length[50]|callback__cek_username');
     $this->form_validation->set_rules('email', 'Email', 'required|trim|callback__cek_email');
+	$this->form_validation->set_rules('idskpd', 'SKPD', 'required');
+	//$this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
     if($this->input->post('mode') == 'new'){
       $this->form_validation->set_rules('passwd', 'Password', 'required|trim|min_length[8]');
       $this->form_validation->set_rules('repasswd', 'Ulangi password', 'required|trim|min_length[8]|matches[passwd]');
@@ -456,6 +458,23 @@ class Group extends Admin_Controller
       }
 
     echo json_encode($response);
+  }
+  
+  
+  //Ditambah Singo Untuk Select Jabatan Berdasarkan SKPD
+	  public function get_jabatan_skpd($kode)
+  {
+	$query_str="SELECT distinct(JABATAN), ID_PEJABAT_SKPD FROM PEJABAT_SKPD where ID_SKPD=".$kode;
+	$query=$this->db->query($query_str);
+	
+	
+    $jabatan = array();
+    foreach($query->result() as $row)
+    {
+      $jabatan[$row->ID_PEJABAT_SKPD] = $row->JABATAN;
+    }
+
+    echo json_encode($jabatan);
   }
 
 

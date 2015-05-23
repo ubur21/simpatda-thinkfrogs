@@ -145,7 +145,9 @@ class Dinas extends Base_Controller {
           // data berikut harus sesuai dengan kolom-kolom yang ingin ditampilkan di view (js)
           $response->rows[$z]['cell']=array($result[$i]['ID_SKPD'],
                           $result[$i]['KODE_SKPD'],
-                          $result[$i]['NAMA_SKPD']
+                          $result[$i]['NAMA_SKPD'],
+						  $result[$i]['ALAMAT_SKPD'],
+						  $result[$i]['TELP_SKPD']
                         );
           $z++;
 				}
