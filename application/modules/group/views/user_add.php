@@ -195,7 +195,7 @@
         <input type="text" class="span2" id="kd_skpd" readonly="1" data-bind="value: kd_skpd, executeOnEnter: pilih_skpd" required />
 		
         <input type="text" class="span6" id="nama_skpd" readonly="1" data-bind="value: nama_skpd, executeOnEnter: pilih_skpd" required />
-        <span class="add-on" data-bind="visible: isEdit() && canSave(),  click: pilih_skpd" ><i class="icon-folder-open"></i></span>
+        <span class="add-on" data-bind="visible: !isEdit() && canSave(),  click: pilih_skpd" ><i class="icon-folder-open"></i></span>
         
       </div>
     </div>	
