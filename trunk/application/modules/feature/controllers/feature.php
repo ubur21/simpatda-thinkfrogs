@@ -358,7 +358,7 @@ class Feature extends Base_Controller {
   
   public function proses_teguran($id_wajib_pajak,$id_rekening)
   {
-	echo $id_rekening;exit;
+	
 	$row = $this->data_model->proses_teguran_db($id_wajib_pajak);
 	$this->reminder();
   }
