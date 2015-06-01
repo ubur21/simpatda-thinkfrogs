@@ -16,9 +16,9 @@
 	 function prosesTeguran(id,id_rekening)
 		 {
 			if (document.getElementById('chk_'+id).checked) {
-				window.location.href = '/<?php echo base_url(); ?>/feature/proses_teguran/'+id+'/'+id_rekening;
+				window.location.href = '<?php echo base_url(); ?>feature/proses_teguran/'+id+'/'+id_rekening;
 			} else {
-				window.location.href = '/<?php echo base_url(); ?>/feature/reminder';
+				window.location.href = '<?php echo base_url(); ?>feature/reminder';
 			}
 		}
 	$(document).ready(function() {
