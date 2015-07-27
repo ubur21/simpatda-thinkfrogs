@@ -102,6 +102,7 @@ class Dinas extends Base_Controller {
 	{
 		if(!isset($_POST['oper']))
 		{
+			$response = new stdClass();
 			$page = $_REQUEST['page']; // get the requested page 
 			$limit = $_REQUEST['rows']; // get how many rows we want to have into the grid 
 			$sidx = $_REQUEST['sidx']; // get index row - i.e. user click to sort 
@@ -130,9 +131,10 @@ class Dinas extends Base_Controller {
 			$total_pages = ceil($count/$limit); 
 			if ($page > $total_pages) 
 				$page=$total_pages; 
+				
 
 			$result = $this->data_model->get_data($req_param);
-			$response->page = $page; 
+			$response->page = 5; 
 			$response->total = $total_pages; 
 			$response->records = $count;
 			
