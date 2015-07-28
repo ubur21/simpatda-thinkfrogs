@@ -77,10 +77,15 @@ class Sts extends Base_Controller {
     echo json_encode($response);
   }
   
-
+	public function create()
+  {
+    $data['breadcrumbs'] = 'Tambah Surat Tanda Setoran';
+    $data['title'] = 'form';
+    $data['modul'] = 'sts';
+    $data['main_content'] = 'sts_form';
+    $this->load->view('layout/template',$data);
+  }
   
 }//end class
 
 ?>
-  
-
