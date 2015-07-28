@@ -155,21 +155,7 @@ class Feature extends Base_Controller {
     echo json_encode($response);
   }
   
-    public function form_teguran($id=0)
-  {
-    $data['title'] = $this->app['app_name'];
-    $data['modul'] = 'Surat Teguran';
-    $data['tipe'] = 'SA';
-    $data['link_proses'] = 'proses';
-    $data['link_back'] = '/daftar_sa';
-    $data['form'] = '/form_teguran';
-    $data['header'] = 'Surat Teguran';
-    $data['akses'] = $this->access;
-   
 
-    $data['main_content']='surat_teguran_form';
-    $this->load->view('layout/template',$data);
-  }
   
   public function reminder()
   {
@@ -294,6 +280,28 @@ class Feature extends Base_Controller {
     $this->load->view('layout/template',$data);
   } 
   
+      public function form_teguran($id=0) // posisi edit
+  {
+	
+    $data['title'] = $this->app['app_name'];
+    $data['modul'] = 'feature';
+    $data['tipe'] = 'SA';
+    $data['link_proses'] = 'proses';
+    $data['link_back'] = '/daftar_sa';
+    $data['form'] = '/form_teguran';
+    $data['header'] = 'Surat Teguran';
+    $data['akses'] = $this->access;
+    $data['data'] = array("TARIF_RP"=>"1");
+
+    $data['main_content']='form_surat_teguran';
+    $this->load->view('layout/template',$data);
+  }
+  
+  public function simpan_teguran()
+  {
+  
+  }
+  
    public function daftar_teguran()
   {
 	  $response = (object) NULL;
@@ -343,7 +351,7 @@ class Feature extends Base_Controller {
 	$i = 0;
     foreach($result as $row)
     {
-      $response->rows[$i]['id'] = $row->ID_WAJIB_PAJAK;
+      $response->rows[$i]['id'] = $row->ID;
       $response->rows[$i]['cell']=array(
         $row->NPWPD,
 		$row->NAMA_WP,
@@ -359,7 +367,7 @@ class Feature extends Base_Controller {
   public function proses_teguran($id_wajib_pajak,$id_rekening)
   {
 	
-	$row = $this->data_model->proses_teguran_db($id_wajib_pajak);
+	$row = $this->data_model->proses_teguran_db($id_wajib_pajak,$id_rekening);
 	$this->reminder();
   }
 	

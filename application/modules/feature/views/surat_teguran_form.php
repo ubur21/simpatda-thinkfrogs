@@ -46,9 +46,13 @@
 			gridview:true,
 			width:930,
 			height:250,
-			onSelectRow: restore_row
+			onSelectRow: restore_row,
+			ondblClickRow:edit_row
 		});
 		
+		$("#grid").jqGrid('bindKeys', {
+    'onEnter':edit_row
+  });
 		
 		
 		function cboxFormatter(cellvalue, options, rowObject)
@@ -71,19 +75,48 @@
   });*/
 		
 		$("#grid").jqGrid( 'navGrid', '#pager', { 
-		refresh: true,
-		refreshtext: 'Refresh',
-		//editfunc:edit_row,
+		 edit:true,
+    edittext: 'Ubah',
+    editfunc:edit_row,
+    del:true,
+    deltext: 'Hapus',
+    delfunc:del_row,
+    search:false,
+    refresh:true,
+    refreshtext:'Refresh',
 		});
 		
-		 function edit_row(id){
-    location.href = root+modul+'<?php echo $link_form;?>/'+id;
+		 function edit_row(id_teguran){
+    location.href = root+'feature'+'/<?php echo $link_form;?>/'+id_teguran;
+  }
+  
+  function del_row(id){
+    var answer = confirm('Hapus dari daftar?');
+    if(answer == true){
+      $.ajax({
+        type: "post",
+        dataType: "json",
+        url: root+modul+'/hapus',
+        data: {id: id},
+        success: function(res) {
+          $.pnotify({
+            title: res.isSuccess ? 'Sukses' : 'Gagal',
+            text: res.message,
+            type: res.isSuccess ? 'info' : 'error'
+          });
+          if (true == res.isSuccess){
+            jQuery('#grid').jqGrid('delRowData', id);
+            jQuery('#grid').trigger("reloadGrid");
+          };
+        },
+      });
+    }
   }
 		
 		$("#add_grid").hide();
-		$("#edit_grid").hide();
-		$("#del_grid").hide();
-		$("#search_grid").hide();
+		//$("#edit_grid").hide();
+		//$("#del_grid").hide();
+		//$("#search_grid").hide();
 		
 		function restore_row(id){
 			if(id && id !== last){

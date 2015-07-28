@@ -168,9 +168,10 @@ left join teguran d on a.ID_WAJIB_PAJAK = d.ID_WAJIB_PAJAK
   function get_teguran()
   {
 	$sql = "
-select b.NAMA_WP,b.NPWPD, a.* 
+select b.NAMA_WP,b.NPWPD, a.* ,c.NAMA_REKENING
 from teguran a
 inner join WAJIB_PAJAK b on a.ID_WAJIB_PAJAK = b.ID_WAJIB_PAJAK
+inner join REKENING c on a.id_rekening = c.ID_REKENING
 ";
 		
 	  $result = $this->db->query($sql)->result();
@@ -206,9 +207,9 @@ where e.PERIODE_AWAL is null and b.tipe='SA'
 	return $result;
   }
   
-  function proses_teguran_db($id_wajib_pajak)
+  function proses_teguran_db($id_wajib_pajak,$id_rekening)
   {
-	$result = $this->db->query(" insert into teguran(id_wajib_pajak,tanggal_spt) values ('".$id_wajib_pajak."','".date('d.m.Y')."') ");
+	$result = $this->db->query(" insert into teguran(id_wajib_pajak,tanggal_spt,id_rekening) values ('".$id_wajib_pajak."','".date('d.m.Y')."','".$id_rekening."') ");
 	return $result;
   }
 
