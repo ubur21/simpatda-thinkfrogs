@@ -659,6 +659,24 @@ var Dialog = (function () {
     }
     initDialog(opt, callback, param);
   }
+  
+  function pilihJURNAL(opt, callback)
+  {
+    var param = {
+      name: 'jurnal',
+      title: 'Pilih Jurnal'
+    }
+    initDialog(opt, callback, param);
+  }
+  
+  function pilihBENDAHARA(opt, callback)
+  {
+    var param = {
+      name: 'bendahara',
+      title: 'Pilih Bendahara'
+    }
+    initDialog(opt, callback, param);
+  }
 
   function pilihSPT(opt, callback)
   {
@@ -699,6 +717,8 @@ var Dialog = (function () {
     pilihCP:pilihCP,
     pilihSPD:pilihSPD,
     pilihNPWPD:pilihNPWPD,
+	pilihJURNAL:pilihJURNAL,
+	pilihBENDAHARA:pilihBENDAHARA,
     pilihSPT:pilihSPT,
     pilihJenisPajak:pilihJenisPajak,
   }
