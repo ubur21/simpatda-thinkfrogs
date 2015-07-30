@@ -415,6 +415,18 @@ class Pilih_model extends CI_Model {
     return $result;
   }
   
+  function getJURNAL(){
+	$sql = " SELECT * FROM MST_JURNAL ";
+		$result = $this->db->query($sql)->result_array();
+		return $result;
+  }
+  
+  function getBENDAHARA(){
+	$sql = " SELECT * FROM MST_BENDAHARA ";
+		$result = $this->db->query($sql)->result_array();
+		return $result;
+  }
+  
 	function getSPT($param, $isCount=FALSE)
 	{
 		$fieldmap = array(

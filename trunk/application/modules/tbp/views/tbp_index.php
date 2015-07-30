@@ -36,6 +36,11 @@
 		
 	
 		$("#grid").jqGrid( 'navGrid', '#pager', { 
+			add:true,
+			addtext: 'Tambah',
+			addfunc:function(){
+			  location.href = root+modul+'/form';
+			},
 			refresh: true,
 			refreshtext: 'Refresh',
 			editfunc:edit_row,
@@ -45,9 +50,9 @@
 			location.href = root+modul+'<?php echo $link_form;?>/'+id;
 		}
 		
-		$("#add_grid").hide();
+		//$("#add_grid").hide();
 		$("#edit_grid").hide();
-		$("#del_grid").hide();
+		//$("#del_grid").hide();
 		$("#search_grid").hide();
 		
 		function restore_row(id){

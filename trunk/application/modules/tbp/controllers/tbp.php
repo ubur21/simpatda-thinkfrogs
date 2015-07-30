@@ -78,6 +78,16 @@ class Tbp extends Base_Controller {
     echo json_encode($response);
   }
   
+  public function form($id=0)
+  {
+    $data['title'] = $this->app['app_name'];
+    $data['modul'] = 'tbp';
+    
+    $data['main_content']='tbp_form';
+    $this->load->view('layout/template',$data);
+	
+  }
+  
 }//end class
 
 ?>
