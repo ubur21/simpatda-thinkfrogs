@@ -60,9 +60,9 @@
 	  
 	  <div class="controls-row" >
 		<div class="control-group pull-left" data-bind="validationElement: akun_kasdaerah" style="margin-left:-20px;" >
-			<div class="controls span2 input-append">
+			<div class="controls span3 input-append">
 				<label class="control-label" for="namaakunkas">Nama Kas Daerah</label>
-				<input type="text" class="span2" id="nama_bendahara" readonly="1" data-bind="value: nama_kasdaerah" required />
+				<input type="text" class="span3" id="nama_bendahara" readonly="1" data-bind="value: nama_kasdaerah" required />
 			</div>
 			<div class="controls span2 input-append">
 			  <label class="control-label" for="akunkasdaerah">Akun Kas Daerah</label>
@@ -75,7 +75,7 @@
   </div>
   <div class="control-group pull-left" style="margin-left:40px" data-bind="validationElement: keterangan" >
 		<label class="control-label" for="keterangan">Keterangan</label>
-		  <textarea style="height:80px;"  class="span7" id="keterangan" name="keterangan" data-bind="value: keterangan" required >
+		  <textarea style="height:80px;"  class="span5" id="keterangan" name="keterangan" data-bind="value: keterangan" required >
 		  </textarea>
   </div>
   </div>
@@ -223,6 +223,7 @@ $(document).ready(function() {
 	
 	self.nama_kasdaerah = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_kasdaerah = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.id_kasdaerah = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	
 	self.tgl_sts = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.no_sts = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
@@ -411,11 +412,12 @@ $(document).ready(function() {
   
   App.pilih_akunkas = function(){
     if (!App.canSave() || App.isEdit()) { return; }
-    var option = {multi:0, mode:'jurnal_tbp'};
-    Dialog.pilihJURNAL(option, function(obj, select){
+    var option = {multi:0, mode:'kasdaerah'};
+    Dialog.pilihKASDAERAH(option, function(obj, select){
       var rs = $(obj).jqGrid('getRowData', select[0].id);
-      App.id_jurnal(rs.id_jurnal);
-      App.jurnal_akrual(rs.kode);
+      App.id_kasdaerah(rs.id_kasdaerah);
+      App.akun_kasdaerah(rs.akun_kasdaerah);
+      App.nama_kasdaerah(rs.nama_kasdaerah);
     });
   }
   
