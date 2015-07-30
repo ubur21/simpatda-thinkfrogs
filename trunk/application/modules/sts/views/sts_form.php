@@ -4,16 +4,15 @@
 
 <form id="frm" method="post" action="<?php echo base_url(); ?>sks/proses">
   <div class="controls-row">
-    <div class="control-group pull-left" data-bind="validationElement: kd_skpd" >
-		<label class="control-label" for="kd_skpd">Kode SKPD</label>
-		<input type="text" class="span2" id="kd_skpd" data-bind="value: kd_skpd, executeOnEnter: kd_skpd" required />
-    </div>
-	<div class="control-group pull-right" data-bind="validationElement: kd_skpd" >
-		<label class="control-label" for="nama_skpd">Nama SKPD</label>
-        <select type="text" class="span10" id="nama_skpd" data-bind="value: nama_skpd, executeOnEnter: nama_skpd" required >
-			<option>Pilih Daftar</option>
-		</select>
-	</div>
+    <div class="control-group pull-left" data-bind="validationElement: kd_skpd">
+			<label class="control-label" for="idrek">SKPD</label>
+			<input type="hidden"  id="idskpd" data-bind="value: idskpd, executeOnEnter: pilih_skpd" required />
+			<input type="text" class="span2" id="kd_skpd" readonly="1" data-bind="value: kd_skpd, executeOnEnter: pilih_skpd" required />
+			<div class="controls span8 input-append">
+			  <input type="text" class="span8" id="nama_skpd" readonly="1" data-bind="value: nama_skpd, executeOnEnter: pilih_skpd" required />
+			  <span class="add-on" data-bind="visible: !isEdit() && canSave(),  click: pilih_skpd" ><i class="icon-folder-open"></i></span>
+			</div>
+		</div>
   </div>
 
   <div class="controls-row" >
@@ -29,57 +28,61 @@
       <label class="control-label" for="tgl_sts">Tanggal STS</label>
       <input type="text" class="datepicker span2" id="tgl_sts" data-bind="value: tgl_sts" required />
     </div>
-	<div class="control-group pull-left" style="margin-left:20px" data-bind="validationElement: jurnal_akrual" >
-      <label class="control-label" for="jurnal_akrual">Jurnal Akrual</label>
-      <select type="text" class="span2" id="jurnal_akrual" data-bind="value: jurnal_akrual" required >
-		<option>Pilih Daftar</option>
-	  </select>
-    </div>
+	<div class="control-group pull-left" data-bind="validationElement: jurnal_akrual" style="margin-left:20px" >
+			<label class="control-label" for="jurnalakrual" style="margin-left:20px">Jurnal Akrual</label>
+			<div class="controls span2 input-append" >
+				<input type="hidden"  id="id_jurnal" data-bind="value: id_jurnal" required />
+			  <input type="text" class="span2" id="jurnal_akrual" readonly="1" data-bind="value: jurnal_akrual, executeOnEnter: pilih_jurnal" required />
+			  <span class="add-on" data-bind="visible: !isEdit() && canSave(),  click: pilih_jurnal" ><i class="icon-folder-open"></i></span>
+			</div>
+		</div>
   </div>
   
   
   <div class="controls-row" >
   <div class="control-group pull-left" data-bind="validationElement: no_akun_bendahara">
 	  <div class="controls-row" >
-		<div class="control-group pull-left" data-bind="validationElement: no_akun_bendahara">
-		  <label class="control-label" for="no_akun_bendahara">Akun Bendahara Penerima</label>
-		  <select type="text" class="span2" id="no_akun_bendahara" data-bind="value: no_akun_bendahara" required >
-			<option>Pilih Daftar</option>
-		  </select>
-		</div>
-		<div class="control-group pull-left" style="margin-left:20px" data-bind="validationElement: nama_bendahara_penerima" >
-		  <label class="control-label" for="nama_bendahara_penerima">Nama Bendahara Penerima</label>
-		  <select type="text" class="span2" id="nama_bendahara_penerima" data-bind="value: nama_bendahara_penerima" required >
-			<option>Pilih Daftar</option>
-		  </select>
+		<div class="control-group pull-left" data-bind="validationElement: akun_bendahara" style="margin-left:-20px;" >
+			<div class="controls span2 input-append">
+				<label class="control-label" for="namabendahara">Nama Bendahara</label>
+				<input type="text" class="span2" id="nama_bendahara" readonly="1" data-bind="value: nama_bendahara" required />
+			</div>
+			<div class="controls span2 input-append">
+			  <label class="control-label" for="akunbendahara">Akun Bendahara</label>
+			  <input type="hidden"  id="id_bendahara" data-bind="value: id_bendahara" required />
+			  <input type="text" class="span2" id="akun_bendahara" readonly="1" data-bind="value: akun_bendahara, executeOnEnter: pilih_bendahara" required />
+			  <span class="add-on" data-bind="visible: !isEdit() && canSave(),  click: pilih_bendahara" ><i class="icon-folder-open"></i></span>
+			</div>
 		</div>
 	  </div>
 	  
 	  <div class="controls-row" >
-		<div class="control-group pull-left" data-bind="validationElement: akun_kas_daerah">
-		  <label class="control-label" for="akun_kas_daerah">Akun Kas Daerah</label>
-		  <select type="text" class="span2" id="akun_kas_daerah" data-bind="value: akun_kas_daerah" required >
-			<option>Pilih Daftar</option>
-		  </select>
-		</div>
-		<div class="control-group pull-left" style="margin-left:20px" data-bind="validationElement: nama_akun_kas_daerah" >
-		  <label class="control-label" for="nama_akun_kas_daerah">Nama Akun Kas Daerah</label>
-		  <select type="text" class="span2" id="nama_akun_kas_daerah" data-bind="value: nama_akun_kas_daerah" required >
-			<option>Pilih Daftar</option>
-		  </select>
+		<div class="control-group pull-left" data-bind="validationElement: akun_kasdaerah" style="margin-left:-20px;" >
+			<div class="controls span2 input-append">
+				<label class="control-label" for="namaakunkas">Nama Kas Daerah</label>
+				<input type="text" class="span2" id="nama_bendahara" readonly="1" data-bind="value: nama_kasdaerah" required />
+			</div>
+			<div class="controls span2 input-append">
+			  <label class="control-label" for="akunkasdaerah">Akun Kas Daerah</label>
+			  <input type="hidden"  id="id_bendahara" data-bind="value: id_kasdaerah" required />
+			  <input type="text" class="span2" id="akun_kasdaerah" readonly="1" data-bind="value: akun_kasdaerah, executeOnEnter: pilih_akunkas" required />
+			  <span class="add-on" data-bind="visible: !isEdit() && canSave(),  click: pilih_akunkas" ><i class="icon-folder-open"></i></span>
+			</div>
 		</div>
 	  </div>
   </div>
-  <div class="control-group pull-left" style="margin-left:20px" data-bind="validationElement: keterangan" >
+  <div class="control-group pull-left" style="margin-left:40px" data-bind="validationElement: keterangan" >
 		<label class="control-label" for="keterangan">Keterangan</label>
-		  <textarea style="height:80px;" type="text" class="span7" id="keterangan" data-bind="value: keterangan" required >
+		  <textarea style="height:80px;"  class="span7" id="keterangan" name="keterangan" data-bind="value: keterangan" required >
 		  </textarea>
   </div>
   </div>
 	Rincian Setoran <input type="checkbox" id="rincian_setoran" class="form-control" /> Berdasar TBP
+	<br/><br/>
   <table id="grid"></table>
   <div id="pager"></div>
 
+<br />
   <div class="controls-row pull-left">
   <div class="btn-group dropup">
     <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: function(data, event){save(false, data, event) }" />Tambah</button>
@@ -96,11 +99,12 @@
 		Total Setor : <input type="text" id="total_setor" class="form-control" />
   </div>
   
-  
-</form>
-<br />
-<br />
-<br />
+  <br/>
+  <br/>
+  <br/>
+  <fieldset>
+  <br/>
+    <legend></legend>
 <div class="controls-row pull-right">
   <div class="btn-group dropup">
     <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: function(data, event){save(false, data, event) }" />Proses</button>
@@ -117,6 +121,11 @@
   </div>
   <input type="button" id="back" value="Kembali" class="btn btn-primary" data-bind="click: back" />
 </div>
+</fieldset>
+  
+</form>
+
+
 
 <script>
 $(document).ready(function() {
