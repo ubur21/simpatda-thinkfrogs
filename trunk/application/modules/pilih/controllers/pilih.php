@@ -459,6 +459,91 @@ class Pilih extends CI_Controller{
     echo json_encode($response);
   }
   
+  
+  function kasdaerah()
+  {
+    $opt = array(
+      'multi',
+      'mode',
+      'tree',
+    );
+
+    foreach ($opt as $key)
+    {
+      $data['param'][$key] = $this->input->post( $key ) ? $this->input->post( $key ) : 0;
+    }
+
+    $data['dialogname'] = 'kasdaerah';
+    $data['colsearch'] = array(
+        'kode' => 'KODE'
+    );
+    $data['colnames'] = array('', 'NAMA' ,'KODE');
+                    
+    $mode = $data['param']['mode'];
+
+      $data['colmodel'] = array(
+        array('name' => 'id_kasdaerah', 'hidden' => true),
+        array('name' => 'nama_kasdaerah', 'width' => '110', 'sortable' => $data['param']['tree'] ? false :true),
+        array('name' => 'akun_kasdaerah', 'width' => '110', 'sortable' => $data['param']['tree'] ? false :true),
+      );
+	
+    $data['orderby'] = 'id_kasdaerah';
+    $response = (object) NULL;
+    $response->html = $this->load->view('v_pilih', $data, true);
+    $response->grid = array(
+      'url' => base_url().'pilih/get'.$data['dialogname'],
+      'pager' => '#pgrDialog'.$data['dialogname'],
+      'sortname' => $data['orderby'],
+      'multiselect' => $data['param']['multi'],
+      'colNames' => $data['colnames'],
+      'colModel' => $data['colmodel'],
+      'postData' => $data['param'],
+    );
+
+    echo json_encode($response);
+  }
+  
+  function getkasdaerah()
+  {
+    $opt = array(
+      'multi',
+      'mode',
+      'tree',
+    );
+
+    $sidx = $_REQUEST['sidx'];
+    $sord = $_REQUEST['sord'];
+
+    $req_param = array(
+        "sort_by" => $sidx,
+        "sort_direction" => $sord,
+        "search" => $_REQUEST['_search'],
+        "search_field" => isset($_REQUEST['searchField']) ? $_REQUEST['searchField'] : null,
+        "search_operator" => isset($_REQUEST['searchOper']) ? $_REQUEST['searchOper'] : null,
+        "search_str" => isset($_REQUEST['searchString']) ? $_REQUEST['searchString'] : null,
+    );
+
+    foreach ($opt as $key)
+    {
+      $req_param[$key] = $this->input->post( $key ) ? $this->input->post( $key ) : '0';
+    }
+
+    $result = $this->pilih_model->getKASDAERAH($req_param);
+    $response = (object) NULL;
+    $response->sql = $this->db->queries;
+    if ($result){
+      for($i=0; $i<count($result); $i++){
+        $response->rows[$i]['id'] = $result[$i]['ID'];
+        $response->rows[$i]['cell'] = array(
+          $result[$i]['ID'],
+          $result[$i]['NAMA'],
+          $result[$i]['KODE'],
+        );
+      }
+    }
+    echo json_encode($response);
+  }
+  
 	function getspt()
 	{
 		$opt = array(

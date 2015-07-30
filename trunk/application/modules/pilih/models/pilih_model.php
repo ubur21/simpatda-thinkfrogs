@@ -427,6 +427,12 @@ class Pilih_model extends CI_Model {
 		return $result;
   }
   
+  function getKASDAERAH(){
+	$sql = " SELECT * FROM MST_KASDAERAH ";
+		$result = $this->db->query($sql)->result_array();
+		return $result;
+  }
+  
 	function getSPT($param, $isCount=FALSE)
 	{
 		$fieldmap = array(
