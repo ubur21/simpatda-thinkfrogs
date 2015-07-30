@@ -250,6 +250,7 @@ $(document).ready(function() {
     self.modul = 'Tbp';
     self.akses_level = ko.observable(03);
     self.id = ko.observable('<?php echo isset($data['ID'])?$data['ID']:0 ?>');
+	
     self.id_jurnal = ko.observable('<?php echo isset($data['ID'])?$data['ID']:0 ?>');
     self.id_bendahara = ko.observable('<?php echo isset($data['ID'])?$data['ID']:0 ?>');
 	
