@@ -80,7 +80,7 @@ class Sts extends Base_Controller {
 	public function create()
   {
     $data['breadcrumbs'] = 'Tambah Surat Tanda Setoran';
-    $data['title'] = 'form';
+    $data['title'] = $this->app['app_name'];
     $data['modul'] = 'sts';
     $data['main_content'] = 'sts_form';
     $this->load->view('layout/template',$data);
