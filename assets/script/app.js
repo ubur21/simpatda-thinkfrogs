@@ -677,6 +677,15 @@ var Dialog = (function () {
     }
     initDialog(opt, callback, param);
   }
+  
+  function pilihKASDAERAH(opt, callback)
+  {
+    var param = {
+      name: 'kasdaerah',
+      title: 'Pilih Kas Daerah'
+    }
+    initDialog(opt, callback, param);
+  }
 
   function pilihSPT(opt, callback)
   {
@@ -719,6 +728,7 @@ var Dialog = (function () {
     pilihNPWPD:pilihNPWPD,
 	pilihJURNAL:pilihJURNAL,
 	pilihBENDAHARA:pilihBENDAHARA,
+	pilihKASDAERAH:pilihKASDAERAH,
     pilihSPT:pilihSPT,
     pilihJenisPajak:pilihJenisPajak,
   }
