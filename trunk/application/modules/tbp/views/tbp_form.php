@@ -77,16 +77,18 @@
   </fieldset>
   
   <fieldset>
-    <legend>Rincian Pembayaran Ketetapan</legend>
+    <legend>Rincian Pembayaran Non Ketetapan</legend>
 	<div class="control-group pull-left span12" style="margin-left:0px">
 		<table id="tbl_grid_ketetapan"></table>
 		<div id="div_pager_ketetapan"></div>
+		
 	</div>
   </fieldset>
   
   <fieldset>
-    <legend>Rincian Pembayaran Non Ketetapan</legend>
+    <legend>Rincian Pembayaran  Ketetapan</legend>
 	<div class="control-group pull-left span12" style="margin-left:0px">
+		
 		<table id="tbl_grid_nonketetapan"></table>
 		<div id="div_pager_nonketetapan"></div>
 		<br/>
@@ -157,15 +159,15 @@ $(document).ready(function() {
     colNames:['', 'SKPD/SKRD/SPTPD', 'Jatuh Tempo', 'Kode Akun', 'Nama Akun', 'Nominal Ketetapan', 'Total Bayar Lalu', 'Nominal Bayar', 'Kurang Bayar', 'Denda'],
     colModel:[
         {name:'idspt', hidden:true},
-        {name:'skpd', width:150},
-        {name:'jatuh_tempo', width:80},
-        {name:'kd_akun', width:80},
-        {name:'nm_akun', width:80, formatter:'currency', align:'right'},
-        {name:'nominal', width:80, formatter:'date', align:'center'},
-        {name:'total_bayarlalu', width:100, formatter:'date', align:'center'},
-		{name:'nominal_bayar', width:100, formatter:'date', align:'center'},
-		{name:'kurang_bayar', width:100, formatter:'date', align:'center'},
-		{name:'denda', width:100, formatter:'date', align:'center'},
+        {name:'skpd', width:100},
+        {name:'jatuh_tempo', formatter:'date', width:80},
+        {name:'kode_akun', width:80,  align:'left'},
+        {name:'nama_akun', width:80,  align:'left'},
+        {name:'nominal_ketetapan', width:80,  formatter:'currency', align:'right'},
+        {name:'total_bayarlalu', width:100, formatter:'currency', align:'right'},
+		{name:'nominal_bayar', width:100, formatter:'currency', align:'right'},
+		{name:'kurang_bayar', width:100, formatter:'currency', align:'right'},
+		{name:'denda', width:100, formatter:'currency', align:'right'},
     ],
     pager:'#div_pager_ketetapan',
     rowNum:-1,
@@ -448,12 +450,56 @@ $(document).ready(function() {
  App.pilih_npwpd = function(){
     if (!App.canSave() || App.isEdit()) { return; }
     var option = {multi:0, mode:'pendataan_restoran_npwpd'};
+	
+	var $list = $('#tbl_grid_ketetapan'), errmsg = [];
+		
+		// hapus dulu isi grid
+		var rowIds = $list.jqGrid('getDataIDs');
+		for(var i=0,len=rowIds.length;i<len;i++){
+			var currRow = rowIds[i];
+			$list.jqGrid('delRowData', currRow);
+		}
+		$list.trigger('reloadGrid');
+		
     Dialog.pilihNPWPD(option, function(obj, select){
       var rs = $(obj).jqGrid('getRowData', select[0].id);
       App.id_wp(rs.id_wp);
       App.npwpd(rs.npwpd);
       App.nama(rs.nama_wp);
       App.alamat(rs.alamat_wp);
+	  
+	  $.ajax({
+				url: root+modul+'/getspt',
+				type: 'post',
+				dataType: 'json',
+				data: {id_wp: App.id_wp()},
+				success: function(response){
+					var result = response.rows,
+					len = response.len;
+					if (len > 0) {
+						// add grid dengan data spt sesuai pajak/retribusi
+						for (i = 0; i < len; i++){
+							$list.jqGrid('addRowData', 'idspt', [{'idspt':result[i]['id_spt'], 'skpd':result[i]['skpd'], 'jatuh_tempo':result[i]['jatuh_tempo'], 'kode_akun':result[i]['kode_akun'], 'nama_akun':result[i]['nama_akun'], 'nominal_ketetapan':result[i]['nominal_ketetapan'], 'total_bayarlalu':result[i]['total_bayarlalu'], 'nominal_bayar':result[i]['nominal_bayar'], 'kurang_bayar':result[i]['kurang_bayar'], 'denda':result[i]['denda']}]);
+						}
+						//hitungTotal();
+						//hitungSisa();
+						//jumlahAll();
+					}
+					else {
+							errmsg.push('SPT dari WP/WR dan Pajak tsb tidak ada yang belum lunas.');
+							App.errors.showAllMessages();
+							if (errmsg.length > 0) {
+								$.pnotify({
+									title: 'Perhatian',
+									text: errmsg.join('</br>'),
+									type: 'warning'
+								});
+								return false;
+							}
+					}
+				}
+			});//end ajax
+			
     });
   }
   	

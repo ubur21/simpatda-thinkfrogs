@@ -45,9 +45,9 @@
   <div class="control-group pull-left" >
 	  <div class="controls-row" >
 		<div class="control-group pull-left" data-bind="validationElement: akun_bendahara" style="margin-left:-20px;" >
-			<div class="controls span2 input-append">
+			<div class="controls span3 input-append">
 				<label class="control-label" for="namabendahara">Nama Bendahara</label>
-				<input type="text" class="span2" id="nama_bendahara" readonly="1" data-bind="value: nama_bendahara" required />
+				<input type="text" class="span3" id="nama_bendahara" readonly="1" data-bind="value: nama_bendahara" required />
 			</div>
 			<div class="controls span2 input-append">
 			  <label class="control-label" for="akunbendahara">Akun Bendahara</label>
@@ -98,7 +98,7 @@
 </div>
   
   <div class="controls-row pull-right">
-		Total Setor : <input type="text" id="total_setor" class="form-control" />
+		Total Setor : <input type="text" id="total_setor" name="total_setor"  class="form-control currency" />
   </div>
   
   <br/>
