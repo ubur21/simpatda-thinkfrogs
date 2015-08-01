@@ -60,18 +60,20 @@
 			<div class="controls span2 input-append">
 			  <input type="text" class="span2" id="npwpd" readonly="1" data-bind="value: npwpd, executeOnEnter: pilih_npwpd" required />
 			  <span class="add-on" data-bind="visible: !isEdit() && canSave(),  click: pilih_npwpd" ><i class="icon-folder-open"></i></span>
+			   
 			</div>
 			
 			<br><br>
 			<div class="controls span6 input-append" style="margin-left:0px;">
 				<label class="control-label" for="gol">Alamat</label>
-				<input type="text" class="span5" id="alamat" data-bind="value: alamat" readonly="1" />
+				<input type="text" class="span5" id="alamat" name="alamat" data-bind="value: alamat" readonly="1" />
+				
 			</div>
 		</div>
 		
-		<div class="control-group pull-left" style="margin-left:-75px" data-bind="validationElement: keterangan" >
+		<div class="control-group pull-left" style="margin-left:-75px"  >
 			<label class="control-label" for="keterangan">Keterangan</label>
-			<textarea style="height:80px;" type="text" class="span6" id="keterangan" data-bind="value: keterangan" required ></textarea>
+			<textarea style="height:80px;" type="text" class="span6" id="keterangan" name="keterangan" data-bind="value: keterangan" required ></textarea>
 		</div>
 	</div>
   </fieldset>
@@ -94,7 +96,7 @@
 		<br/>
 		<div class="controls-row pull-left">
   <div class="btn-group dropup">
-    <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: function(data, event){save(false, data, event) }" />Tambah</button>
+	<button type="button" class="btn btn-primary"  data-bind="visible: !isEdit() && canSave(),  click: pilih_pajakoa"  />Tambah</button>
   </div>
   <div class="btn-group dropup">
     <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: function(data, event){save(false, data, event) }" />Ubah</button>
@@ -201,10 +203,10 @@ $(document).ready(function() {
     mtype:'POST',
     colNames:['', 'Kode Akun', 'Nama Akun', 'Nominal Bayar'],
     colModel:[
-        {name:'idspt', hidden:true},
-        {name:'kd_akun', width:150},
-        {name:'nm_akun', width:100, formatter:'currency', align:'right'},
-        {name:'nominal', width:100, formatter:'date', align:'center'},
+        {name:'id_rekening', hidden:true},
+        {name:'kode_akun', width:150,  align:'left'},
+        {name:'nama_akun', width:100,  align:'left'},
+        {name:'nominal_bayar', width:100, formatter:'currency', align:'right'},
     ],
     pager:'#div_pager_nonketetapan',
     rowNum:-1,
@@ -446,6 +448,57 @@ $(document).ready(function() {
     });
   }
   
+  App.pilih_pajakoa = function(){
+    if (!App.canSave() || App.isEdit()) { return; }
+    var option = {multi:0, mode:'pendataan_restoran_npwpd'};
+	
+	var $list = $('#tbl_grid_nonketetapan'), errmsg = [];
+		
+		// hapus dulu isi grid
+		var rowIds = $list.jqGrid('getDataIDs');
+		for(var i=0,len=rowIds.length;i<len;i++){
+			var currRow = rowIds[i];
+			$list.jqGrid('delRowData', currRow);
+		}
+		$list.trigger('reloadGrid');
+		
+    Dialog.pilihPAJAKOA(option, function(obj, select){
+      var rs = $(obj).jqGrid('getRowData', select[0].id);
+	  
+	  $.ajax({
+				url: root+modul+'/getpajakoa',
+				type: 'post',
+				dataType: 'json',
+				data: {id_rekening: rs.id_rekening},
+				success: function(response){
+					var result = response.rows,
+					len = response.len;
+					if (len > 0) {
+						// add grid dengan data spt sesuai pajak/retribusi
+						for (i = 0; i < len; i++){
+							$list.jqGrid('addRowData', 'id_rekening', [{'kode_akun':result[i]['kode_akun'], 'nama_akun':result[i]['nama_akun'], 'nominal_bayar':result[i]['nominal_bayar']}]);
+						}
+						//hitungTotal();
+						//hitungSisa();
+						//jumlahAll();
+					}
+					else {
+							errmsg.push('SPT dari WP/WR dan Pajak tsb tidak ada yang belum lunas.');
+							App.errors.showAllMessages();
+							if (errmsg.length > 0) {
+								$.pnotify({
+									title: 'Perhatian',
+									text: errmsg.join('</br>'),
+									type: 'warning'
+								});
+								return false;
+							}
+					}
+				}
+			});//end ajax
+			
+    });
+  } //end app pilih_pajakoa
   
  App.pilih_npwpd = function(){
     if (!App.canSave() || App.isEdit()) { return; }
@@ -501,7 +554,7 @@ $(document).ready(function() {
 			});//end ajax
 			
     });
-  }
+  } //end app pilih_npwpd
   	
   
   App.hapus_icon = function(){

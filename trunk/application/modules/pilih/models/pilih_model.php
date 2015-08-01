@@ -421,6 +421,12 @@ class Pilih_model extends CI_Model {
 		return $result;
   }
   
+  function getPAJAKOA(){
+	$sql = " SELECT KODE_PR as ID_REKENING,NAMA_PR as NAMA_REKENING FROM MODUL_PR WHERE OA='1' ";
+		$result = $this->db->query($sql)->result_array();
+		return $result;
+  }
+  
   function getBENDAHARA(){
 	$sql = " SELECT * FROM MST_BENDAHARA ";
 		$result = $this->db->query($sql)->result_array();

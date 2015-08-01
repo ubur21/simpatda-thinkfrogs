@@ -112,6 +112,31 @@ class Tbp extends Base_Controller {
 
 		echo json_encode($response);    
 	}
+	
+	function getpajakoa()
+	{
+		$id_rekening = $this->input->post('id_rekening') ? $this->input->post('id_rekening') : 0;
+		$result = $this->data_model->getPAJAKOA($id_rekening);
+		$response = (object) NULL;
+		$response->sql = $this->db->queries;
+		$response->len = count($result);
+		if ($result){
+			for($i=0; $i<count($result); $i++){
+				$response->rows[$i]['id_spt'] = $result[$i]['ID_SPT'];
+				$response->rows[$i]['skpd'] = $result[$i]['SKPD'];
+				$response->rows[$i]['jatuh_tempo'] = $result[$i]['JATUH_TEMPO'];
+				$response->rows[$i]['kode_akun'] = $result[$i]['KODE_AKUN'];
+				$response->rows[$i]['nama_akun'] = $result[$i]['NAMA_AKUN'];
+				$response->rows[$i]['nominal_ketetapan'] = $result[$i]['NOMINAL_KETETAPAN'];
+				$response->rows[$i]['total_bayarlalu'] = $result[$i]['TOTAL_BAYARLALU'];
+				$response->rows[$i]['nominal_bayar'] = $result[$i]['NOMINAL_BAYAR'];
+				$response->rows[$i]['kurang_bayar'] = $result[$i]['KURANG_BAYAR'];
+				$response->rows[$i]['denda'] = $result[$i]['DENDA'];
+			}
+		}
+
+		echo json_encode($response);    
+	}
   
 }//end class
 
