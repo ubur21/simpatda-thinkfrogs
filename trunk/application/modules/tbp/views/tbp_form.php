@@ -73,7 +73,7 @@
 		
 		<div class="control-group pull-left" style="margin-left:-75px"  >
 			<label class="control-label" for="keterangan">Keterangan</label>
-			<textarea style="height:80px;" type="text" class="span6" id="keterangan" name="keterangan" data-bind="value: keterangan" required ></textarea>
+			<textarea style="height:80px;" type="text" class="span6" id="keterangan" name="keterangan" data-bind="value: keterangan"  ></textarea>
 		</div>
 	</div>
   </fieldset>
@@ -261,6 +261,7 @@ $(document).ready(function() {
 	self.nomor_tbp = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.tgl_bayar = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.alamat = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.keterangan = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	
 	self.nama_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');

@@ -19,4 +19,16 @@ where a.id_wajib_pajak = $id_wp ";
 		$result = $this->db->query($sql)->result_array();
 		return $result;
 	}
+	
+	function getPAJAKOA($id_rekening){
+		$sql = " SELECT coalesce(sum(b.JUMLAH_PAJAK),0) as NOMINAL_BAYAR,a.NAMA_REKENING as NAMA_AKUN, a.ID_REKENING as KODE_AKUN
+FROM REKENING a
+inner join spt b on a.ID_REKENING = b.ID_REKENING
+where a.KODE_REKENING like '4.1.1.08%'
+group by a.NAMA_REKENING,a.ID_REKENING ";
+		$result = $this->db->query($sql)->result_array();
+		return $result;
+	}
+	
 }
+

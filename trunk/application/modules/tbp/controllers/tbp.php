@@ -122,16 +122,9 @@ class Tbp extends Base_Controller {
 		$response->len = count($result);
 		if ($result){
 			for($i=0; $i<count($result); $i++){
-				$response->rows[$i]['id_spt'] = $result[$i]['ID_SPT'];
-				$response->rows[$i]['skpd'] = $result[$i]['SKPD'];
-				$response->rows[$i]['jatuh_tempo'] = $result[$i]['JATUH_TEMPO'];
 				$response->rows[$i]['kode_akun'] = $result[$i]['KODE_AKUN'];
 				$response->rows[$i]['nama_akun'] = $result[$i]['NAMA_AKUN'];
-				$response->rows[$i]['nominal_ketetapan'] = $result[$i]['NOMINAL_KETETAPAN'];
-				$response->rows[$i]['total_bayarlalu'] = $result[$i]['TOTAL_BAYARLALU'];
 				$response->rows[$i]['nominal_bayar'] = $result[$i]['NOMINAL_BAYAR'];
-				$response->rows[$i]['kurang_bayar'] = $result[$i]['KURANG_BAYAR'];
-				$response->rows[$i]['denda'] = $result[$i]['DENDA'];
 			}
 		}
 
