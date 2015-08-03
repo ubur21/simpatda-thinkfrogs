@@ -66,6 +66,7 @@
 			</div>
 			<div class="controls span2 input-append">
 			  <label class="control-label" for="akunkasdaerah">Akun Kas Daerah</label>
+			  
 			  <input type="hidden"  id="id_kasdaerah" name="id_kasdaerah" data-bind="value: id_kasdaerah" required />
 			  <input type="text" class="span2" id="akun_kasdaerah" readonly="1" data-bind="value: akun_kasdaerah, executeOnEnter: pilih_akunkas" required />
 			  <span class="add-on" data-bind="visible: !isEdit() && canSave(),  click: pilih_akunkas" ><i class="icon-folder-open"></i></span>
@@ -73,13 +74,15 @@
 		</div>
 	  </div>
   </div>
+  
   <div class="control-group pull-left" style="margin-left:40px" data-bind="validationElement: keterangan" >
 		<label class="control-label" for="keterangan">Keterangan</label>
 		  <textarea style="height:80px;"  class="span5" id="keterangan" name="keterangan" data-bind="value: keterangan" required >
 		  </textarea>
+		  
   </div>
   </div>
-	Rincian Setoran <input type="checkbox" id="rincian_setoran" class="form-control" /> Berdasar TBP
+	Rincian Setoran <input type="checkbox" id="rincian_setoran" name="rincian_setoran" class="form-control" value="1" /> Berdasar TBP
 	<br/><br/>
   <table id="grid"></table>
   <div id="pager"></div>
@@ -87,7 +90,7 @@
 <br />
   <div class="controls-row pull-left">
   <div class="btn-group dropup">
-    <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: function(data, event){save(false, data, event) }" />Tambah</button>
+    <button type="button" class="btn btn-primary" data-bind="visible: !isEdit() && canSave(),  click: pilih_pajakmanual"  />Tambah</button>
   </div>
   <div class="btn-group dropup">
     <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: function(data, event){save(false, data, event) }" />Ubah</button>
@@ -160,10 +163,10 @@ $(document).ready(function() {
     mtype:'POST',
     colNames:['', 'Kode Akun', 'Nama Akun', 'Nominal Setoran', 'Sisa Belum Setor'],
     colModel:[
-        {name:'idakun', hidden:true},
+        {name:'id_sts', hidden:true},
         {name:'noakun', width:150},
         {name:'nama', width:200},
-        {name:'nominal', width:150},
+        {name:'nominal', width:150, formatter:'currency', align:'right'},
         {name:'sisa', width:100, formatter:'currency', align:'right'},
     ],
     pager:'#pager',
@@ -220,6 +223,7 @@ $(document).ready(function() {
 	self.nama_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.jurnal_akrual = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.rincian_setoran = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	
 	self.nama_kasdaerah = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_kasdaerah = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
@@ -228,6 +232,7 @@ $(document).ready(function() {
 	self.tgl_sts = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.no_sts = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.otm = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.keterangan = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	
 	    self.id_wp = ko.observable('<?php echo isset($data['ID_WAJIB_PAJAK']) ? $data['ID_WAJIB_PAJAK'] : 0 ?>');
     self.npwpd = ko.observable('<?php echo isset($data['NPWPD']) ? $data['NPWPD'] : '' ?>')
@@ -388,6 +393,69 @@ $(document).ready(function() {
 	  
     });
   }
+  
+  $('#rincian_setoran').click(function(){
+		var $list = $('#grid'), errmsg = [];
+		var isChecked = jQuery('#rincian_setoran').is(':checked');
+		console.log(isChecked);
+		if(isChecked){
+			$.ajax({
+				url: root+modul+'/getlisttbp',
+				type: 'post',
+				dataType: 'json',
+				data: {},
+				success: function(response){
+					var result = response.rows,
+					len = response.len;
+					if (len > 0) {
+						$list.clearGridData();
+						for (i = 0; i < len; i++){
+							$list.jqGrid('addRowData', 'id_sts', [{ 'noakun':result[i]['noakun'], 'nama':result[i]['nama'], 'nominal':result[i]['nominal'], 'sisa':result[i]['sisa']}]);
+						}
+						//hitungTotal();
+						//hitungSisa();
+						//jumlahAll();
+					}
+					else {
+						if (App.id_spt() !== 0 && App.idpjk() !== 0) {
+							errmsg.push('SPT dari WP/WR dan Pajak tsb tidak ada yang belum lunas.');
+							App.errors.showAllMessages();
+							if (errmsg.length > 0) {
+								$.pnotify({
+									title: 'Perhatian',
+									text: errmsg.join('</br>'),
+									type: 'warning'
+								});
+								return false;
+							}
+						}
+					}
+				}
+			});
+		}
+	}); //end check
+	
+	App.pilih_pajakmanual = function(){
+    if (!App.canSave() || App.isEdit()) { return; }
+    var option = {multi:0, mode:'pendataan_restoran_npwpd'};
+	
+	var $list = $('#grid'), errmsg = [];
+		
+		// hapus dulu isi grid
+		var rowIds = $list.jqGrid('getDataIDs');
+		for(var i=0,len=rowIds.length;i<len;i++){
+			var currRow = rowIds[i];
+			$list.jqGrid('delRowData', currRow);
+		}
+		$list.trigger('reloadGrid');
+		
+    Dialog.pilihPAJAKMANUAL(option, function(obj, select){
+      var rs = $(obj).jqGrid('getRowData', select[0].id);
+	  
+	  $list.jqGrid('addRowData', 'id_sts', [{'noakun':rs.noakun, 'nama':rs.nama, 'nominal':'0', 'sisa':'0'}]);
+			
+    });
+  } //end app pilih_pajakmanual
   
    App.pilih_bendahara = function(){
     if (!App.canSave() || App.isEdit()) { return; }

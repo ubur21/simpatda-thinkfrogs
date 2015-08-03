@@ -422,7 +422,13 @@ class Pilih_model extends CI_Model {
   }
   
   function getPAJAKOA(){
-	$sql = " SELECT KODE_PR as ID_REKENING,NAMA_PR as NAMA_REKENING FROM MODUL_PR WHERE OA='1' ";
+	$sql = " SELECT ID_REKENING ,NAMA_REKENING  FROM REKENING  WHERE OBJEK='04' OR OBJEK = '08' ORDER BY KODE_REKENING ";
+		$result = $this->db->query($sql)->result_array();
+		return $result;
+  }
+  
+  function getPAJAKMANUAL(){
+	$sql = " SELECT ID_REKENING as ID, KODE_REKENING as NO_AKUN ,NAMA_REKENING as NAMA FROM REKENING   ORDER BY KODE_REKENING ";
 		$result = $this->db->query($sql)->result_array();
 		return $result;
   }

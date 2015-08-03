@@ -86,6 +86,25 @@ class Sts extends Base_Controller {
     $this->load->view('layout/template',$data);
   }
   
+  function getlisttbp()
+	{
+		$result = $this->data_model->getlistTBP();
+		$response = (object) NULL;
+		$response->sql = $this->db->queries;
+		$response->len = count($result);
+		if ($result){
+			for($i=0; $i<count($result); $i++){
+				$response->rows[$i]['id_STS'] = $result[$i]['ID'];
+				$response->rows[$i]['noakun'] = $result[$i]['IDAKUN'];
+				$response->rows[$i]['nama'] = $result[$i]['NAMA'];
+				$response->rows[$i]['nominal'] = $result[$i]['NOMINAL'];
+				$response->rows[$i]['sisa'] = $result[$i]['SISA'];
+			}
+		}
+
+		echo json_encode($response);    
+	}
+  
 }//end class
 
 ?>

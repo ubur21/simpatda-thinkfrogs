@@ -205,7 +205,7 @@ $(document).ready(function() {
     colModel:[
         {name:'id_rekening', hidden:true},
         {name:'kode_akun', width:150,  align:'left'},
-        {name:'nama_akun', width:100,  align:'left'},
+        {name:'nama_akun', width:200,  align:'left'},
         {name:'nominal_bayar', width:100, formatter:'currency', align:'right'},
     ],
     pager:'#div_pager_nonketetapan',
@@ -319,85 +319,33 @@ $(document).ready(function() {
     location.href = root+modul;
   }
 
-  App.save = function(){
+    App.save = function(createNew){
+    if (!App.formValidation()){ return }
+
     var $frm = $('#frm'),
-      data = JSON.parse(ko.toJSON(App));
+        data = JSON.parse(ko.toJSON(App));
+        data['rincian'] = JSON.stringify($('#grid').jqGrid('getRowData'));
+        data['purge'] = purge;
 
-    if (!App.isValid()) {
-      App.errors.showAllMessages();;
-      return ;
-    }
+    $.ajax({
+      url: $frm.attr('action'),
+      type: 'post',
+      dataType: 'json',
+      data: data,
+      success: function(res, xhr){
+        if (res.isSuccess){
+          if (res.id) App.id(res.id);
+        }
 
-    var file = document.getElementById('image').files[0];
-    var formData = new FormData($('form#frm')[0]);
-
-    //tanpa image
-    if(App.image() == "")
-    {
-      $.ajax(
-            {
-              url: $frm.attr('action'),
-              type: 'post',
-              dataType: 'json',
-              data: data,
-              success: function(res, xhr)
-              {
-                if (res.id) App.id(res.id);
-
-                $.pnotify(
-                  {
-                    title: res.isSuccess ? 'Sukses' : 'Gagal',
-                    text: res.message,
-                    type: res.isSuccess ? 'info' : 'error'
-                  });
-              }
-            });
-    }
-    //dengan image
-    else
-    {
-      $.ajax(
-        {
-          url: App.url,
-          type: 'post',
-          dataType: 'json',
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-          success: function(res)
-          {
-            $.pnotify(
-              {
-                title: res.isSuccess ? 'Sukses' : 'Gagal',
-                text: res.message,
-                type: res.isSuccess ? 'info' : 'error'
-              });
-            if(res.isSuccess == true)
-            {
-              $.ajax(
-                {
-                  url: $frm.attr('action'),
-                  type: 'post',
-                  dataType: 'json',
-                  data: $.extend(data,{icon:res.filename}),
-                  success: function(res, xhr)
-                  {
-                    if (res.id) App.id(res.id);
-
-                    $.pnotify(
-                      {
-                        title: res.isSuccess ? 'Sukses' : 'Gagal',
-                        text: res.message,
-                        type: res.isSuccess ? 'info' : 'error'
-                      });
-                  }
-                });
-            }
-
-          }
+        $.pnotify({
+          title: res.isSuccess ? 'Sukses' : 'Gagal',
+          text: res.message,
+          type: res.isSuccess ? 'info' : 'error'
         });
-    }
+
+        if (createNew) location.href = root+modul+'/form/';
+      }
+    });
   }
 	
 
@@ -477,7 +425,7 @@ $(document).ready(function() {
 					if (len > 0) {
 						// add grid dengan data spt sesuai pajak/retribusi
 						for (i = 0; i < len; i++){
-							$list.jqGrid('addRowData', 'id_rekening', [{'kode_akun':result[i]['kode_akun'], 'nama_akun':result[i]['nama_akun'], 'nominal_bayar':result[i]['nominal_bayar']}]);
+							$list.jqGrid('addRowData', 'id_rekening', [{'id_rekening':result[i]['id_rekening'],'kode_akun':result[i]['kode_akun'], 'nama_akun':result[i]['nama_akun'], 'nominal_bayar':result[i]['nominal_bayar']}]);
 						}
 						//hitungTotal();
 						//hitungSisa();
