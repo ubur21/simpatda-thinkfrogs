@@ -678,6 +678,15 @@ var Dialog = (function () {
     initDialog(opt, callback, param);
   }
   
+  function pilihPAJAKMANUAL(opt, callback)
+  {
+    var param = {
+      name: 'pajakmanual',
+      title: 'Pilih PAJAK MANUAL'
+    }
+    initDialog(opt, callback, param);
+  }
+  
   function pilihBENDAHARA(opt, callback)
   {
     var param = {
@@ -737,6 +746,7 @@ var Dialog = (function () {
     pilihNPWPD:pilihNPWPD,
 	pilihJURNAL:pilihJURNAL,
 	pilihPAJAKOA:pilihPAJAKOA,
+	pilihPAJAKMANUAL:pilihPAJAKMANUAL,
 	pilihBENDAHARA:pilihBENDAHARA,
 	pilihKASDAERAH:pilihKASDAERAH,
     pilihSPT:pilihSPT,
