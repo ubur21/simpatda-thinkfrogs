@@ -131,6 +131,27 @@ class Tbp extends Base_Controller {
 
 		echo json_encode($response);    
 	}
+	
+	public function proses()
+  {
+    $response = (object) NULL;
+	$success = $this->data_model->save_data();
+
+      if (!$success)
+      {
+        $response->isSuccess = TRUE;
+        $response->message = 'Data berhasil disimpan';
+        $response->sql = $this->db->queries;
+      }
+      else
+      {
+        $response->isSuccess = FALSE;
+        $response->message = 'Data gagal disimpan';
+        $response->sql = $this->db->queries;
+      }
+	  
+	echo json_encode($response);
+  }
   
 }//end class
 
