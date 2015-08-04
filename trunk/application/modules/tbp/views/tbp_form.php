@@ -79,7 +79,7 @@
   </fieldset>
   
   <fieldset>
-    <legend>Rincian Pembayaran Non Ketetapan</legend>
+    <legend>Rincian Pembayaran Ketetapan</legend>
 	<div class="control-group pull-left span12" style="margin-left:0px">
 		<table id="tbl_grid_ketetapan"></table>
 		<div id="div_pager_ketetapan"></div>
@@ -88,7 +88,7 @@
   </fieldset>
   
   <fieldset>
-    <legend>Rincian Pembayaran  Ketetapan</legend>
+    <legend>Rincian Pembayaran Non Ketetapan</legend>
 	<div class="control-group pull-left span12" style="margin-left:0px">
 		
 		<table id="tbl_grid_nonketetapan"></table>
@@ -107,7 +107,7 @@
 </div>
 
   <div class="controls-row pull-right">
-		Total Setor : <input type="text" id="total_setor" name="total_setor" class="form-control currency" />
+		Total Setor : <input type="text" id="total_setor" name="total_setor"  data-bind="value: total_setor"  class="form-control currency" />
   </div>
   
 	</div>
@@ -266,6 +266,7 @@ $(document).ready(function() {
 	self.nama_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.jurnal_akrual = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.total_setor = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 
 	
 	    self.id_wp = ko.observable('<?php echo isset($data['ID_WAJIB_PAJAK']) ? $data['ID_WAJIB_PAJAK'] : 0 ?>');
@@ -314,6 +315,25 @@ $(document).ready(function() {
   } //end ModelTbp
 
   var App = new ModelTbp();
+  
+   App.formValidation = function(){
+	var errmsg = [];
+
+    if (!App.isValid()){
+      errmsg.push('Ada kolom yang belum diisi dengan benar. Silakan diperbaiki.');
+      App.errors.showAllMessages();
+    }
+
+    if (errmsg.length > 0) {
+      $.pnotify({
+        title: 'Perhatian',
+        text: errmsg.join('</br>'),
+        type: 'warning'
+      });
+      return false;
+    }
+    return true;
+  }
 
   App.back = function(){
     location.href = root+modul;
@@ -324,7 +344,8 @@ $(document).ready(function() {
 
     var $frm = $('#frm'),
         data = JSON.parse(ko.toJSON(App));
-        data['rincian'] = JSON.stringify($('#grid').jqGrid('getRowData'));
+        data['rincian'] = JSON.stringify($('#tbl_grid_nonketetapan').jqGrid('getRowData'));
+		data['rincian2'] = JSON.stringify($('#tbl_grid_ketetapan').jqGrid('getRowData'));
         data['purge'] = purge;
 
     $.ajax({

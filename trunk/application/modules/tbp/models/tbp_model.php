@@ -30,5 +30,32 @@ group by a.NAMA_REKENING,a.ID_REKENING,a.KODE_REKENING";
 		return $result;
 	}
 	
+	function save_data(){
+		$data_oa = json_decode($this->input->post('rincian'),true) ;
+		$data_sa = json_decode($this->input->post('rincian2'),true) ;
+		$idskpd = $this->input->post('idskpd');
+		$nomor_tbp = $this->input->post('nomor_tbp');
+		$tgl_bayar = $this->input->post('tgl_bayar');
+		$id_bendahara = $this->input->post('id_bendahara');
+		$id_jurnal = $this->input->post('id_jurnal');
+		$id_wp = $this->input->post('id_wp');
+		$keterangan = $this->input->post('keterangan');
+		$total_setor = $this->input->post('total_setor');
+		
+		$this->db->trans_start();
+		for($i=0;$i < count($data_sa);$i++){
+			
+			$result = $this->db->query(" INSERT INTO TBP (ID_SKPD,NOMOR_TBP,TGL_BAYAR,ID_BENDAHARA,ID_JURNAL,ID_NPWPD,TOTAL_BAYAR,ID_SPT,KETERANGAN) VALUES (".$idskpd.",'".$nomor_tbp."','".prepare_date($tgl_bayar)."',".$id_bendahara.",".$id_jurnal.",".$id_wp.",'".$total_setor."',".$data_sa[$i]["idspt"].",'".$keterangan."') ");
+		}
+		
+		for($y=0;$y < count($data_oa);$y++){
+			
+			$result = $this->db->query(" INSERT INTO TBP (ID_SKPD,NOMOR_TBP,TGL_BAYAR,ID_BENDAHARA,ID_JURNAL,ID_NPWPD,TOTAL_BAYAR,ID_REKENING,KETERANGAN) VALUES (".$idskpd.",'".$nomor_tbp."','".prepare_date($tgl_bayar)."',".$id_bendahara.",".$id_jurnal.",".$id_wp.",'".$total_setor."',".$data_oa[$y]["id_rekening"].",'".$keterangan."') ");
+		}
+		
+		$this->db->trans_complete();
+		
+	}
+	
 }
 
