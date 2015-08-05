@@ -1,6 +1,6 @@
 
 
-<form id="frm" method="post" action="<?php echo base_url(); ?>sks/proses">
+<form id="frm" method="post" action="<?php echo base_url(); ?>sts/proses">
 <fieldset>
   <legend id="bc" > Surat Tanda Setoran</legend>
 </fieldset>
@@ -79,6 +79,7 @@
 		<label class="control-label" for="keterangan">Keterangan</label>
 		  <textarea style="height:80px;"  class="span5" id="keterangan" name="keterangan" data-bind="value: keterangan" required >
 		  </textarea>
+		  <input type="hidden" style="height:80px;"  class="span5" id="idspt" name="idspt" data-bind="value: idspt" required />
 		  
   </div>
   </div>
@@ -161,9 +162,9 @@ $(document).ready(function() {
     url:'',
     datatype:'local',
     mtype:'POST',
-    colNames:['', 'Kode Akun', 'Nama Akun', 'Nominal Setoran', 'Sisa Belum Setor'],
+    colNames:['id sts', 'Kode Akun', 'Nama Akun', 'Nominal Setoran', 'Sisa Belum Setor'],
     colModel:[
-        {name:'id_sts', hidden:true},
+        {name:'idsts', hidden:true},
         {name:'noakun', width:150},
         {name:'nama', width:200},
         {name:'nominal', width:150, formatter:'currency', align:'right'},
@@ -195,7 +196,7 @@ $(document).ready(function() {
     refresh:false,
   },{},{},{},{});
   
-  function select_row(id)
+  function select_row()
   {
     var idnya = $("#grid").jqGrid('getGridParam', 'selarrrow');
     App.idspt(idnya);
@@ -222,6 +223,7 @@ $(document).ready(function() {
 	
 	self.nama_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.idspt = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.jurnal_akrual = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.rincian_setoran = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	
@@ -235,14 +237,7 @@ $(document).ready(function() {
 	self.keterangan = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	
 	    self.id_wp = ko.observable('<?php echo isset($data['ID_WAJIB_PAJAK']) ? $data['ID_WAJIB_PAJAK'] : 0 ?>');
-    self.npwpd = ko.observable('<?php echo isset($data['NPWPD']) ? $data['NPWPD'] : '' ?>')
-      .extend({
-        required: {params: true, message: 'NPWPD tidak boleh kosong'},
-      });
-    self.nama = ko.observable('<?php echo isset($data['NAMA_WP']) ? $data['NAMA_WP'] : '' ?>')
-      .extend({
-        required: {params: true, message: 'Nama WP/WR tidak boleh kosong'},
-      });
+
 	
 	self.idskpd = ko.observable('<?php echo isset($data['ID_SKPD']) ? $data['ID_SKPD'] : 0 ?>')
     self.kd_skpd = ko.observable('<?php echo isset($data['KODE_SKPD']) ? $data['KODE_SKPD'] : '' ?>')
@@ -410,7 +405,7 @@ $(document).ready(function() {
 					if (len > 0) {
 						$list.clearGridData();
 						for (i = 0; i < len; i++){
-							$list.jqGrid('addRowData', 'id_sts', [{ 'noakun':result[i]['noakun'], 'nama':result[i]['nama'], 'nominal':result[i]['nominal'], 'sisa':result[i]['sisa']}]);
+							$list.jqGrid('addRowData', 'idsts', [{'idsts':result[i]['idsts'], 'noakun':result[i]['noakun'], 'nama':result[i]['nama'], 'nominal':result[i]['nominal'], 'sisa':result[i]['sisa']}]);
 						}
 						//hitungTotal();
 						//hitungSisa();
@@ -489,44 +484,51 @@ $(document).ready(function() {
     });
   }
   
- App.pilih_npwpd = function(){
-    if (!App.canSave() || App.isEdit()) { return; }
-    var option = {multi:0, mode:'pendataan_restoran_npwpd'};
-    Dialog.pilihNPWPD(option, function(obj, select){
-      var rs = $(obj).jqGrid('getRowData', select[0].id);
-      App.id_wp(rs.id_wp);
-      App.npwpd(rs.npwpd);
-      App.nama(rs.nama_wp);
-      App.alamat(rs.alamat_wp);
-    });
-  }
-  	
-  
-  App.hapus_icon = function(){
-    var agree=confirm("Apakah Anda yakin akan menghapus icon?");
-    if(agree)
-    {
-      $.ajax(
-            {
-              url: '<?php echo base_url()?>group/icon',
-              type: 'post',
-              dataType: 'json',
-              data: {id:App.id()},
-              success: function(res, xhr)
-              {
-                if (res.id) App.id(res.id);
 
-                $.pnotify(
-                  {
-                    title: res.isSuccess ? 'Sukses' : 'Gagal',
-                    text: res.message,
-                    type: res.isSuccess ? 'info' : 'error'
-                  });
-                  refresh('2400');
-              }
-            });
+  	
+App.formValidation = function(){
+    var errmsg = [];  
+    if (!App.isValid()){
+      errmsg.push('Ada kolom yang belum diisi dengan benar. Silakan diperbaiki.');
+      App.errors.showAllMessages();
     }
 
+    if (errmsg.length > 0) {
+      $.pnotify({
+        title: 'Perhatian',
+        text: errmsg.join('</br>'),
+        type: 'warning'
+      });
+      return false;
+    }
+    return true;
+  }
+  
+  App.save = function(createNew){
+    if (!App.formValidation()){ return }
+
+    var $frm = $('#frm'),
+        data = JSON.parse(ko.toJSON(App));
+
+    $.ajax({
+      url: $frm.attr('action'),
+      type: 'post',
+      dataType: 'json',
+      data: data,
+      success: function(res, xhr){
+        if (res.isSuccess){
+          if (res.id) App.id(res.id);
+        }
+
+        $.pnotify({
+          title: res.isSuccess ? 'Sukses' : 'Gagal',
+          text: res.message,
+          type: res.isSuccess ? 'info' : 'error'
+        });
+
+        if (createNew) location.href = root+modul+App.form();
+      }
+    });
   }
 
   ko.applyBindings(App);
