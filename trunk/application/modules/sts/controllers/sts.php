@@ -90,11 +90,11 @@ class Sts extends Base_Controller {
 	{
 		$result = $this->data_model->getlistTBP();
 		$response = (object) NULL;
-		$response->sql = $this->db->queries;
+		//$response->sql = $this->db->queries;
 		$response->len = count($result);
 		if ($result){
 			for($i=0; $i<count($result); $i++){
-				$response->rows[$i]['id_STS'] = $result[$i]['ID'];
+				$response->rows[$i]['idsts'] = $result[$i]['ID'];
 				$response->rows[$i]['noakun'] = $result[$i]['IDAKUN'];
 				$response->rows[$i]['nama'] = $result[$i]['NAMA'];
 				$response->rows[$i]['nominal'] = $result[$i]['NOMINAL'];
@@ -104,6 +104,30 @@ class Sts extends Base_Controller {
 
 		echo json_encode($response);    
 	}
+	
+	public function proses()
+  {
+    $response = (object) NULL;
+      
+      
+        $success = $this->data_model->save_data();
+
+        if (!$success)
+        {
+          $response->isSuccess = TRUE;
+          $response->message = 'Data berhasil disimpan';
+          $response->id = $this->data_model->id;
+          $response->sql = $this->db->queries;
+        }
+        else
+        {
+          $response->isSuccess = FALSE;
+          $response->message = 'Data gagal disimpan';
+          $response->sql = $this->db->queries;
+        }
+
+    echo json_encode($response);
+  }
   
 }//end class
 
