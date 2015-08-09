@@ -15,10 +15,11 @@
 			editurl:'<?php echo base_url()?>sts/daftar_sts',
 			datatype:'json',
 			mtype:'POST',
-			colNames:['NOMOR_STS','TGL_SETOR'],
+			colNames:['NOMOR STS','TGL SETOR', 'TOTAL SETOR'],
 			colModel:[
 				{name:'nomor_sts',index:'nomor_sts',width:180,editable:true,editoptions:{size:30,class:"span3"},editrules:{required:true}},
-				{name:'tgl_setor', index:'tgl_setor',width:115,editable:true,edittype:'text',editoptions:{size:10,class:"span2"}}
+				{name:'tgl_setor', index:'tgl_setor',width:115,editable:true,edittype:'text',editoptions:{size:10,class:"span2"}},
+				{name:'total_setor', index:'total_setor',width:115,editable:true,edittype:'text',editoptions:{size:10,class:"span2"}}
 			],
 			rowNum:10,
 			rowList:[10,20,30],
@@ -45,8 +46,8 @@
 			editfunc:edit_row,
 		});
 		
-		function edit_row(id){
-			location.href = root+modul+'<?php echo $link_form;?>/'+id;
+		function edit_row(){
+			location.href = root+modul+'/update/'+ $("#grid").jqGrid ('getCell', $("#grid").jqGrid('getGridParam', 'selrow'), 'nomor_sts');
 		}
 		
 		$("#add_grid").show();
