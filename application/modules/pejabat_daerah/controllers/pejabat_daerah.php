@@ -19,6 +19,7 @@ class Pejabat_daerah extends Base_Controller {
 
   public function proses_form()
   {
+  $response = (object) NULL;
     $id = $this->input->post('id');
     $oper = $this->input->post('oper');
 
@@ -78,6 +79,7 @@ class Pejabat_daerah extends Base_Controller {
 
   public function hapus()
   {
+  $response = (object) NULL;
     $id = $this->input->post('id');
 /*    $result = $this->data_model->check_dependency($id);
     if ($result) {
@@ -99,6 +101,7 @@ class Pejabat_daerah extends Base_Controller {
 
   public function get_daftar()
   {
+  $response = (object) NULL;
     $page = $_REQUEST['page']; // get the requested page
     $limit = $_REQUEST['rows']; // get how many rows we want to have into the grid
     $sidx = $_REQUEST['sidx']; // get index row - i.e. user click to sort
