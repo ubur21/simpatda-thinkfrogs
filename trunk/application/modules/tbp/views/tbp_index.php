@@ -43,15 +43,42 @@
 			},
 			refresh: true,
 			refreshtext: 'Refresh',
+			edit:true,
+			edittext: 'Ubah',
 			editfunc:edit_row,
+			del:true,
+			deltext: 'Hapus',
+			delfunc:del_row,
 		});
 		
 		function edit_row(id){
 			location.href = root+modul+'<?php echo $link_form;?>/'+id;
 		}
 		
+		 function del_row(id){
+    var answer = confirm('Hapus dari daftar?');
+    if(answer == true){
+      $.ajax({
+        type: "post",
+        dataType: "json",
+        url: root+modul+'/hapus',
+        data: {id: id},
+        success: function(res) {
+          $.pnotify({
+            title: res.isSuccess ? 'Sukses' : 'Gagal',
+            text: res.message,
+            type: res.isSuccess ? 'info' : 'error'
+          });
+          if (true == res.isSuccess){
+            jQuery('#grid').jqGrid('delRowData', id);
+          };
+        },
+      });
+    }
+  }
+  
 		//$("#add_grid").hide();
-		$("#edit_grid").hide();
+		//$("#edit_grid").hide();
 		//$("#del_grid").hide();
 		$("#search_grid").hide();
 		

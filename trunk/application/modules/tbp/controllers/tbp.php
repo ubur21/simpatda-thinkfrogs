@@ -13,6 +13,7 @@ class Tbp extends Base_Controller {
     $data['breadcrumbs'] = 'Daftar Tanda Bukti Setoran';
     $data['title'] = PRODUCT.' - '.$data['breadcrumbs'];
     $data['modul'] = 'tbp';
+	 $data['link_form'] = '/form';
     $data['main_content'] = 'tbp_index';
     $this->load->view('layout/template',$data);
   }
@@ -67,7 +68,7 @@ class Tbp extends Base_Controller {
 	$i = 0;
     foreach($result as $row)
     {
-      $response->rows[$i]['id'] = $row->ID;
+      $response->rows[$i]['id'] = $row->NOMOR_TBP;
       $response->rows[$i]['cell'] = array(
         $row->NOMOR_TBP,
 		$row->TGL_BAYAR,
@@ -131,6 +132,19 @@ class Tbp extends Base_Controller {
 
 		echo json_encode($response);    
 	}
+	
+	  public function hapus()
+  {
+    $id = $this->input->post('id');
+    $tipe = $this->input->post('tipe');
+    $response = (object) NULL;
+      $this->data_model->delete_data($id);
+      $response->isSuccess = TRUE;
+      $response->message = 'Data TBP telah dihapus.';
+    
+    echo json_encode($response);
+  }
+
 	
 	public function proses()
   {

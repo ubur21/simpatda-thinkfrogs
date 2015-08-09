@@ -12,13 +12,13 @@
 			</div>
 		</div>
 		
-		<div class="control-group pull-left">
+		<div class="control-group pull-left" data-bind="validationElement: nomor_tbp">
 			<label class="control-label" for="gol">Nomor TBP</label>
 			<input type="text" class="span2" id="nomor_tbp" data-bind="value: nomor_tbp" required />
 			<input type="checkbox" name="chk_otm" id="chk_otm" data-bind="value: chk_otm" /> Otm
 		</div>
 		
-		<div class="control-group pull-left" style="margin-left:20px" >
+		<div class="control-group pull-left" style="margin-left:20px"  data-bind="validationElement: tgl_bayar" >
 			<label class="control-label" for="jenis">Tanggal Bayar</label>
 			<input type="text" class="datepicker span2" id="tgl_bayar" data-bind="value: tgl_bayar" required />
 		</div>
@@ -71,9 +71,9 @@
 			</div>
 		</div>
 		
-		<div class="control-group pull-left" style="margin-left:-75px"  >
+		<div class="control-group pull-left" style="margin-left:-75px"   data-bind="validationElement: keterangan"  >
 			<label class="control-label" for="keterangan">Keterangan</label>
-			<textarea style="height:80px;" type="text" class="span6" id="keterangan" name="keterangan" data-bind="value: keterangan"  ></textarea>
+			<textarea style="height:80px;" type="text" class="span6" id="keterangan" name="keterangan" data-bind="value: keterangan" required  ></textarea>
 		</div>
 	</div>
   </fieldset>
@@ -106,7 +106,7 @@
   </div>
 </div>
 
-  <div class="controls-row pull-right">
+  <div class="controls-row pull-right"   data-bind="validationElement: total_setor">
 		Total Setor : <input type="text" id="total_setor" name="total_setor"  data-bind="value: total_setor"  class="form-control currency" />
   </div>
   
@@ -167,9 +167,12 @@ $(document).ready(function() {
         {name:'nama_akun', width:80,  align:'left'},
         {name:'nominal_ketetapan', width:80,  formatter:'currency', align:'right'},
         {name:'total_bayarlalu', width:100, formatter:'currency', align:'right'},
-		{name:'nominal_bayar', width:100, formatter:'currency', align:'right'},
-		{name:'kurang_bayar', width:100, formatter:'currency', align:'right'},
-		{name:'denda', width:100, formatter:'currency', align:'right'},
+		{name:'nominal_bayar', width:100, formatter:'currency', align:'right', editable:true, 
+          editoptions:{size:50,class:'span2'}},
+		{name:'kurang_bayar', width:100, formatter:'currency', align:'right', editable:true, 
+          editoptions:{size:50,class:'span2'}},
+		{name:'denda', width:100, formatter:'currency', align:'right', editable:true, 
+          editoptions:{size:50,class:'span2'}},
     ],
     pager:'#div_pager_ketetapan',
     rowNum:-1,
@@ -182,6 +185,12 @@ $(document).ready(function() {
     recordtext:'{2} baris',
     width:935,
     height:100,
+	ondblClickRow: edit_row,
+	loadComplete:function(){
+		hitungTotal();
+		hitungSisa();
+		jumlahAll();
+	}
     //onSelectRow: select_row,
     //onSelectAll: select_row,
   });
@@ -236,6 +245,38 @@ $(document).ready(function() {
   
   var last;
   var purge = new Array();
+  
+  function edit_row(id){
+    $(this).jqGrid('saveRow', last, null, 'clientArray', null, after_save);
+    $(this).jqGrid('editRow', id, true, null, null, 'clientArray', null, after_save);
+    last = id;
+  }
+  
+  function after_save(){
+    $(this).focus();
+    hitungTotal();
+    hitungSisa();
+    jumlahAll();
+  }
+  
+  function hitungTotal()
+  {
+	var selRowId = $('#tbl_grid_ketetapan').jqGrid ('getGridParam', 'selrow'),
+        total_bayarlalu = $('#tbl_grid_ketetapan').jqGrid('getCell', selRowId, 'total_bayarlalu'),
+        nominal_bayar = $('#tbl_grid_ketetapan').jqGrid('getCell', selRowId, 'nominal_bayar'),
+        kurang_bayar = (parseFloat(total_bayarlalu) - parseFloat(nominal_bayar)) ;
+		$("#tbl_grid_ketetapan").jqGrid('setRowData', selRowId, {kurang_bayar:kurang_bayar});	
+  }
+    
+  function hitungSisa()
+  {
+	
+  }
+
+  function jumlahAll()
+	{
+		
+	}
 
   function refresh (timeoutPeriod)
   {
@@ -258,35 +299,47 @@ $(document).ready(function() {
     self.id_jurnal = ko.observable('<?php echo isset($data['ID'])?$data['ID']:0 ?>');
     self.id_bendahara = ko.observable('<?php echo isset($data['ID'])?$data['ID']:0 ?>');
 	
-	self.nomor_tbp = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
-	self.tgl_bayar = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.nomor_tbp = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>')
+      .extend({
+        required: {params: true, message: ' '},
+    }); 
+	self.tgl_bayar = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>')
+      .extend({
+        required: {params: true, message: ' '},
+    }); 
 	self.alamat = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
-	self.keterangan = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.keterangan = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>')
+      .extend({
+        required: {params: true, message: ' '},
+    }); 
 	
 	self.nama_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.jurnal_akrual = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
-	self.total_setor = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.total_setor = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>')
+      .extend({
+        required: {params: true, message: ' '},
+    }); 
 
 	
 	    self.id_wp = ko.observable('<?php echo isset($data['ID_WAJIB_PAJAK']) ? $data['ID_WAJIB_PAJAK'] : 0 ?>');
     self.npwpd = ko.observable('<?php echo isset($data['NPWPD']) ? $data['NPWPD'] : '' ?>')
       .extend({
-        required: {params: true, message: 'NPWPD tidak boleh kosong'},
+        required: {params: true, message: ' '},
       });
     self.nama = ko.observable('<?php echo isset($data['NAMA_WP']) ? $data['NAMA_WP'] : '' ?>')
       .extend({
-        required: {params: true, message: 'Nama WP/WR tidak boleh kosong'},
+        required: {params: true, message: ' '},
       });
 	
 	self.idskpd = ko.observable('<?php echo isset($data['ID_SKPD']) ? $data['ID_SKPD'] : 0 ?>')
     self.kd_skpd = ko.observable('<?php echo isset($data['KODE_SKPD']) ? $data['KODE_SKPD'] : '' ?>')
       .extend({
-        required: {params: true, message: 'Kode SKPD tidak boleh kosong'},
+        required: {params: true, message: ' '},
       });
     self.nama_skpd = ko.observable('<?php echo isset($data['NAMA_SKPD']) ? $data['NAMA_SKPD'] : '' ?>')
       .extend({
-        required: {params: true, message: 'Nama SKPD tidak boleh kosong'},
+        required: {params: true, message: ' '},
     });  
 	  
     

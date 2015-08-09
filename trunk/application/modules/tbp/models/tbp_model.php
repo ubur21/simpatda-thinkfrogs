@@ -1,15 +1,15 @@
 <?php
 class Tbp_model extends CI_Model {
 	function get_daftartbp(){
-		$sql = " SELECT * FROM TBP ";
+		$sql = " SELECT distinct NOMOR_TBP,TGL_BAYAR, TOTAL_BAYAR FROM TBP ";
 		$result = $this->db->query($sql)->result();
 		return $result;
 	}
 	
 	function getSPT($id_wp){
 		$sql = " select c.id_spt,c.nomor_spt as skpd,c.periode_akhir as jatuh_tempo,d.KODE_REKENING as kode_akun
-,d.NAMA_REKENING as nama_akun,c.jumlah_pajak as nominal_ketetapan,coalesce(e.TOTAL_BAYAR,0) total_bayarlalu
-,coalesce(e.TOTAL_BAYAR,0) nominal_bayar,0.00 as kurang_bayar,0.00 as denda
+,d.NAMA_REKENING as nama_akun,c.jumlah_pajak as nominal_ketetapan,coalesce(e.NOMINAL_BAYAR,0) total_bayarlalu
+,coalesce(e.NOMINAL_BAYAR,0) nominal_bayar,coalesce(e.KURANG_BAYAR,0) as kurang_bayar,coalesce(e.DENDA,0) as denda
 from  wajib_pajak a
 inner join jenis_usaha b on a.ID_JENIS_USAHA = b.ID_JENIS_USAHA
 inner join spt c on a.ID_WAJIB_PAJAK = c.ID_WAJIB_PAJAK
@@ -45,7 +45,7 @@ group by a.NAMA_REKENING,a.ID_REKENING,a.KODE_REKENING";
 		$this->db->trans_start();
 		for($i=0;$i < count($data_sa);$i++){
 			
-			$result = $this->db->query(" INSERT INTO TBP (ID_SKPD,NOMOR_TBP,TGL_BAYAR,ID_BENDAHARA,ID_JURNAL,ID_NPWPD,TOTAL_BAYAR,ID_SPT,KETERANGAN) VALUES (".$idskpd.",'".$nomor_tbp."','".prepare_date($tgl_bayar)."',".$id_bendahara.",".$id_jurnal.",".$id_wp.",'".$total_setor."',".$data_sa[$i]["idspt"].",'".$keterangan."') ");
+			$result = $this->db->query(" INSERT INTO TBP (ID_SKPD,NOMOR_TBP,TGL_BAYAR,ID_BENDAHARA,ID_JURNAL,ID_NPWPD,TOTAL_BAYAR,ID_SPT,KETERANGAN,NOMINAL_BAYAR,KURANG_BAYAR,DENDA) VALUES (".$idskpd.",'".$nomor_tbp."','".prepare_date($tgl_bayar)."',".$id_bendahara.",".$id_jurnal.",".$id_wp.",'".$total_setor."',".$data_sa[$i]["idspt"].",'".$keterangan."',".$data_sa[$i]["nominal_bayar"].",".$data_sa[$i]["kurang_bayar"].",".$data_sa[$i]["denda"].") ");
 		}
 		
 		for($y=0;$y < count($data_oa);$y++){
@@ -55,6 +55,12 @@ group by a.NAMA_REKENING,a.ID_REKENING,a.KODE_REKENING";
 		
 		$this->db->trans_complete();
 		
+	}
+	
+	function delete_data($id){
+		$this->db->trans_start();
+		$result = $this->db->query(" DELETE FROM TBP WHERE NOMOR_TBP = '".$id."' ");
+		$this->db->trans_complete();
 	}
 	
 }
