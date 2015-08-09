@@ -94,15 +94,15 @@
     <button type="button" class="btn btn-primary" data-bind="visible: !isEdit() && canSave(),  click: pilih_pajakmanual"  />Tambah</button>
   </div>
   <div class="btn-group dropup">
-    <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: function(data, event){save(false, data, event) }" />Ubah</button>
+    <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: select_row" />Ubah</button>
   </div>
   <div class="btn-group dropup">
-    <button type="button" class="btn btn-primary" data-bind="enable: canSave, click: function(data, event){save(false, data, event) }" />Hapus</button>
+    <button type="button" class="btn btn-primary" data-bind="visible:isEdit() ,enable: canSave, click: delete_row" />Hapus</button>
   </div>
 </div>
   
   <div class="controls-row pull-right">
-		Total Setor : <input type="text" id="total_setor" name="total_setor"  class="form-control currency" />
+		Total Setor : <input type="text" id="total_setor" name="total_setor"  class="form-control currency" data-bind="value: rincian_setoran" required />
   </div>
   
   <br/>
@@ -167,8 +167,10 @@ $(document).ready(function() {
         {name:'idsts', hidden:true},
         {name:'noakun', width:150},
         {name:'nama', width:200},
-        {name:'nominal', width:150, formatter:'currency', align:'right'},
-        {name:'sisa', width:100, formatter:'currency', align:'right'},
+		{name:'nominal', width:100, formatter:'currency', align:'right', editable:true, 
+          editoptions:{size:50,class:'span2'}},
+		{name:'sisa', width:100, formatter:'currency', align:'right', editable:true, 
+          editoptions:{size:50,class:'span2'}},
     ],
     pager:'#pager',
     rowNum:-1,
@@ -177,12 +179,13 @@ $(document).ready(function() {
     viewrecords:true,
 		multiselect:true,
     gridview:true,
-    shrinkToFit:false,
+    shrinkToFit:true,
     recordtext:'{2} baris',
     width:675,
     height:150,
     onSelectRow: select_row,
     onSelectAll: select_row,
+	ondblClickRow: edit_row,
   });
 
   $("#grid").jqGrid('bindKeys', {
@@ -190,16 +193,53 @@ $(document).ready(function() {
 
   $("#grid").jqGrid('navGrid', '#pager', {
     add:false,
-    edit:false,
+    edit:true,
     del:false,
+	editfunc: edit_row,
     search:false,
     refresh:false,
   },{},{},{},{});
   
+  function edit_row(id){
+    $(this).jqGrid('saveRow', null, null, 'clientArray', null, null);
+    $(this).jqGrid('editRow', id, true, null, null, 'clientArray', null, null);
+    last = id;
+  }
+  
+  $("#grid").jqGrid('bindKeys', {
+    "onEnter": select_row
+  });
+  
   function select_row()
   {
-    var idnya = $("#grid").jqGrid('getGridParam', 'selarrrow');
-    App.idspt(idnya);
+    var id = $("#grid").jqGrid('getGridParam', 'selarrrow');
+    App.idspt(id);
+	if(id.length)
+	{
+		var total = 0;
+		for (var i=0;i<id.length;i++)  // For Multiple Delete of row
+			{
+				total += parseInt(jQuery("#grid").jqGrid('getCell',id[i],'nominal'));
+				App.rincian_setoran(total); 
+			}
+	}
+  }
+  
+  function delete_row()
+  {
+    var id = $("#grid").jqGrid('getGridParam', 'selarrrow');
+    
+	$.ajax(
+            {
+              url: 'sts/delete',
+              type: 'post',
+              dataType: 'json',
+              data: 'id='+id,
+              success: function(res, xhr)
+              {
+                $('#grid').trigger('reloadGrid');
+              }
+            });
   }
 
   ko.validation.init({
@@ -214,32 +254,32 @@ $(document).ready(function() {
     self.akses_level = ko.observable(03);
     self.id = ko.observable('<?php echo isset($data['ID'])?$data['ID']:0 ?>');
 	
-    self.id_jurnal = ko.observable('<?php echo isset($data['ID'])?$data['ID']:0 ?>');
-    self.id_bendahara = ko.observable('<?php echo isset($data['ID'])?$data['ID']:0 ?>');
+    self.id_jurnal = ko.observable('<?php echo isset($data['ID_JURNAL'])?$data['ID_JURNAL']:0 ?>');
+    self.id_bendahara = ko.observable('<?php echo isset($data['ID_BENDAHARA'])?$data['ID_BENDAHARA']:0 ?>');
 	
 	self.nomor_tbp = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
-	self.tgl_bayar = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.tgl_bayar = ko.observable('<?php echo isset($data['TGL_SETOR'])?$data['TGL_SETOR']:0 ?>');
 	self.alamat = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	
 	self.nama_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_bendahara = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.idspt = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.jurnal_akrual = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
-	self.rincian_setoran = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.rincian_setoran = ko.observable('<?php echo isset($data['TOTAL_SETOR'])?$data['TOTAL_SETOR']:0 ?>');
 	
 	self.nama_kasdaerah = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.akun_kasdaerah = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	self.id_kasdaerah = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
 	
-	self.tgl_sts = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
-	self.no_sts = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.tgl_sts = ko.observable('<?php echo isset($data['TGL_SETOR'])?$data['TGL_SETOR']:0 ?>');
+	self.no_sts = ko.observable('<?php echo isset($data['NOMOR_STS'])?$data['NOMOR_STS']:0 ?>');
 	self.otm = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
-	self.keterangan = ko.observable('<?php echo isset($tipe) ? $tipe : '' ?>');
+	self.keterangan = ko.observable('<?php echo isset($data['KETERANGAN'])?$data['KETERANGAN']:0 ?>');
 	
 	    self.id_wp = ko.observable('<?php echo isset($data['ID_WAJIB_PAJAK']) ? $data['ID_WAJIB_PAJAK'] : 0 ?>');
 
 	
-	self.idskpd = ko.observable('<?php echo isset($data['ID_SKPD']) ? $data['ID_SKPD'] : 0 ?>')
+	self.idskpd = ko.observable('<?php echo isset($data['ID_JENIS_PAJAK']) ? $data['ID_JENIS_PAJAK'] : 0 ?>')
     self.kd_skpd = ko.observable('<?php echo isset($data['KODE_SKPD']) ? $data['KODE_SKPD'] : '' ?>')
       .extend({
         required: {params: true, message: 'Kode SKPD tidak boleh kosong'},
@@ -249,8 +289,6 @@ $(document).ready(function() {
         required: {params: true, message: 'Nama SKPD tidak boleh kosong'},
     });  
 	  
-    
-
     self.mode = ko.computed(function(){
       return self.id() > 0 ? 'edit' : 'new';
     });
@@ -389,6 +427,44 @@ $(document).ready(function() {
     });
   }
   
+  if('<?php echo $mode; ?>' == 'update'){
+	var $list = $('#grid'), errmsg = [];
+	$.ajax({
+				url: root+modul+'/getlisttbp_uppdate',
+				type: 'post',
+				dataType: 'json',
+				data: 'no_sts='+<?php echo $data['NOMOR_STS']; ?>,
+				success: function(response){
+					var result = response.rows,
+					len = response.len;
+					if (len > 0) {
+						$list.clearGridData();
+						for (i = 0; i < len; i++){
+							$list.jqGrid('addRowData', 'idsts', [{'idsts':result[i]['idsts'], 'noakun':result[i]['noakun'], 'nama':result[i]['nama'], 'nominal':result[i]['nominal'], 'sisa':result[i]['sisa']}]);
+							$("#jqg_grid_" + result[i]['idsts']).prop('checked', true);
+						}
+						//hitungTotal();
+						//hitungSisa();
+						//jumlahAll();
+					}
+					else {
+						if (App.id_spt() !== 0 && App.idpjk() !== 0) {
+							errmsg.push('SPT dari WP/WR dan Pajak tsb tidak ada yang belum lunas.');
+							App.errors.showAllMessages();
+							if (errmsg.length > 0) {
+								$.pnotify({
+									title: 'Perhatian',
+									text: errmsg.join('</br>'),
+									type: 'warning'
+								});
+								return false;
+							}
+						}
+					}
+				}
+			});
+  }
+  
   $('#rincian_setoran').click(function(){
 		var $list = $('#grid'), errmsg = [];
 		var isChecked = jQuery('#rincian_setoran').is(':checked');
@@ -440,14 +516,14 @@ $(document).ready(function() {
 		var rowIds = $list.jqGrid('getDataIDs');
 		for(var i=0,len=rowIds.length;i<len;i++){
 			var currRow = rowIds[i];
-			$list.jqGrid('delRowData', currRow);
+			$list.jqGrid('addRowData', currRow);
 		}
-		$list.trigger('reloadGrid');
+		//$list.trigger('reloadGrid');
 		
     Dialog.pilihPAJAKMANUAL(option, function(obj, select){
       var rs = $(obj).jqGrid('getRowData', select[0].id);
 	  
-	  $list.jqGrid('addRowData', 'id_sts', [{'noakun':rs.noakun, 'nama':rs.nama, 'nominal':'0', 'sisa':'0'}]);
+	  $list.jqGrid('addRowData', 'idsts', [{'idsts': rs.id_rekening, 'noakun':rs.noakun, 'nama':rs.nama, 'nominal':'0', 'sisa':'0'}]);
 			
     });
   } //end app pilih_pajakmanual

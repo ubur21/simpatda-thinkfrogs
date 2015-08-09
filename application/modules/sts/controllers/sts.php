@@ -86,9 +86,46 @@ class Sts extends Base_Controller {
     $this->load->view('layout/template',$data);
   }
   
+  public function update($no_sts)
+  {
+	
+	$data['data'] = $this->data_model->get_sts_one($no_sts);
+    $data['breadcrumbs'] = 'Ubah Surat Tanda Setoran';
+    $data['title'] = $this->app['app_name'];
+    $data['modul'] = 'sts';
+	$data['mode'] = 'update';
+    $data['main_content'] = 'sts_form';
+	$data['tbp'] = $this->data_model->get_sts($no_sts);
+    $this->load->view('layout/template',$data);
+  }
+  
   function getlisttbp()
 	{
 		$result = $this->data_model->getlistTBP();
+		$response = (object) NULL;
+		//$response->sql = $this->db->queries;
+		$response->len = count($result);
+		if ($result){
+			for($i=0; $i<count($result); $i++){
+				$response->rows[$i]['idsts'] = $result[$i]['ID'];
+				$response->rows[$i]['noakun'] = $result[$i]['IDAKUN'];
+				$response->rows[$i]['nama'] = $result[$i]['NAMA'];
+				$response->rows[$i]['nominal'] = $result[$i]['NOMINAL'];
+				$response->rows[$i]['sisa'] = $result[$i]['SISA'];
+			}
+		}
+
+		echo json_encode($response);    
+	}
+	
+	function getlisttbp_uppdate()
+	{
+		$con = $this->data_model->get_sts($_POST['no_sts']);
+		foreach ($con as $item){
+			$a[] = $item['TBP_ID'];
+		}
+		$id = implode(",",$a);
+		$result = $this->data_model->getlistTBP2($id);
 		$response = (object) NULL;
 		//$response->sql = $this->db->queries;
 		$response->len = count($result);
@@ -123,6 +160,30 @@ class Sts extends Base_Controller {
         {
           $response->isSuccess = FALSE;
           $response->message = 'Data gagal disimpan';
+          $response->sql = $this->db->queries;
+        }
+
+    echo json_encode($response);
+  }
+  
+  public function delete()
+  {
+    $response = (object) NULL;
+      
+      
+        $success = $this->data_model->delete_data();
+
+        if (!$success)
+        {
+          $response->isSuccess = TRUE;
+          $response->message = 'Data berhasil dihapus';
+          $response->id = $this->data_model->id;
+          $response->sql = $this->db->queries;
+        }
+        else
+        {
+          $response->isSuccess = FALSE;
+          $response->message = 'Data gagal dihapus';
           $response->sql = $this->db->queries;
         }
 
